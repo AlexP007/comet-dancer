@@ -1,0 +1,18 @@
+# === Main ===
+
+appname: 'App'
+
+layout: 'main'
+
+charset: 'UTF-8'
+
+# If set to true, Dancer2 will look to X-Forwarded-Protocol and X-Forwarded-host.
+behind_proxy: 1
+
+# === Engines ===
+
+# Template engine.
+template: 'simple'
+
+# Session engine.
+session: 'Redis'
