@@ -1,0 +1,5 @@
+.idea
+config.yml
+/environments
+/logs
+/db
