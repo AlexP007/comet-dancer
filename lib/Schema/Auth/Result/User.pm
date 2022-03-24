@@ -2,10 +2,11 @@ package Schema::Auth::Result::User;
 
 use strict;
 use warnings;
-
 use parent qw(DBIx::Class::Core);
 
 __PACKAGE__->table('user');
+
+### Columns ###
 
 __PACKAGE__->add_columns(
     id => {
@@ -63,10 +64,24 @@ __PACKAGE__->add_columns(
     },
 );
 
-__PACKAGE__->set_primary_key('id');
+### Constrains ###
+
+__PACKAGE__->set_primary_key(qw(id));
 
 __PACKAGE__->add_unique_constraint([qw(username)]);
 
 __PACKAGE__->add_unique_constraint([qw(email)]);
+
+### Relationships ###
+
+__PACKAGE__->has_many(
+    user_roles => 'Schema::Auth::Result::UserRoles', 'user_id',
+    {
+        cascade_copy   => 0,
+        cascade_delete => 0,
+    }
+);
+
+__PACKAGE__->many_to_many(roles => 'user_roles', 'role_id');
 
 1;
