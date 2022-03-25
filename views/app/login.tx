@@ -1,3 +1,5 @@
 <div class="grid place-items-center h-screen">
-    'Hello, <: $lang :> world!'
+    <div>
+
+    </div>
 </div>
