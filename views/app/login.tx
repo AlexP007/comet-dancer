@@ -1,11 +1,9 @@
 <: cascade components::blocks::window_centered :>
 <: around body -> { :>
-<div class="bg-white shadow-lg py-4 px-6">
+<div class="w-3/4 max-w-xs bg-white shadow-lg py-4 px-6">
     <form method="post" action="<: $routes.login :>">
         <: include components::forms::input_group {label => 'Username', name  => 'username'} :>
-
         <: include components::forms::input_group {label => 'Password', name  => 'password'} :>
-
         <div class="flex justify-between items-baseline">
             <div class="text-sm  text-gray-500">
                 <a class="cursor-pointer hover:underline" href="<: $routes.register :>">Register</a>

@@ -1,0 +1,23 @@
+<: cascade components::blocks::window_centered :>
+<: around body -> { :>
+<div class="w-3/4 max-w-md bg-white shadow-lg py-4 px-6">
+    <form method="post" action="<: $routes.register :>">
+        <: include components::forms::input_group {label => 'Username',         name  => 'username'    } :>
+        <: include components::forms::input_group {label => 'Email',            name  => 'email'       } :>
+        <: include components::forms::input_group {label => 'Password',         name  => 'password'    } :>
+        <: include components::forms::input_group {label => 'Confirm Password', name  => 'password_cnf'} :>
+        <div class="flex justify-between items-baseline">
+           <div>
+               <input class="cursor-pointer"
+                       type="checkbox"
+                       id="confirm"
+                       name="confirm"
+                       checked
+               >
+               <label for="confirm" class="form-check-label inline-block">I accept the Terms of Use</label>
+           </div>
+            <: include components::forms::button {text => 'Register'} :>
+        </div>
+    </form>
+</div>
+<: } :>
