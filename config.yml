@@ -4,8 +4,6 @@ appname: 'App'
 
 layout: 'main'
 
-location: 'views'
-
 charset: 'UTF-8'
 
 # If set to true, Dancer2 will look to X-Forwarded-Protocol and X-Forwarded-host.
