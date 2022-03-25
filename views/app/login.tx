@@ -1,20 +1,14 @@
-<: cascade components::block::window_centered :>
+<: cascade components::blocks::window_centered :>
 <: around body -> { :>
 <div class="bg-white shadow-md py-4 px-6">
     <form>
-        <: include components::form::input_group
-           {
-               label => 'Username',
-               name  => 'username'
-           }
-        :>
+        <: include components::forms::input_group {label => 'Username', name  => 'username'} :>
 
-        <: include components::form::input_group
-           {
-               label => 'Password',
-               name  => 'password'
-           }
-        :>
+        <: include components::forms::input_group {label => 'Password', name  => 'password'} :>
+
+        <div class="flex justify-between items-baseline">
+            <: include components::forms::button {text => 'Log In'} :>
+        </div>
     </form>
 </div>
 <: } :>
