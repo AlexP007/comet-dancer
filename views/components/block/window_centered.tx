@@ -1,0 +1,5 @@
+<div class="h-screen flex justify-center items-center">
+    <div class="relative w-3/4 max-w-xs">
+        <: block body -> { } :>
+    </div>
+</div>
