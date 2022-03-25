@@ -12,7 +12,7 @@ behind_proxy: 1
 # === Engines ===
 
 # Template engine.
-template: 'simple'
+template: 'Xslate'
 
 # Session engine.
 session: 'Redis'
@@ -62,3 +62,5 @@ plugins:
         # 'check_password' in users_resultset result class
         # which takes the password to check as a single argument.
         users_password_check: check_password
+    # Not using DPAE routes and pages.
+    no_default_pages: 1

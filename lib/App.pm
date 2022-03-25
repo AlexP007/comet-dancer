@@ -6,9 +6,10 @@ use Dancer2::Plugin::Auth::Extensible;
 
 our $VERSION = '0.1';
 
-get '/' => require_login sub {
-    template 'index' => {
-        title   => 'app',
+get '/' => sub {
+    template 'app/login' => {
+        title  => 'ho',
+        lang   => 'app',
     };
 };
 
