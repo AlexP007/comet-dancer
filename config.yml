@@ -16,3 +16,49 @@ template: 'simple'
 
 # Session engine.
 session: 'Redis'
+
+# === Plugins ===
+
+plugins:
+
+  # Dancer2::Plugin::Auth::Extensible::Provider::DBIC.
+  Auth::Extensible:
+    realms:
+      users:
+        provider: 'DBIC'
+
+        # get_user_details return an inflated DBIC object.
+        user_as_object: 1
+
+        # Schema.
+        users_resultset: User
+        roles_resultset: Role
+        user_roles_resultset: UserRoles
+
+        # Columns.
+        users_username_column: username
+        users_password_column: password
+        roles_role_column: role
+        users_lastlogin_column: lastlogin
+        users_pwresetcode_column: pw_reset_code
+        users_pwchanged_column: pw_changed
+
+        # Days after which passwords expire.
+        password_expiry_days: 30
+
+        # Optionally set additional conditions when searching for the
+        # user in the database. These are the same format as required
+        # by DBIC, and are passed directly to the DBIC resultset search.
+        user_valid_conditions:
+          deleted: 0
+
+        # Key for the user's roles to be returned in.
+        roles_key: roles
+
+        # Optionally specify the algorithm when encrypting new passwords.
+        encryption_algorithm: SHA-512
+
+        # Optional: To validate passwords using a method called
+        # 'check_password' in users_resultset result class
+        # which takes the password to check as a single argument.
+        users_password_check: check_password
