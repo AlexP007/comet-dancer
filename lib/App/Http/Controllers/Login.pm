@@ -8,4 +8,4 @@ get '/login' => sub {
     };
 };
 
-1;
+true;

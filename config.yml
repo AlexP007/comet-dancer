@@ -4,18 +4,27 @@ appname: 'App'
 
 layout: 'main'
 
+location: 'views'
+
 charset: 'UTF-8'
 
 # If set to true, Dancer2 will look to X-Forwarded-Protocol and X-Forwarded-host.
 behind_proxy: 1
-
-# === Engines ===
 
 # Template engine.
 template: 'Xslate'
 
 # Session engine.
 session: 'Redis'
+
+# === Engines ===
+
+engines:
+
+  # Dancer2::Template::Xslate.
+  template:
+    Xslate:
+      location: 'views'
 
 # === Plugins ===
 

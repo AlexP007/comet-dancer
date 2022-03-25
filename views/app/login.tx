@@ -1,5 +1,16 @@
-<div class="grid place-items-center h-screen">
-    <div>
-
+<div class="h-screen flex justify-center items-center">
+    <div class="relative w-3/4 max-w-xs">
+        <div class="bg-white shadow-md py-4 px-6">
+            <form>
+                <: include components::form::input_group {
+                       label => 'Username',
+                       name  => 'username'
+                } :>
+                <: include components::form::input_group {
+                       label => 'Password',
+                       name  => 'password'
+                } :>
+            </form>
+        </div>
     </div>
 </div>
