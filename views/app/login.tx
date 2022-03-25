@@ -7,6 +7,11 @@
         <: include components::forms::input_group {label => 'Password', name  => 'password'} :>
 
         <div class="flex justify-between items-baseline">
+            <div>
+                <a class="text-sm cursor-pointer hover:underline">Register</a>
+                <span>/</span>
+                <a class="text-sm cursor-pointer hover:underline">Lost password</a>
+            </div>
             <: include components::forms::button {text => 'Log In'} :>
         </div>
     </form>
