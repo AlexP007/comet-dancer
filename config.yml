@@ -71,3 +71,15 @@ plugins:
         users_password_check: check_password
     # Not using DPAE routes and pages.
     no_default_pages: 1
+
+  # Dancer2::Plugin::FormValidator.
+  FormValidator:
+    session:
+      namespace: '_form_validator'
+    messages:
+      missing: '%s is missing.'
+      invalid: '%s is invalid.'
+      ucfirst: 1
+    forms:
+      app_login_form: 'App::Http::Validators::LoginForm'
+      app_register_form: 'App::Http::Validators::RegisterForm'

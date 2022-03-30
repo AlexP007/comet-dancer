@@ -4,6 +4,8 @@ requires "Dancer2::Plugin::Auth::Extensible::Provider::DBIC" => "0";
 requires "Dancer2::Session::Redis"                           => "0";
 requires "Dancer2::Session::Redis::Serialization::Sereal"    => "0";
 requires "Dancer2::Template::Xslate"                         => "0";
+requires "Dancer2::Plugin::Deferred"                         => "0";
+requires "Dancer2::Plugin::FormValidator"                    => "0";
 
 # Basic.
 
@@ -19,7 +21,7 @@ requires "Log::Dispatch"                       => "0";
 
 # Support.
 
-requires "DBIx::Class::Migration" => "0";
+requires "DBIx::Class::Migration"           => "0";
 
 recommends "YAML"                    => "0";
 recommends "URL::Encode::XS"         => "0";
