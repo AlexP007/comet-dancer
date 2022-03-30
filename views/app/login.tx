@@ -5,7 +5,7 @@
         <: include components::forms::input_group {label => 'Username', name  => 'username'} :>
         <: include components::forms::input_group {label => 'Password', name  => 'password'} :>
         <div class="flex justify-between items-baseline">
-            <div class="text-sm  text-gray-500">
+            <div class="text-sm text-gray-500">
                 <a class="cursor-pointer hover:underline" href="<: $routes.register :>">Register</a>
                 <span>/</span>
                 <a class="cursor-pointer hover:underline" href="<: $routes.forget :>">Lost password</a>
