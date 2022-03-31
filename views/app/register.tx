@@ -2,10 +2,10 @@
 <: around body -> { :>
 <div class="w-3/4 max-w-md bg-white shadow-lg py-4 px-6">
     <form method="post" action="<: $routes.register :>">
-        <: include components::forms::input_group {label => 'Username',         name  => 'username'    } :>
-        <: include components::forms::input_group {label => 'Email',            name  => 'email'       } :>
-        <: include components::forms::input_group {label => 'Password',         name  => 'password'    } :>
-        <: include components::forms::input_group {label => 'Confirm Password', name  => 'password_cnf'} :>
+        <: include components::forms::input_group {label => 'Username',         name  => 'username'                        } :>
+        <: include components::forms::input_group {label => 'Email',            name  => 'email'                           } :>
+        <: include components::forms::input_group {label => 'Password',         name  => 'password'    , autocomplete => 0 } :>
+        <: include components::forms::input_group {label => 'Confirm Password', name  => 'password_cnf', autocomplete => 0 } :>
         <div class="flex justify-between items-baseline">
            <div>
                <input class="cursor-pointer"
