@@ -77,9 +77,8 @@ plugins:
     session:
       namespace: '_form_validator'
     messages:
-      missing: '%s is missing.'
-      invalid: '%s is invalid.'
+      missing: '%s is missing'
+      invalid: '%s is invalid'
       ucfirst: 1
     forms:
-      app_login_form: 'App::Http::Validators::LoginForm'
       app_register_form: 'App::Http::Validators::RegisterForm'
