@@ -1,4 +1,4 @@
-<div class="py-2">
+<div class="pt-1">
     <label class="block font-normal text-gray-400" for="<: $name :>">
         <: $label :>
     </label>
@@ -13,7 +13,7 @@
                 autocomplete="off"
             <: } :>
     >
-    <: if $errors[$name] != nil { :>
-        <small class="pl-1 text-red-400"><: $errors[$name] :></small>
-    <: } :>
+            <: for $errors[$name] -> $error { :>
+                <small class="pl-1 text-red-400"><: $error :></small>
+            <: } :>
 </div>

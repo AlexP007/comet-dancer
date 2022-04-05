@@ -1,11 +1,12 @@
-requires "Dancer2"                                           => "0.400000";
-requires "Dancer2::Plugin::DBIC"                             => "0";
-requires "Dancer2::Plugin::Auth::Extensible::Provider::DBIC" => "0";
-requires "Dancer2::Session::Redis"                           => "0";
-requires "Dancer2::Session::Redis::Serialization::Sereal"    => "0";
-requires "Dancer2::Template::Xslate"                         => "0";
-requires "Dancer2::Plugin::Deferred"                         => "0";
-requires "Dancer2::Plugin::FormValidator"                    => "0";
+requires "Dancer2"                                             => "0.400000";
+requires "Dancer2::Plugin::DBIC"                               => "0";
+requires "Dancer2::Plugin::Auth::Extensible::Provider::DBIC"   => "0";
+requires "Dancer2::Session::Redis"                             => "0";
+requires "Dancer2::Session::Redis::Serialization::Sereal"      => "0";
+requires "Dancer2::Template::Xslate"                           => "0";
+requires "Dancer2::Plugin::Deferred"                           => "0";
+requires "Dancer2::Plugin::FormValidator"                      => "0";
+requires "Dancer2::Plugin::FormValidator::Extension::Password" => "0";
 
 # Basic.
 

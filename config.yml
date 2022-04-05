@@ -76,9 +76,8 @@ plugins:
   FormValidator:
     session:
       namespace: '_form_validator'
-    messages:
-      missing: '%s is missing'
-      invalid: '%s is invalid'
-      ucfirst: 1
     forms:
       app_register_form: 'App::Http::Validators::RegisterForm'
+    extensions:
+      password:
+        provider: 'Dancer2::Plugin::FormValidator::Extension::Password'

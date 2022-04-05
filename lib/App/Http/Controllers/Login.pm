@@ -2,7 +2,7 @@ package App::Http::Controllers::Login;
 
 use Dancer2 appname  =>'App';
 use Dancer2::Plugin::FormValidator;
-use App::Http::Validators::RegisterForm;
+use Dancer2::Plugin::Auth::Extensible;
 
 hook before_template_render => sub {
     my $tokens = shift;
@@ -29,8 +29,10 @@ get '/register' => sub {
 };
 
 post '/register' => sub {
-    if (my $validated = validate_form 'app_register_form') {
-        to_dumper $validated;
+    if (my $v = validate_form 'app_register_form') {
+        my $user = create_user username => $v->{username}, email => $v->{email};
+
+        to_dumper $user;
     }
     else {
         redirect '/register';

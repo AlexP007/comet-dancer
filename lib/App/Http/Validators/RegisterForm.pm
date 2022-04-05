@@ -5,25 +5,24 @@ use warnings;
 use Moo;
 use Data::FormValidator::Constraints qw(:closures);
 
-with 'Dancer2::Plugin::FormValidator::Role::HasProfile', 'Dancer2::Plugin::FormValidator::Role::HasMessages';
+with 'Dancer2::Plugin::FormValidator::Role::ProfileHasMessages';
 
 sub profile {
     return {
-        required => [qw(username email password password_cnf)],
-        constraint_methods => {
-            username => FV_length_between(4, 25),
-            email    => email,
-            password => FV_eq_with('password_cnf')
-        },
+        username     => [ qw(required alpha_num_ascii length_min:4 length_max:32) ],
+        email        => [ qw(required email length_max:127) ],
+        password     => [ qw(required password_simple length_max:40) ],
+        password_cnf => [ qw(required same:password) ],
+        confirm      => [ qw(required accepted) ],
     };
 };
 
 sub messages {
     return {
-        username => '%s length should be 4 to 25 characters',
-        email    => '%s should be a valid email address',
-        password => '%s and password confirmation should match',
-    };
+        same => {
+            'en' => 'Password confirmation must be the same as password'
+        }
+    }
 }
 
 1;

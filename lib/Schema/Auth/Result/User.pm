@@ -36,6 +36,8 @@ __PACKAGE__->add_columns(
     email => {
         data_type     => 'varchar',
         size          => 255,
+        is_nullable   => 1,
+        default_value => undef,
     },
 
     deleted => {
