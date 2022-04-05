@@ -14,7 +14,8 @@ my $migration = DBIx::Class::Migration->new(
 );
 
 for ($action) {
-    $migration->prepare   if /^prepare$/;
-    $migration->install   if /^install$/;
-    $migration->downgrade if /^downgrade$/;
+    $migration->prepare     if /^prepare$/;
+    $migration->install     if /^install$/;
+    $migration->downgrade   if /^downgrade$/;
+    $migration->drop_tables if /^drop_tables$/;
 }
