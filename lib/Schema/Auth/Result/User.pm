@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use parent qw(DBIx::Class::Core);
 
-__PACKAGE__->table('user');
+__PACKAGE__->table('users');
 
 ### Columns ###
 

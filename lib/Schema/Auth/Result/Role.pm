@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use parent qw(DBIx::Class::Core);
 
-__PACKAGE__->table('role');
+__PACKAGE__->table('roles');
 
 ### Columns ###
 
