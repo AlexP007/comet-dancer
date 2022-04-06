@@ -30,7 +30,11 @@ get '/register' => sub {
 
 post '/register' => sub {
     if (my $v = validate_form 'app_register_form') {
-        my $user = create_user username => $v->{username}, email => $v->{email};
+        my $user = create_user(
+            username => $v->{username},
+            email    => $v->{email},
+            password => $v->{password},
+        );
 
         to_dumper $user;
     }

@@ -76,11 +76,11 @@ plugins:
   FormValidator:
     session:
       namespace: '_form_validator'
-    forms:
-      app_register_form: 'App::Http::Validators::RegisterForm'
     extensions:
       password:
         provider: 'Dancer2::Plugin::FormValidator::Extension::Password'
       dbic:
         provider: 'Dancer2::Plugin::FormValidator::Extension::DBIC'
         database: 'default'
+    forms:
+      app_register_form: 'App::Http::Validators::RegisterForm'

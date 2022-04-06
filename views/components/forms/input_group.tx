@@ -13,7 +13,5 @@
                 autocomplete="off"
             <: } :>
     >
-            <: for $errors[$name] -> $error { :>
-                <small class="pl-1 text-red-400"><: $error :></small>
-            <: } :>
+            <: include components::forms::error { name => $name } :>
 </div>

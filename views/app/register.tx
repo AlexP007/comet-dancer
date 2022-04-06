@@ -18,6 +18,7 @@
            </div>
             <: include components::forms::button {text => 'Register'} :>
         </div>
+        <: include components::forms::error { name => 'confirm' } :>
     </form>
 </div>
 <: } :>
