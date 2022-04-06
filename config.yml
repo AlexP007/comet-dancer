@@ -81,3 +81,6 @@ plugins:
     extensions:
       password:
         provider: 'Dancer2::Plugin::FormValidator::Extension::Password'
+      dbic:
+        provider: 'Dancer2::Plugin::FormValidator::Extension::DBIC'
+        database: 'default'

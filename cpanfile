@@ -7,6 +7,7 @@ requires "Dancer2::Template::Xslate"                           => "0";
 requires "Dancer2::Plugin::Deferred"                           => "0";
 requires "Dancer2::Plugin::FormValidator"                      => "0";
 requires "Dancer2::Plugin::FormValidator::Extension::Password" => "0";
+requires "Dancer2::Plugin::FormValidator::Extension::DBIC"     => "0";
 
 # Basic.
 
