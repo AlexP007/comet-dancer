@@ -65,12 +65,9 @@ plugins:
         # Optionally specify the algorithm when encrypting new passwords.
         encryption_algorithm: SHA-256
 
-        # Optional: To validate passwords using a method called
-        # 'check_password' in users_resultset result class
-        # which takes the password to check as a single argument.
-        users_password_check: check_password
     # Not using DPAE routes and pages.
     no_default_pages: 1
+#    no_login_handler: 1
 
   # Dancer2::Plugin::FormValidator.
   FormValidator:
