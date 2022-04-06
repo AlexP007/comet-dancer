@@ -33,14 +33,20 @@ post '/register' => sub {
         my $user = create_user(
             username => $v->{username},
             email    => $v->{email},
-            password => $v->{password},
+            roles    => { user => 1 },
         );
 
-        to_dumper $user;
+        if ($user) {
+            user_password(
+                username     => $user->username,
+                new_password => $v->{password},
+            );
+
+            return 'super';
+        }
     }
-    else {
-        redirect '/register';
-    }
+
+    redirect '/register';
 };
 
 true;

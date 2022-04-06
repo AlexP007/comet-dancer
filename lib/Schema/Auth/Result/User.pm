@@ -21,7 +21,7 @@ __PACKAGE__->add_columns(
 
     password => {
         data_type     => 'varchar',
-        size          => 40,
+        size          => 64,
         is_nullable   => 1,
         default_value => undef,
     },
