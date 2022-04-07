@@ -1,8 +1,12 @@
 {
   "devDependencies": {
-    "tailwindcss": "^3.0.23"
+    "alpinejs": "^3.9.5",
+    "tailwindcss": "^3.0.23",
+    "webpack": "^5.72.0",
+    "webpack-cli": "^4.9.2"
   },
   "scripts": {
-    "watch": "npx tailwindcss -i ./src/input.css -o ./public/css/style.css --watch"
+    "watch": "npx tailwindcss -i ./src/input.css -o ./public/css/style.css --watch",
+    "build": "webpack"
   }
 }
