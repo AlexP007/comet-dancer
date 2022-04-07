@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="<: $settings.charset :>">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="referrer" content="always">
+    <title><: $title :></title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/bundle.js"></script>
+</head>
+<body>
+<div x-data="{ sidebarOpen: false }" class="flex h-screen bg-gray-200 font-roboto">
+    <: include admin::layout::sidebar :>
+
+    <div class="flex-1 flex flex-col overflow-hidden">
+        <: include admin::layout::header :>
+
+        <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
+            <div class="container mx-auto px-6 py-8">
+                <: $content | raw :>
+            </div>
+        </main>
+    </div>
+</div>
+</body>
+</html>
