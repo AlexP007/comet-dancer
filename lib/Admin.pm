@@ -13,6 +13,12 @@ use constant (
 
 set layout => 'admin';
 
+hook before_template_render => sub {
+    my $tokens = shift;
+
+    $tokens->{user} = logged_in_user;
+};
+
 get '/' => require_role admin => sub {
     redirect '/dashboard';
 };
