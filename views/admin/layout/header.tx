@@ -9,7 +9,7 @@
 <div class="flex items-center">
 
     <div x-data="{ dropdownOpen: false }"  class="relative">
-        <button @click="dropdownOpen = ! dropdownOpen" class="relative block w-12 h-8 text-gray-700 text-lg font-medium overflow-hidden underline focus:outline-none">
+        <button @click="dropdownOpen = ! dropdownOpen" class="relative block w-12 h-8 text-gray-700 text-lg overflow-hidden underline focus:outline-none">
             <: $user.username :>
         </button>
 
