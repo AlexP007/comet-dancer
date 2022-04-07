@@ -8,4 +8,10 @@ get '/dashboard' => sub {
     }
 };
 
+get '/dashboard/users' => sub {
+    template 'admin/dashboard/users', {
+        title => 'Users',
+    }
+};
+
 true;

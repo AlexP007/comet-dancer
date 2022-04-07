@@ -12,8 +12,9 @@ get '/login' => sub {
     }
 
     template 'admin/login' => {
-        title       => 'Login page',
-        login_error => $login_error,
+        title        => 'Login page',
+        exclude_bars => 1,
+        login_error  => $login_error,
     };
 };
 
