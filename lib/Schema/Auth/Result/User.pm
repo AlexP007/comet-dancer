@@ -2,6 +2,8 @@ package Schema::Auth::Result::User;
 
 use strict;
 use warnings;
+use Constant;
+
 use parent qw(DBIx::Class::Core);
 
 __PACKAGE__->table('users');
@@ -85,5 +87,21 @@ __PACKAGE__->has_many(
 );
 
 __PACKAGE__->many_to_many(roles => 'user_roles', 'role_id');
+
+### Methods ###
+
+sub is_admin {
+    return shift->has_role(Constant::role_admin);
+}
+
+sub has_role {
+    my ($self, $role_name) = @_;
+
+    my $role = $self->user_roles->search_related(role => {
+        role => $role_name,
+    })->first;
+
+    return $role ? $role->role eq $role_name : undef;
+}
 
 1;
