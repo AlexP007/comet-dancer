@@ -2,6 +2,8 @@ package Admin;
 
 use Dancer2;
 use Constant;
+use Dancer2::Core::Error;
+use Dancer2::Plugin::CSRF;
 use Dancer2::Plugin::Auth::Extensible;
 use Admin::Http::Controllers::Login;
 use Admin::Http::Controllers::Dashboard;
@@ -11,6 +13,8 @@ our $VERSION = '0.1';
 set layout => 'admin';
 
 hook before => sub {
+
+    ### Protect admin space ###
     my $path = request->path;
 
     if (
@@ -18,6 +22,20 @@ hook before => sub {
         and not user_has_role(Constant::role_admin)
     ) {
         redirect Constant::page_login . "?return_url=$path";
+    }
+
+    ### Check CSRF token ###
+    if (request->is_post) {
+        my $csrf_token = body_parameters->{csrf_token};
+        if (not ($csrf_token or validate_csrf_token($csrf_token))) {
+            my $error = Dancer2::Core::Error->new(
+                status  => 419,
+                title   => 'Authentication Timeout',
+                message => 'Page expired',
+            );
+
+            $error->throw(response);
+        }
     }
 };
 
