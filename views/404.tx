@@ -1,0 +1,12 @@
+<: cascade components::blocks::window_centered :>
+<: around body -> { :>
+<div>
+  <h1>Error 404</h1>
+  <div>
+    <h2>Page Not Found</h2><p>Sorry, this is void.</p>
+  </div>
+  <div>
+    Powered by D2R.
+  </div>
+</div>
+<: } :>
