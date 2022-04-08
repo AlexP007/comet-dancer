@@ -42,7 +42,8 @@ hook before => sub {
 hook before_template_render => sub {
     my $tokens = shift;
 
-    $tokens->{user} = logged_in_user;
+    $tokens->{user}       = logged_in_user;
+    $tokens->{csrf_token} = get_csrf_token;
 };
 
 get '/' => sub {
