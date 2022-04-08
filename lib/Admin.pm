@@ -28,10 +28,13 @@ hook before => sub {
     if (request->is_post) {
         my $csrf_token = body_parameters->{csrf_token};
         if (not ($csrf_token or validate_csrf_token($csrf_token))) {
+            set layout => 'main';
+
             my $error = Dancer2::Core::Error->new(
-                status  => 419,
-                title   => 'Authentication Timeout',
-                message => 'Page expired',
+                app      => app,
+                status   => 419,
+                title    => 'Error 419 - Authentication Timeout',
+                message  => 'Page expired',
             );
 
             $error->throw(response);
