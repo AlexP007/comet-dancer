@@ -2,6 +2,7 @@ package Admin;
 
 use Dancer2;
 use Constant;
+use Utils;
 use Dancer2::Core::Error;
 use Dancer2::Plugin::CSRF;
 use Dancer2::Plugin::Auth::Extensible;
@@ -12,18 +13,10 @@ our $VERSION = '0.1';
 
 set layout => 'admin';
 
+### Protect admin space ###
+hook before => \&Utils::access_admin_only;
+
 hook before => sub {
-
-    ### Protect admin space ###
-    my $path = request->path;
-
-    if (
-       $path ne Constant::page_login
-        and not user_has_role(Constant::role_admin)
-    ) {
-        redirect uri_for(Constant::page_login, { return_url =>$path });
-    }
-
     ### Check CSRF token ###
     if (request->is_post) {
         my $csrf_token = body_parameters->{csrf_token};
