@@ -19,6 +19,7 @@ requires "Sereal::Encoder" => "0";
 
 # Plack.
 
+requires "Plack::Handler::Starman"             => "0";
 requires "Plack::Middleware::AccessLog::Timed" => "0";
 requires "Log::Dispatch"                       => "0";
 
