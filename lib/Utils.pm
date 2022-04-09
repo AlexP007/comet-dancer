@@ -3,6 +3,7 @@ package Utils;
 use strict;
 use warnings;
 use Constant;
+use Dancer2::Core::Error;
 
 sub access_admin_only {
     my $app  = shift;
@@ -15,6 +16,31 @@ sub access_admin_only {
         $app->redirect(
             $app->request->uri_for(Constant::page_login, { return_url =>$path })
         );
+    }
+
+    return;
+}
+
+sub check_csrf_token {
+    my $app  = shift;
+
+    if ($app->request->is_post) {
+        my $csrf_token = $app->request->body_parameters->{csrf_token};
+        if (
+            not (
+                $csrf_token
+                or $app->with_plugin('Dancer2::Plugin::CSRF')->validate_csrf_token($csrf_token)
+            )
+        ) {
+            my $error = Dancer2::Core::Error->new(
+                app      => $app,
+                status   => 419,
+                title    => 'Error 419 - Authentication Timeout',
+                message  => 'Page expired',
+            );
+
+            $error->throw($app->response);
+        }
     }
 
     return;
