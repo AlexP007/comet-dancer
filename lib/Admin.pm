@@ -21,7 +21,7 @@ hook before => sub {
        $path ne Constant::page_login
         and not user_has_role(Constant::role_admin)
     ) {
-        redirect Constant::page_login . "?return_url=$path";
+        redirect uri_for(Constant::page_login, { return_url =>$path });
     }
 
     ### Check CSRF token ###
