@@ -46,4 +46,16 @@ sub check_csrf_token {
     return;
 }
 
+sub set_active_menu_item {
+    my ($items, $path) = @_;
+
+    for my $item (@{ $items }) {
+        if ($item->{path} eq $path) {
+            $item->{active} = 1;
+        }
+    }
+
+    return $items;
+}
+
 1;

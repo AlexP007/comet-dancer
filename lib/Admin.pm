@@ -3,6 +3,7 @@ package Admin;
 use Dancer2;
 use Constant;
 use Utils;
+use Icons;
 use Dancer2::Core::Error;
 use Dancer2::Plugin::CSRF;
 use Dancer2::Plugin::Auth::Extensible;
@@ -24,6 +25,14 @@ hook before_template_render => sub {
 
     $tokens->{user}       = logged_in_user;
     $tokens->{csrf_token} = get_csrf_token;
+
+    ### Sidebar menu ###
+    my $sidebar = [
+        {name => 'Dashboard', path => '/dashboard'      , icon => Icons::get('chart_pie')  },
+        {name => 'Users',     path => '/dashboard/users', icon => Icons::get('user_group') },
+    ];
+
+    $tokens->{sidebar} = Utils::set_active_menu_item($sidebar, request->path);
 };
 
 get '/' => sub {
