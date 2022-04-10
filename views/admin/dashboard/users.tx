@@ -5,7 +5,7 @@
     <div class="pr-1">
         <: include components::utils::button_link {
            text  => 'Roles',
-            link  => '/admin/dashboard/users/groups',
+            link  => $routes.roles,
             color => 'cyan',
         } :>
         <: include components::utils::button_link {

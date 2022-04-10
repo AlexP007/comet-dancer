@@ -1,7 +1,21 @@
 package Admin::Http::Controllers::Dashboard;
 
+use feature 'try';
 use Dancer2 appname  =>'Admin';
 use Dancer2::Plugin::DBIC;
+use Dancer2::Plugin::Deferred;
+use Dancer2::Plugin::FormValidator;
+
+hook before_template_render => sub {
+    my $tokens = shift;
+
+    $tokens->{routes} = {
+        'roles'         => '/admin/dashboard/users/roles',
+        'roles_create'  => '/admin/dashboard/users/roles/create',
+    };
+
+    return;
+};
 
 get '/dashboard' => sub {
     template 'admin/dashboard/index', {
@@ -21,13 +35,33 @@ get '/dashboard/users/create' => sub {
     }
 };
 
-get '/dashboard/users/groups' => sub {
+get '/dashboard/users/roles' => sub {
     my @roles = rset('Role')->all;
 
     template 'admin/dashboard/users_roles' , {
         title => 'Roles',
         roles => \@roles,
     }
+};
+
+post '/dashboard/users/roles/create' => sub {
+    if (my $v = validate_form 'admin_users_role') {
+        try {
+            rset('Role')->create({
+                role => $v->{role},
+            });
+
+            my $message = "Role: $v->{role} created.";
+
+            info $message;
+            deferred success => $message;
+        } catch ($e) {
+            error $e;
+            deferred error => $e;
+        }
+    }
+
+    redirect request->referer;
 };
 
 true;

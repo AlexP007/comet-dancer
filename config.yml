@@ -81,3 +81,4 @@ plugins:
         database: 'default'
     forms:
       app_register_form: 'App::Http::Validators::RegisterForm'
+      admin_users_role: 'Admin::Http::Validators::Role'
