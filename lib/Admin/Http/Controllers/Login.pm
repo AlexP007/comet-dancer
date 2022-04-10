@@ -21,6 +21,9 @@ hook after_authenticate_user => sub {
 
             redirect '/login';
         }
+        else {
+            deferred success => 'Login successful.'
+        }
     }
     else {
         deferred auth_result => {

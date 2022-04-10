@@ -6,6 +6,19 @@
     </button>
 </div>
 
+<div>
+    <: if $deferred.success != nil { :>
+        <div
+             class="py-2 px-4 w-48 text-emerald-700 text-center bg-green-200 rounded-sm shadow-sm opacity-80"
+             x-data="{ show : true }"
+             x-show="show"
+             x-init="setTimeout(() => show = false, 3000)"
+        >
+            <: $deferred.success :>
+        </div>
+    <: } :>
+</div>
+
 <div class="flex items-center">
 
     <div x-data="{ dropdownOpen: false }"  class="relative">
