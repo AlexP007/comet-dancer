@@ -14,4 +14,10 @@ get '/dashboard/users' => sub {
     }
 };
 
+get '/dashboard/users/create' => sub {
+    template 'admin/dashboard/users_create', {
+        title => 'Create user',
+    }
+};
+
 true;

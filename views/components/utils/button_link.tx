@@ -1,0 +1,8 @@
+<a href="<: $link :>">
+    <button
+            type="button"
+            class="mt-4 bg-<: $color :>-600 text-white py-2 px-6 rounded-md hover:bg-<: $color :>-500"
+    >
+        <: $text :>
+    </button>
+</a>
