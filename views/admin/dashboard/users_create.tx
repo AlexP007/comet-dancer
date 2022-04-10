@@ -1,0 +1,18 @@
+<: cascade admin::dashboard::container :>
+<: around body -> { :>
+<h3 class="text-gray-700 text-3xl font-semibold">Create User</h3>
+
+<div class="mt-4">
+    <form method="post" action="">
+        <: include components::forms::input_group {label => 'Username',         name  => 'username'                        } :>
+        <: include components::forms::input_group {label => 'Real Name',        name  => 'name'                            } :>
+        <: include components::forms::input_group {label => 'Email',            name  => 'email'                           } :>
+        <: include components::forms::input_group {label => 'Password',         name  => 'password'    , autocomplete => 0 } :>
+        <: include components::forms::input_group {label => 'Confirm Password', name  => 'password_cnf', autocomplete => 0 } :>
+        <div class="flex justify-end items-baseline">
+            <: include components::forms::button {text => 'Create'} :>
+        </div>
+    </form>
+</div>
+
+<: } :>
