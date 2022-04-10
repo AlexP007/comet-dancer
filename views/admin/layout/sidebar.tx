@@ -18,7 +18,7 @@
                 class="flex items-center px-6 py-2 mt-4 text-white <: $item.active ? 'bg-gray-900 bg-opacity-25' : 'hover:bg-gray-900 hover:bg-opacity-25' :>"
                 href="/admin<: $item.path :>"
             >
-                <: $item.icon | raw :>
+                <: include 'components/icons/' ~ $item.icon ~ '.tx' :>
                 <span class="mx-3"><: $item.name :></span>
             </a>
         <: } :>

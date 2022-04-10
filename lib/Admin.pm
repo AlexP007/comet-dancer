@@ -3,7 +3,6 @@ package Admin;
 use Dancer2;
 use Constant;
 use Utils;
-use Icons;
 use Dancer2::Core::Error;
 use Dancer2::Plugin::CSRF;
 use Dancer2::Plugin::Auth::Extensible;
@@ -28,8 +27,8 @@ hook before_template_render => sub {
 
     ### Sidebar menu ###
     my $sidebar = [
-        {name => 'Dashboard', path => '/dashboard'      , icon => Icons::get('chart_pie')  },
-        {name => 'Users',     path => '/dashboard/users', icon => Icons::get('user_group') },
+        {name => 'Dashboard', path => '/dashboard'      , icon => 'chart_pie'  },
+        {name => 'Users',     path => '/dashboard/users', icon => 'user_group' },
     ];
 
     $tokens->{sidebar} = Utils::set_active_menu_item($sidebar, request->path);
