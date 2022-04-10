@@ -20,8 +20,8 @@
         <div x-cloak x-show="dropdownOpen" @click="dropdownOpen = false" class="fixed inset-0 z-10 w-full h-full"></div>
 
         <div x-cloak x-show="dropdownOpen" class="absolute bg-stone-50 right-0 z-10 w-48 mt-2 overflow-hidden bg-white rounded-md shadow-xl">
-            <a href="/admin/dashboard/profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-sky-500">Profile</a>
-            <a href="/admin/logout" class="block px-4 py-2 text-sm text-gray-700 hover:bg-sky-500">Logout</a>
+            <a href="/admin/dashboard/profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-sky-300">Profile</a>
+            <a href="/admin/logout" class="block px-4 py-2 text-sm text-gray-700 hover:bg-sky-300">Logout</a>
         </div>
     </div>
 </div>
