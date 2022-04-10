@@ -4,11 +4,15 @@
     <h3 class="text-gray-700 text-3xl font-medium">Users</h3>
     <div class="pr-1">
         <: include components::utils::button_link {
-            text  => 'Create',
+           text  => 'Groups',
+            link  => '/admin/dashboard/users/groups',
+            color => 'cyan',
+        } :>
+        <: include components::utils::button_link {
+            text  => 'New',
             link  => '/admin/dashboard/users/create',
             color => 'sky',
         } :>
-<!--        <button class="px-3 py-1 bg-green-300 text-green-800 rounded-md text-sm hover:bg-green-200 focus:outline-none">Create</button>-->
     </div>
 </div>
 <div class="flex flex-col mt-8">

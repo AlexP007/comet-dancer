@@ -4,4 +4,8 @@ module.exports = {
     extend: {},
   },
   plugins: [],
+  safelist: [
+    'hover:bg-cyan-500',
+    'bg-cyan-600',
+  ],
 }
