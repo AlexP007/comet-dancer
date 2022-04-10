@@ -12,6 +12,7 @@ hook before_template_render => sub {
     $tokens->{routes} = {
         'roles'         => '/admin/dashboard/users/roles',
         'roles_create'  => '/admin/dashboard/users/roles/create',
+        'roles_delete'  => '/admin/dashboard/users/roles/delete',
     };
 
     return;
@@ -47,9 +48,7 @@ get '/dashboard/users/roles' => sub {
 post '/dashboard/users/roles/create' => sub {
     if (my $v = validate_form 'admin_users_role') {
         try {
-            rset('Role')->create({
-                role => $v->{role},
-            });
+            rset('Role')->create({ role => $v->{role} });
 
             my $message = "Role: $v->{role} created.";
 
@@ -58,8 +57,26 @@ post '/dashboard/users/roles/create' => sub {
         } catch ($e) {
             error $e;
             deferred error => $e;
-        }
+        };
     }
+
+    redirect request->referer;
+};
+
+post '/dashboard/users/roles/delete' => sub {
+    my $role = body_parameters->{role};
+
+    try {
+        rset('Role')->single({ role => $role })->delete;
+
+        my $message = "Role: $role deleted.";
+
+        info $message;
+        deferred success => $message;
+    } catch ($e) {
+        error $e;
+        deferred error => $e;
+    };
 
     redirect request->referer;
 };

@@ -27,7 +27,15 @@
 
                                 <div x-cloak x-show="dropdownOpen" class="absolute bg-stone-50 right-0 z-10 w-48 mt-2 overflow-hidden bg-white rounded-md shadow-xl">
                                     <a href="/admin/dashboard/profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-sky-300">Edit</a>
-                                    <a href="/admin/logout" class="block px-4 py-2 text-sm text-gray-700 hover:bg-red-300">Delete</a>
+                                    <div class="text-sm text-gray-700 hover:bg-red-300">
+                                        <form method="post" action="<: $routes.roles_delete :>">
+                                            <: include components::forms::csrf_token :>
+                                            <input type="hidden" name="role" value="<: $role.role :>">
+                                            <button type="submit" class="px-4 py-2 w-full h-full text-left">
+                                                Delete
+                                            </button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </td>
