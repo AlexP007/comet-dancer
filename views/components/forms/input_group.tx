@@ -1,7 +1,5 @@
 <div class="pt-1">
-    <label class="block font-normal text-gray-400" for="<: $name :>">
-        <: $label :>
-    </label>
+    <: include components::forms::label { id => $name, text => $label } :>
     <: include components::forms::input {
         name         => $name,
         type         => $type,

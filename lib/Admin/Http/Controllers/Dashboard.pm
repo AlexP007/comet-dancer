@@ -34,7 +34,12 @@ get '/dashboard/users' => sub {
 };
 
 get '/dashboard/users/create' => sub {
-    my @roles = rset('Role')->all;
+    my @roles_result = rset('Role')->all;
+    my @roles = ();
+
+    for my $role (@roles_result) {
+        push @roles => { text => $role->role, value => $role->role },
+    }
 
     template 'admin/dashboard/users_create', {
         title => 'Create user',
