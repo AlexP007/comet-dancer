@@ -5,6 +5,7 @@ use Dancer2 appname  =>'Admin';
 use Dancer2::Plugin::DBIC;
 use Dancer2::Plugin::Deferred;
 use Dancer2::Plugin::FormValidator;
+use Dancer2::Plugin::Auth::Extensible;
 
 hook before_template_render => sub {
     my $tokens = shift;
@@ -43,7 +44,39 @@ get '/dashboard/users/create' => sub {
 
 post '/dashboard/users/store' => sub {
     if (my $v = validate_form 'admin_users_store') {
+        try {
 
+            my @roles = ref $v->{roles} eq 'ARRAY' ? @{ $v->{roles} } : ($v->{roles});
+            my $roles = {};
+
+            for my $role (@roles) {
+                $roles->{$role} = 1;
+            }
+
+            my $user = create_user(
+                username => $v->{username},
+                name     => $v->{name},
+                email    => $v->{email},
+                roles    => $roles,
+            );
+
+            if ($user) {
+                user_password(
+                    username     => $user->username,
+                    new_password => $v->{password},
+                );
+
+                my $message = "User: $v->{username} created.";
+
+                info $message;
+                deferred success => $message;
+
+                redirect '/dashboard/users'
+            }
+        } catch ($e) {
+            error $e;
+            deferred error => $e;
+        };
     }
 
     redirect request->referer;
