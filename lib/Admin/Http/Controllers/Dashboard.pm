@@ -32,8 +32,11 @@ get '/dashboard/users' => sub {
 };
 
 get '/dashboard/users/create' => sub {
+    my @roles = rset('Role')->all;
+
     template 'admin/dashboard/users_create', {
         title => 'Create user',
+        roles => \@roles,
     }
 };
 

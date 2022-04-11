@@ -9,6 +9,16 @@
         <: include components::forms::input_group {label => 'Email',            name  => 'email'                           } :>
         <: include components::forms::input_group {label => 'Password',         name  => 'password'    , autocomplete => 0 } :>
         <: include components::forms::input_group {label => 'Confirm Password', name  => 'password_cnf', autocomplete => 0 } :>
+        <div class="pt-1 text-left ">
+            <label for="roles" class="block font-normal text-gray-400">
+                Roles
+            </label>
+            <select id="roles" name="roles" class="w-full text-sm mt-1 rounded-md" multiple>
+                <: for $roles -> $role { :>
+                    <option class="px-4 py-3 mt-1" value="<: $role.role :>"><: $role.role :></option>
+                <: } :>
+            </select>
+        </div>
         <div class="flex justify-end items-baseline">
             <: include components::forms::button {text => 'Create'} :>
         </div>
