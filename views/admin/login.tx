@@ -3,8 +3,8 @@
 <div class="w-3/4 max-w-xs bg-white shadow-lg py-4 px-6">
     <form method="post">
         <: include components::forms::csrf_token :>
-        <: include components::forms::input_group {label => 'Username', name  => 'username'} :>
-        <: include components::forms::input_group {label => 'Password', name  => 'password'} :>
+        <: include components::forms::input_group {label => 'Username', name  => 'username' } :>
+        <: include components::forms::input_group {label => 'Password', name  => 'password', type => 'password'} :>
         <: if $login_error { :>
             <small class="pl-1 text-red-400"><: $login_error :></small>
         <: } :>
