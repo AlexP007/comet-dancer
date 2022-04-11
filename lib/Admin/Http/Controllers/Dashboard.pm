@@ -14,6 +14,7 @@ hook before_template_render => sub {
         'roles_create' => '/admin/dashboard/users/roles/create',
         'roles_delete' => '/admin/dashboard/users/roles/delete',
         'roles_edit'   => '/admin/dashboard/users/roles/edit',
+        'users_create' => '/admin/dashboard/users/store',
     };
 
     return;
@@ -38,6 +39,14 @@ get '/dashboard/users/create' => sub {
         title => 'Create user',
         roles => \@roles,
     }
+};
+
+post '/dashboard/users/store' => sub {
+    if (my $v = validate_form 'admin_users_store') {
+
+    }
+
+    redirect request->referer;
 };
 
 get '/dashboard/users/roles' => sub {
