@@ -15,10 +15,10 @@
 
                 <tbody class="bg-white">
                 <: for $roles -> $role { :>
-                    <tr>
-                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500"><: $role.role :></td>
-                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
-                            <div x-data="{ dropdownOpen: false }" class="relative flex justify-end">
+                    <tr x-data="{ editing: false, dropdownOpen: false }">
+                        <td x-show="!editing" class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500"><: $role.role :></td>
+                        <td x-show="!editing" class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
+                            <div class="relative flex justify-end">
                                 <button @click="dropdownOpen = ! dropdownOpen" class="relative block w-12 h-8 text-lg overflow-hidden underline focus:outline-none">
                                     <: include components::icons::menu :>
                                 </button>
@@ -26,7 +26,7 @@
                                 <div x-cloak x-show="dropdownOpen" @click="dropdownOpen = false" class="fixed inset-0 z-10 w-full h-full"></div>
 
                                 <div x-cloak x-show="dropdownOpen" class="absolute bg-stone-50 right-0 z-10 w-48 mt-2 overflow-hidden bg-white rounded-md shadow-xl">
-                                    <a href="/admin/dashboard/profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-sky-300">Edit</a>
+                                    <a @click.prevent @click="editing = true; dropdownOpen = false" class="block px-4 py-2 text-sm text-gray-700 hover:bg-sky-300">Edit</a>
                                     <div class="text-sm text-gray-700 hover:bg-red-300">
                                         <form method="post" action="<: $routes.roles_delete :>">
                                             <: include components::forms::csrf_token :>
@@ -38,6 +38,18 @@
                                     </div>
                                 </div>
                             </div>
+                        </td>
+                        <td x-show="editing" class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 leading-5">
+                            <form id="<: $role.role :>" method="post" action="<: $routes.roles_edit :>">
+                                <: include components::forms::csrf_token :>
+                                <: include components::forms::input { name => 'role', value => $role.role } :>
+                            </form>
+                        </td>
+                        <td x-show="editing" class="px-4 py-4 whitespace-no-wrap border-b border-gray-200 leading-5 text-right">
+                            <a @click.prevent @click="editing = false" class="px-4 py-2 inline-block text-sm cursor-pointer text-gray-700 bg-red-300 hover:bg-red-200">Cancel</a>
+                            <button form="<: $role.role :>" type="submit" class="px-6 py-2 text-sm text-gray-700 bg-sky-300 hover:bg-sky-200">
+                                Save
+                            </button>
                         </td>
                     </tr>
                 <: } :>

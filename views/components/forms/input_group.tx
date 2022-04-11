@@ -2,16 +2,11 @@
     <label class="block font-normal text-gray-400" for="<: $name :>">
         <: $label :>
     </label>
-    <input
-            type="<: $type // 'text' :>"
-            id="<: $name :>"
-            name="<: $name :>"
-            value="<: $old[$name] :>"
-            class="border border-2 w-full h-5 px-4 py-5 mt-1 rounded-md
-                   hover:outline-none focus:outline-none focus:ring-1 focus:ring-indigo-100"
-            <: if $autocomplete == 0 { :>
-                autocomplete="off"
-            <: } :>
-    >
-            <: include components::forms::error { name => $name } :>
+    <: include components::forms::input {
+        name         => $name,
+        type         => $type,
+        value        => $value,
+        autocomplete => $autocomplete,
+    } :>
+    <: include components::forms::error { name => $name } :>
 </div>
