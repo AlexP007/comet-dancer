@@ -10,9 +10,10 @@ hook before_template_render => sub {
     my $tokens = shift;
 
     $tokens->{routes} = {
-        'roles'         => '/admin/dashboard/users/roles',
-        'roles_create'  => '/admin/dashboard/users/roles/create',
-        'roles_delete'  => '/admin/dashboard/users/roles/delete',
+        'roles'        => '/admin/dashboard/users/roles',
+        'roles_create' => '/admin/dashboard/users/roles/create',
+        'roles_delete' => '/admin/dashboard/users/roles/delete',
+        'roles_edit'   => '/admin/dashboard/users/roles/edit',
     };
 
     return;
@@ -59,6 +60,25 @@ post '/dashboard/users/roles/create' => sub {
             deferred error => $e;
         };
     }
+
+    redirect request->referer;
+};
+
+post '/dashboard/users/roles/edit' => sub {
+    my $role     = body_parameters->{role};
+    my $new_role = body_parameters->{new_role};
+
+    try {
+        rset('Role')->single({ role => $role })->update({ role => $new_role });
+
+        my $message = "Role: $role updated to $new_role.";
+
+        info $message;
+        deferred success => $message;
+    } catch ($e) {
+        error $e;
+        deferred error => $e;
+    };
 
     redirect request->referer;
 };
