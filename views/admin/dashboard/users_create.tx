@@ -5,17 +5,26 @@
 <div class="mt-4">
     <form method="post" action="<: $routes.users_create :>">
         <: include components::forms::csrf_token :>
-        <: include components::forms::input_group  { label => 'Username',         name  => 'username'                        } :>
-        <: include components::forms::input_group  { label => 'Real Name',        name  => 'name'                            } :>
-        <: include components::forms::input_group  { label => 'Email',            name  => 'email'                           } :>
-        <: include components::forms::input_group  { label => 'Password',         name  => 'password'    , autocomplete => 0 } :>
-        <: include components::forms::input_group  { label => 'Confirm Password', name  => 'password_cnf', autocomplete => 0 } :>
-        <: include components::forms::select_group {
-           label    => 'Roles',
-           name     => 'roles',
-           options  => $roles,
-           multiple => 1,
-        } :>
+
+        <div class="grid grid-cols-2 gap-x-4">
+            <div>
+                <: include components::forms::input_group  { label => 'Username',  name  => 'username' } :>
+                <: include components::forms::input_group  { label => 'Real Name', name  => 'name'     } :>
+                <: include components::forms::input_group  { label => 'Email', name  => 'email' } :>
+            </div>
+            <: include components::forms::select_group {
+                label    => 'Roles',
+                name     => 'roles',
+                options  => $roles,
+                multiple => 1,
+            } :>
+        </div>
+
+        <div class="grid grid-cols-2 gap-x-4">
+            <: include components::forms::input_group  { label => 'Password',         name  => 'password'    , autocomplete => 0 } :>
+            <: include components::forms::input_group  { label => 'Confirm Password', name  => 'password_cnf', autocomplete => 0 } :>
+        </div>
+
         <div class="flex justify-end items-baseline">
             <: include components::forms::button {text => 'Create'} :>
         </div>

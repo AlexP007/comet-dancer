@@ -6,6 +6,8 @@ use Dancer2::Plugin::DBIC;
 use Dancer2::Plugin::Deferred;
 use Dancer2::Plugin::FormValidator;
 use Dancer2::Plugin::Auth::Extensible;
+use Admin::Http::Forms::UserForm;
+use Admin::Http::Forms::RoleForm;
 
 hook before_template_render => sub {
     my $tokens = shift;
@@ -48,9 +50,10 @@ get '/dashboard/users/create' => sub {
 };
 
 post '/dashboard/users/store' => sub {
-    if (my $v = validate_form 'admin_users_store') {
-        try {
+    if (validate profile => Admin::Http::Forms::UserForm->new) {
+        my $v = validated;
 
+        try {
             my @roles = ref $v->{roles} eq 'ARRAY' ? @{ $v->{roles} } : ($v->{roles});
             my $roles = {};
 
@@ -97,7 +100,9 @@ get '/dashboard/users/roles' => sub {
 };
 
 post '/dashboard/users/roles/create' => sub {
-    if (my $v = validate_form 'admin_users_role') {
+    if (validate profile => Admin::Http::Forms::RoleForm->new) {
+        my $v = validated;
+
         try {
             rset('Role')->create({ role => $v->{role} });
 

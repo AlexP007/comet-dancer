@@ -1,4 +1,4 @@
-package Admin::Http::Validators::Role;
+package Admin::Http::Forms::RoleForm;
 
 use strict;
 use warnings;
@@ -8,7 +8,7 @@ with 'Dancer2::Plugin::FormValidator::Role::Profile';
 
 sub profile {
     return {
-        role => [ qw(required alpha_num_ascii length_max:32 unique:Role,role) ],
+        role => [ qw(required alpha_num length_max:32 unique:Role,role) ],
     };
 };
 
