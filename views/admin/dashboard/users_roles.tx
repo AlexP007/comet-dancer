@@ -54,10 +54,9 @@
                             </div>
                         </td>
                         <td x-show="editing" class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 leading-5">
-                            <form id="<: $role.role :>" method="post" action="<: $routes.roles_edit :>">
+                            <form id="<: $role.role :>" method="post" action="<: replace($routes.roles_update, ':role', $role.role) :>">
                                 <: include components::forms::csrf_token :>
-                                <: include components::forms::input { name => 'new_role', value => $role.role } :>
-                                <input type="hidden" name="role" value="<: $role.role :>">
+                                <: include components::forms::input { name => 'role', value => $role.role } :>
                             </form>
                         </td>
                         <td x-show="editing" class="px-4 py-4 whitespace-no-wrap border-b border-gray-200 leading-5 text-right">

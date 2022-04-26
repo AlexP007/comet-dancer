@@ -23,6 +23,8 @@ engines:
   template:
     Xslate:
       location: 'views'
+      module:
+        - 'Text::Xslate::Bridge::Star'
 
 # === Plugins ===
 
@@ -67,7 +69,7 @@ plugins:
 
     # Not using DPAE routes and pages.
     no_default_pages: 1
-#    no_login_handler: 1
+    # no_login_handler: 1
     record_lastlogin: 1
 
   # Dancer2::Plugin::FormValidator.
@@ -80,3 +82,8 @@ plugins:
       dbic:
         provider: 'Dancer2::Plugin::FormValidator::Extension::DBIC'
         database: 'default'
+
+  # Dancer2::Plugin::Paginator
+  Paginator:
+    frame_size: 3
+    page_size: 10

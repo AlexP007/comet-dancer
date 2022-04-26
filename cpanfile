@@ -9,6 +9,7 @@ requires "Dancer2::Plugin::Deferred"                           => "0";
 requires "Dancer2::Plugin::FormValidator"                      => "0";
 requires "Dancer2::Plugin::FormValidator::Extension::Password" => "0";
 requires "Dancer2::Plugin::FormValidator::Extension::DBIC"     => "0";
+requires "Dancer2::Plugin::Paginator"                          => "0";
 
 # Basic.
 
@@ -25,7 +26,8 @@ requires "Log::Dispatch"                       => "0";
 
 # Support.
 
-requires "DBIx::Class::Migration"           => "0";
+requires "DBIx::Class::Migration"     => "0";
+requires "Text::Xslate::Bridge::Star" => "0";
 
 recommends "YAML"                    => "0";
 recommends "URL::Encode::XS"         => "0";

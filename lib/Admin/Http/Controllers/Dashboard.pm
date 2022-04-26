@@ -16,7 +16,7 @@ hook before_template_render => sub {
         'roles'        => '/admin/dashboard/users/roles',
         'roles_create' => '/admin/dashboard/users/roles/create',
         'roles_delete' => '/admin/dashboard/users/roles/delete',
-        'roles_edit'   => '/admin/dashboard/users/roles/edit',
+        'roles_update' => '/admin/dashboard/users/roles/:role/update',
         'users_create' => '/admin/dashboard/users/store',
     };
 
@@ -99,7 +99,7 @@ get '/dashboard/users/roles' => sub {
     }
 };
 
-post '/dashboard/users/roles/create' => sub {
+post '/dashboard/users/roles/store' => sub {
     if (validate profile => Admin::Http::Forms::RoleForm->new) {
         my $v = validated;
 
@@ -119,9 +119,9 @@ post '/dashboard/users/roles/create' => sub {
     redirect request->referer;
 };
 
-post '/dashboard/users/roles/edit' => sub {
-    my $role     = body_parameters->{role};
-    my $new_role = body_parameters->{new_role};
+post '/dashboard/users/roles/:role/update' => sub {
+    my $role     = route_parameters->get('role');
+    my $new_role = body_parameters->{role};
 
     try {
         rset('Role')->single({ role => $role })->update({ role => $new_role });
