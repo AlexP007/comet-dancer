@@ -30,8 +30,14 @@ get '/dashboard' => sub {
 };
 
 get '/dashboard/users' => sub {
+    my @users = rset('User')->search({}, {
+        prefetch => { user_roles => 'role' },
+        select   => [ qw(username name lastlogin email deleted) ]
+    })->all;
+
     template 'admin/dashboard/users', {
         title => 'Users',
+        users => \@users
     }
 };
 
