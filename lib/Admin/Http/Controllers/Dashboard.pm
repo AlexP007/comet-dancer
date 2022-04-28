@@ -30,11 +30,9 @@ get '/dashboard' => sub {
 };
 
 get '/dashboard/users' => sub {
-    my @users = rset('User')->users_with_roles;
-
     template 'admin/dashboard/users', {
         title => 'Users',
-        users => \@users
+        users => [ rset('User')->users_with_roles ],
     }
 };
 
