@@ -36,6 +36,6 @@ __PACKAGE__->has_many(
     }
 );
 
-__PACKAGE__->many_to_many(users => 'user_roles', 'user_id');
+__PACKAGE__->many_to_many(users => 'user_roles', 'user');
 
 1;

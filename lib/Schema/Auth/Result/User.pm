@@ -86,7 +86,7 @@ __PACKAGE__->has_many(
     }
 );
 
-__PACKAGE__->many_to_many(roles => 'user_roles', 'role_id');
+__PACKAGE__->many_to_many(roles => 'user_roles', 'role');
 
 ### Methods ###
 
@@ -97,9 +97,9 @@ sub is_admin {
 sub has_role {
     my ($self, $role_name) = @_;
 
-    my $role = $self->user_roles->search_related(role => {
+    my $role = $self->roles->search({
         role => $role_name,
-    })->first;
+    })->single;
 
     return $role ? $role->role eq $role_name : undef;
 }
