@@ -9,16 +9,19 @@ use Dancer2::Plugin::Auth::Extensible;
 use Admin::Http::Forms::UserForm;
 use Admin::Http::Forms::RoleForm;
 
+my %routes = (
+    'roles'       => '/admin/dashboard/users/roles',
+    'role_create' => '/admin/dashboard/users/roles/store',
+    'role_delete' => '/admin/dashboard/users/roles/%s/delete',
+    'role_update' => '/admin/dashboard/users/roles/%s/update',
+    'user_create' => '/admin/dashboard/users/store',
+);
+
 hook before_template_render => sub {
     my $tokens = shift;
 
-    $tokens->{routes} = {
-        'roles'        => '/admin/dashboard/users/roles',
-        'roles_create' => '/admin/dashboard/users/roles/create',
-        'roles_delete' => '/admin/dashboard/users/roles/delete',
-        'roles_update' => '/admin/dashboard/users/roles/:role/update',
-        'users_create' => '/admin/dashboard/users/store',
-    };
+    my %merged_routes = (%routes, %{ $tokens->{routes} // {} });
+    $tokens->{routes} = \%merged_routes;
 
     return;
 };
@@ -44,7 +47,7 @@ get '/dashboard/users/create' => sub {
         push @roles => { text => $role->role, value => $role->role },
     }
 
-    template 'admin/dashboard/users_create', {
+    template 'admin/dashboard/user_create', {
         title => 'Create user',
         roles => \@roles,
     }
@@ -93,10 +96,23 @@ post '/dashboard/users/store' => sub {
 
 get '/dashboard/users/roles' => sub {
     my @roles = rset('Role')->all;
+    my @rows  = map {
+        {
+            id       => $_->role,
+            data     => [
+                { value => $_->role, name => 'role' },
+            ],
+        }
+    } @roles;
+
+    my $table = {
+        headings => [ qw(Role) ],
+        rows     => \@rows,
+    };
 
     template 'admin/dashboard/users_roles' , {
         title => 'Roles',
-        roles => \@roles,
+        table => $table,
     }
 };
 
@@ -121,7 +137,7 @@ post '/dashboard/users/roles/store' => sub {
 };
 
 post '/dashboard/users/roles/:role/update' => sub {
-    my $role     = route_parameters->get('role');
+    my $role     = route_parameters->{role};
     my $new_role = body_parameters->{role};
 
     try {
@@ -139,8 +155,8 @@ post '/dashboard/users/roles/:role/update' => sub {
     redirect request->referer;
 };
 
-post '/dashboard/users/roles/delete' => sub {
-    my $role = body_parameters->{role};
+post '/dashboard/users/roles/:role/delete' => sub {
+    my $role = route_parameters->{role};
 
     try {
         rset('Role')->single({ role => $role })->delete;

@@ -1,0 +1,55 @@
+<table class="min-w-full">
+    <thead>
+    <tr>
+        <: for $headings -> $heading { :>
+            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">$heading</th>
+        <: } :>
+        <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+    </tr>
+    </thead>
+
+    <tbody class="bg-white">
+    <: for $rows-> $row { :>
+        <tr x-data="{ editing: false, dropdownOpen: false }">
+            <: for $row.data -> $data { :>
+                <td x-show="!editing" class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500"><: $data.value :></td>
+            <: } :>
+            <td x-show="!editing" class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
+                <div class="relative flex justify-end">
+                    <button @click="dropdownOpen = ! dropdownOpen" class="relative block w-12 h-8 text-lg overflow-hidden underline focus:outline-none">
+                        <: include components::icons::menu :>
+                    </button>
+
+                    <div x-cloak x-show="dropdownOpen" @click="dropdownOpen = false" class="fixed inset-0 z-10 w-full h-full"></div>
+
+                    <div x-cloak x-show="dropdownOpen" class="absolute bg-stone-50 right-0 z-10 w-48 mt-2 overflow-hidden bg-white rounded-md shadow-xl">
+                        <a @click.prevent @click="editing = true; dropdownOpen = false" class="block px-4 py-2 text-sm text-gray-700 hover:bg-sky-300">Edit</a>
+                        <div class="text-sm text-gray-700 hover:bg-red-300">
+                            <form method="post" action="<: sprintf($routes.delete, $row.id) :>">
+                                <: include components::forms::csrf_token :>
+                                    <button type="submit" class="px-4 py-2 w-full h-full text-left">
+                                        Delete
+                                    </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <: for $row.data -> $data { :>
+            <td x-show="editing" class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 leading-5">
+                <: include components::forms::input { name => $data.name, value => $data.value, form => $row.id } :>
+            </td>
+            <: } :>
+            <td x-show="editing" class="px-4 py-4 whitespace-no-wrap border-b border-gray-200 leading-5 text-right">
+                <a @click.prevent @click="editing = false" class="px-4 py-2 inline-block text-sm cursor-pointer text-gray-700 bg-red-300 hover:bg-red-200">Cancel</a>
+                <form id="<: $row.id :>" method="post" action="<: sprintf($routes.update, $row.id) :>" class="inline-block">
+                    <: include components::forms::csrf_token :>
+                    <button type="submit" class="px-6 py-2 text-sm text-gray-700 bg-sky-300 hover:bg-sky-200">
+                        Save
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <: } :>
+    </tbody>
+</table>

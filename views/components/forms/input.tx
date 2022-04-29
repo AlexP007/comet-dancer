@@ -8,4 +8,8 @@
     <: if $autocomplete == 0 { :>
         autocomplete="off"
     <: } :>
+
+    <: if $form != nil { :>
+        form="<: $form :>"
+   <: } :>
 >
