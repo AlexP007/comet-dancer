@@ -1,16 +1,21 @@
 <: cascade components::blocks::window_centered :>
 <: around body -> { :>
 <div class="w-3/4 max-w-xs bg-white shadow-lg py-4 px-6">
-    <form method="post">
-        <: include components::forms::csrf_token :>
-        <: include components::forms::input_group {label => 'Username', name  => 'username' } :>
-        <: include components::forms::input_group {label => 'Password', name  => 'password', type => 'password'} :>
-        <: if $login_error { :>
-            <small class="pl-1 text-red-400"><: $login_error :></small>
-        <: } :>
-        <div class="flex justify-end items-baseline">
-            <: include components::forms::button {text => 'Log In'} :>
-        </div>
-    </form>
+    <div>
+        <img class="object-fill" src="/images/cd_logo_light.png" alt="Comet Dancer logo">
+    </div>
+    <div class="mt-2">
+        <form method="post">
+            <: include components::forms::csrf_token :>
+            <: include components::forms::input_group {label => 'Username', name  => 'username' } :>
+            <: include components::forms::input_group {label => 'Password', name  => 'password', type => 'password'} :>
+            <: if $login_error { :>
+                <small class="pl-1 text-red-400"><: $login_error :></small>
+            <: } :>
+            <div class="flex justify-end items-baseline">
+                <: include components::forms::button {text => 'Log In'} :>
+            </div>
+        </form>
+    </div>
 </div>
 <: } :>
