@@ -2,6 +2,7 @@ package Admin::Http::Controllers::Dashboard::UserRoles;
 
 use Dancer2 appname  =>'Admin';
 
+use Constant;
 use Dancer2::Plugin::DBIC;
 use Dancer2::Plugin::FormValidator;
 use Dancer2::Plugin::Deferred;
@@ -26,9 +27,15 @@ sub index {
         rows     => \@rows,
     };
 
-    template 'admin/dashboard/users_roles' , {
+    template 'admin/dashboard/user_roles/index' , {
         title => 'Roles',
         table => $table,
+    }
+}
+
+sub create {
+    template 'admin/dashboard/user_roles/create', {
+        title => 'Create Role',
     }
 }
 
@@ -39,10 +46,11 @@ sub store {
         try {
             rset('Role')->create({ role => $v->{role} });
 
-            my $message = "Role: $v->{role} created.";
+            my $message = "Role: $v->{role} created";
 
             info $message;
             deferred success => $message;
+            redirect '/dashboard/users/roles';
         } catch ($e) {
             error $e;
             deferred error => $e;

@@ -20,13 +20,14 @@ prefix '/dashboard' => sub {
     };
 
     prefix '/users' => sub {
-        get ''         => \&Admin::Http::Controllers::Dashboard::User::index;
+        get  ''        => \&Admin::Http::Controllers::Dashboard::User::index;
         get  '/create' => \&Admin::Http::Controllers::Dashboard::User::create;
         post '/store'  => \&Admin::Http::Controllers::Dashboard::User::store;
     };
 
     prefix '/users/roles' => sub {
-        get ''               => \&Admin::Http::Controllers::Dashboard::UserRoles::index;
+        get  ''              => \&Admin::Http::Controllers::Dashboard::UserRoles::index;
+        get  '/create'       => \&Admin::Http::Controllers::Dashboard::UserRoles::create;
         post '/store'        => \&Admin::Http::Controllers::Dashboard::UserRoles::store;
         post '/:role/update' => \&Admin::Http::Controllers::Dashboard::UserRoles::update;
         post '/:role/delete' => \&Admin::Http::Controllers::Dashboard::UserRoles::delete;

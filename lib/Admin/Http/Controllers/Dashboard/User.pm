@@ -76,7 +76,7 @@ sub store {
                     new_password => $v->{password},
                 );
 
-                my $message = "User: $v->{username} created.";
+                my $message = "User: $v->{username} created";
 
                 info $message;
                 deferred success => $message;

@@ -28,17 +28,20 @@ hook before_template_render => sub {
 
     ### Sidebar menu ###
     my $sidebar = [
-        {name => 'Dashboard', path => '/dashboard'      , icon => 'chart_pie'  },
-        {name => 'Users',     path => '/dashboard/users', icon => 'user_group' },
+        { name => 'Dashboard', path => '/dashboard' ,           icon => 'chart_pie'  },
+        { name => 'Users',     path => '/dashboard/users',      icon => 'user_group' },
+        { name => 'Roles',     path => '/dashboard/users/roles', icon => 'user_roles' },
     ];
 
     $tokens->{sidebar} = Utils::set_active_menu_item($sidebar, request->path);
 
     ### Routes ###
     my $prefix = '/admin/dashboard';
+
     my %routes = (
         'roles'       => "$prefix/users/roles",
-        'role_create' => "$prefix/users/roles/store",
+        'role_create' => "$prefix/users/roles/create",
+        'role_store'  => "$prefix/users/roles/store",
         'role_delete' => "$prefix/users/roles/%s/delete",
         'role_update' => "$prefix/users/roles/%s/update",
         'user_create' => "$prefix/users/store",

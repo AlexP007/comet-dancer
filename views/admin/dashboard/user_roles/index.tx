@@ -1,20 +1,16 @@
 <: cascade admin::dashboard::container :>
 <: around body -> { :>
-<h3 class="text-gray-700 text-3xl font-semibold mt-8">Create role</h3>
 
-<div class="flex flex-col">
-    <div class="mt-4">
-        <form method="post" action="<: $routes.role_create :>">
-            <: include components::forms::csrf_token :>
-                <: include components::forms::input_group {label => 'Role', name => 'role' } :>
-                    <div class="flex justify-end items-baseline">
-                        <: include components::forms::button {text => 'Create'} :>
-                    </div>
-        </form>
+<div class="flex justify-between items-center">
+    <h3 class="text-gray-700 text-3xl font-semibold"><: $title :></h3>
+    <div class="pr-1">
+        <: include components::utils::button_link {
+           text  => 'New',
+            link  => $routes.role_create,
+            color => 'sky',
+            } :>
     </div>
 </div>
-
-<h3 class="text-gray-700 text-3xl font-semibold">Roles</h3>
 
 <div class="flex flex-col mt-8">
     <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
