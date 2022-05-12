@@ -1,26 +1,15 @@
-package Admin::Http::Routes::Dashboard;
+package Admin::Http::Routes;
 
-use feature 'try';
 use Dancer2 appname  =>'Admin';
+use Admin::Http::Controllers::Login;
 use Admin::Http::Controllers::Dashboard::User;
 use Admin::Http::Controllers::Dashboard::UserRoles;
 
-hook before_template_render => sub {
-    my $tokens = shift;
-
-    my %routes = (
-        'roles'       => '/admin/dashboard/users/roles',
-        'role_create' => '/admin/dashboard/users/roles/store',
-        'role_delete' => '/admin/dashboard/users/roles/%s/delete',
-        'role_update' => '/admin/dashboard/users/roles/%s/update',
-        'user_create' => '/admin/dashboard/users/store',
-    );
-
-    my %merged_routes = (%routes, %{ $tokens->{routes} // {} });
-    $tokens->{routes} = \%merged_routes;
-
-    return;
+get '/' => sub {
+    redirect '/dashboard';
 };
+
+get '/login' => \&Admin::Http::Controllers::Login::index;
 
 prefix '/dashboard' => sub {
     get '' => sub {
