@@ -7,7 +7,7 @@ use Dancer2::Core::Error;
 use Dancer2::Plugin::CSRF;
 use Dancer2::Plugin::Auth::Extensible;
 use Admin::Http::Controllers::Login;
-use Admin::Http::Controllers::Dashboard;
+use Admin::Http::Routes::Dashboard;
 
 our $VERSION = '0.1';
 
