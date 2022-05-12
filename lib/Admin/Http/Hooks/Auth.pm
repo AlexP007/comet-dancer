@@ -1,9 +1,9 @@
 package Admin::Http::Hooks::Auth;
 
+use Constant;
 use Dancer2 appname  =>'Admin';
 use Dancer2::Plugin::Deferred;
 use Dancer2::Plugin::Auth::Extensible;
-use Constant;
 
 sub admin_only {
     my $path = request->path;

@@ -1,12 +1,12 @@
 package Admin;
 
+use Constant;
+use Utils;
 use Dancer2;
 use Dancer2::Plugin::CSRF;
 use Dancer2::Plugin::Auth::Extensible;
 use Admin::Http::Hooks::Auth;
 use Admin::Http::Routes;
-use Constant;
-use Utils;
 
 our $VERSION = '0.1';
 
@@ -24,7 +24,10 @@ hook before => \&Utils::check_csrf_token;
 hook before_template_render => sub {
     my $tokens = shift;
 
-    $tokens->{user}       = logged_in_user;
+    ### Logged in user ###
+    $tokens->{user} = logged_in_user;
+
+    ### CSRF token ###
     $tokens->{csrf_token} = get_csrf_token;
 
     ### Sidebar menu ###
@@ -34,17 +37,15 @@ hook before_template_render => sub {
     ];
 
     $tokens->{sidebar} = Utils::set_active_menu_item($sidebar, request->path);
-};
 
-hook before_template_render => sub {
-    my $tokens = shift;
-
+    ### Routes ###
+    my $prefix = '/admin/dashboard';
     my %routes = (
-        'roles'       => '/admin/dashboard/users/roles',
-        'role_create' => '/admin/dashboard/users/roles/store',
-        'role_delete' => '/admin/dashboard/users/roles/%s/delete',
-        'role_update' => '/admin/dashboard/users/roles/%s/update',
-        'user_create' => '/admin/dashboard/users/store',
+        'roles'       => "$prefix/users/roles",
+        'role_create' => "$prefix/users/roles/store",
+        'role_delete' => "$prefix/users/roles/%s/delete",
+        'role_update' => "$prefix/users/roles/%s/update",
+        'user_create' => "$prefix/users/store",
     );
 
     my %merged_routes = (%routes, %{ $tokens->{routes} // {} });
