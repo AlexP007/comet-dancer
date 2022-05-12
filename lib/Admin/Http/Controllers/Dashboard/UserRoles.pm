@@ -1,11 +1,13 @@
 package Admin::Http::Controllers::Dashboard::UserRoles;
 
-use feature 'try';
 use Dancer2 appname  =>'Admin';
+
 use Dancer2::Plugin::DBIC;
 use Dancer2::Plugin::FormValidator;
 use Dancer2::Plugin::Deferred;
 use Admin::Http::Forms::RoleForm;
+
+use feature 'try';
 no warnings 'experimental::try';
 
 sub index {

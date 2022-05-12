@@ -1,12 +1,14 @@
 package Admin::Http::Controllers::Dashboard::User;
 
-use feature 'try';
 use Dancer2 appname  =>'Admin';
+
 use Dancer2::Plugin::DBIC;
 use Dancer2::Plugin::FormValidator;
 use Dancer2::Plugin::Auth::Extensible;
 use Dancer2::Plugin::Deferred;
 use Admin::Http::Forms::UserForm;
+
+use feature 'try';
 no warnings 'experimental::try';
 
 sub index {
