@@ -34,7 +34,7 @@
 
                     <div x-cloak
                          x-show="show"
-                         class="absolute bg-stone-50 right-0 z-10 w-48 mt-2 overflow-hidden bg-white rounded-md shadow-xl"
+                         class="absolute text-left bg-stone-50 right-0 z-10 w-48 mt-2 overflow-hidden bg-white rounded-md shadow-xl"
                     >
                         <a href="<: sprintf($routes.edit, $row.id) :>"
                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-sky-300"
