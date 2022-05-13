@@ -16,35 +16,12 @@
     <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
         <div class="align-middle min-w-full shadow sm:rounded-lg border-b border-gray-200">
             <: include components::tables::table {
-               headings => $table.headings,
-               rows     => $table.rows,
-               routes   => { update => $routes.role_update, delete => $routes.role_delete },
+               entity_name => 'role',
+               headings    => $table.headings,
+               rows        => $table.rows,
+               routes      => { update => $routes.role_update, delete => $routes.role_delete },
             } :>
         </div>
     </div>
 </div>
-
-    <div x-data="{ show: false, form: null }"
-         x-cloak
-         x-show="show"
-         @confirm.window="show = true; form = $event.detail.id;"
-         class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 max-w-sm w-full bg-white shadow-md rounded-md overflow-hidden border"
-    >
-        <div class="flex justify-between items-center px-5 py-3 text-gray-700 border-b">
-            <h3 class="text-sm">Are you shure?</h3>
-        </div>
-
-        <div class="px-5 py-6 bg-gray-200 text-gray-700 border-b">
-            <p>
-                Continuing will delete role permanently.
-            </p>
-        </div>
-
-        <div class="flex justify-between items-center px-4 py-3">
-            <button @click="show=false"
-                    class="px-3 py-1 text-gray-700 text-sm rounded-md bg-gray-200 hover:bg-gray-300 focus:outline-none">Cancel</button>
-            <button @click="form.submit()"
-                    class="px-3 py-1 bg-sky-600 text-white rounded-md text-sm hover:bg-sky-500 focus:outline-none">Continue</button>
-        </div>
-    </div>
 <: } :>

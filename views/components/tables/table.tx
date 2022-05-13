@@ -52,3 +52,8 @@
         <: } :>
     </tbody>
 </table>
+
+<: include components::utils::modal_confirm {
+    heading      => 'Are you shure?',
+    entity_name  => $entity_name,
+} :>
