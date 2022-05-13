@@ -20,9 +20,16 @@ sub index {
         }
     } @roles;
 
+    my $routes = var 'routes';
+
     my $table = {
+        name     => 'role',
         headings => [ qw(Role) ],
         rows     => \@rows,
+        actions  => [
+            { name => 'edit',   type => 'link', confirm => false, route => uri_for $routes->{role_edit}   },
+            { name => 'delete', type => 'form', confirm => true,  route => uri_for $routes->{role_delete} },
+        ],
     };
 
     template 'admin/dashboard/user_roles/index' , {

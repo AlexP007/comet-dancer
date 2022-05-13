@@ -1,7 +1,7 @@
-<div x-data="{ show: false, form: null }"
+<div x-data="{ show: false, form: null, id: null }"
      x-cloak
      x-show="show"
-     @confirm.window="show = true; form = $event.detail.id;"
+     @confirm.window="show = true; form = $event.detail.id; id = form.id"
      class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 max-w-sm w-full bg-white shadow-md rounded-md overflow-hidden border"
 >
     <div class="flex justify-between items-center px-5 py-3 text-gray-700 border-b">
@@ -10,7 +10,7 @@
 
     <div class="px-5 py-6 bg-gray-200 text-gray-700 border-b">
         <p>
-            Continuing will delete <: $entity_name :>:<span x-text="form.id"></span> permanently.
+            Continuing will delete <: $name :>:<span x-text="id"></span> permanently.
         </p>
     </div>
 
