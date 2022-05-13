@@ -19,7 +19,7 @@
                entity_name => 'role',
                headings    => $table.headings,
                rows        => $table.rows,
-               routes      => { update => $routes.role_update, delete => $routes.role_delete },
+               routes      => { edit => $routes.role_edit, delete => $routes.role_delete },
             } :>
         </div>
     </div>

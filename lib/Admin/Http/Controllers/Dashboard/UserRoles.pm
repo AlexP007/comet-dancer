@@ -15,10 +15,8 @@ sub index {
     my @roles = rset('Role')->all;
     my @rows  = map {
         {
-            id       => $_->role,
-                data     => [
-                    { value => $_->role, name => 'role' },
-                ],
+            id   => $_->role,
+            data => [ { value => $_->role } ],
         }
     } @roles;
 

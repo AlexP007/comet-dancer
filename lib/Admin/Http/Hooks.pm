@@ -26,6 +26,7 @@ hook before => sub {
         'role_create' => '/dashboard/users/roles/create',
         'role_store'  => '/dashboard/users/roles/store',
         'role_delete' => '/dashboard/users/roles/%s/delete',
+        'role_edit'   => '/dashboard/users/roles/%s/edit',
         'role_update' => '/dashboard/users/roles/%s/update',
         'user_create' => '/dashboard/users/store',
     };
