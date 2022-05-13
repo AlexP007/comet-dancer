@@ -6,7 +6,7 @@
     <meta name="referrer" content="always">
     <title><: $title :></title>
     <link rel="stylesheet" href="/css/style.css">
-    <script src="/js/bundle.js"></script>
+    <script defer src="/js/bundle.js"></script>
 </head>
 <body>
 <div x-data="{ sidebarOpen: false }" class="flex h-screen bg-gray-200 font-roboto">

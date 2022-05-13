@@ -14,63 +14,37 @@
 
 <div class="flex flex-col mt-8">
     <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-        <div class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
+        <div class="align-middle min-w-full shadow sm:rounded-lg border-b border-gray-200">
             <: include components::tables::table {
                headings => $table.headings,
                rows     => $table.rows,
                routes   => { update => $routes.role_update, delete => $routes.role_delete },
             } :>
-<!--            <table class="min-w-full">-->
-<!--                <thead>-->
-<!--                <tr>-->
-<!--                    <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Role</th>-->
-<!--                    <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider text-right">Actions</th>-->
-<!--                </tr>-->
-<!--                </thead>-->
-
-<!--                <tbody class="bg-white">-->
-<!--                <: for $roles -> $role { :>-->
-<!--                    <tr x-data="{ editing: false, dropdownOpen: false }">-->
-<!--                        <td x-show="!editing" class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500"><: $role.role :></td>-->
-<!--                        <td x-show="!editing" class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">-->
-<!--                            <div class="relative flex justify-end">-->
-<!--                                <button @click="dropdownOpen = ! dropdownOpen" class="relative block w-12 h-8 text-lg overflow-hidden underline focus:outline-none">-->
-<!--                                    <: include components::icons::menu :>-->
-<!--                                </button>-->
-
-<!--                                <div x-cloak x-show="dropdownOpen" @click="dropdownOpen = false" class="fixed inset-0 z-10 w-full h-full"></div>-->
-
-<!--                                <div x-cloak x-show="dropdownOpen" class="absolute bg-stone-50 right-0 z-10 w-48 mt-2 overflow-hidden bg-white rounded-md shadow-xl">-->
-<!--                                    <a @click.prevent @click="editing = true; dropdownOpen = false" class="block px-4 py-2 text-sm text-gray-700 hover:bg-sky-300">Edit</a>-->
-<!--                                    <div class="text-sm text-gray-700 hover:bg-red-300">-->
-<!--                                        <form method="post" action="<: $routes.roles_delete :>">-->
-<!--                                            <: include components::forms::csrf_token :>-->
-<!--                                            <input type="hidden" name="role" value="<: $role.role :>">-->
-<!--                                            <button type="submit" class="px-4 py-2 w-full h-full text-left">-->
-<!--                                                Delete-->
-<!--                                            </button>-->
-<!--                                        </form>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </td>-->
-<!--                        <td x-show="editing" class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 leading-5">-->
-<!--                            <form id="<: $role.role :>" method="post" action="<: replace($routes.roles_update, ':role', $role.role) :>">-->
-<!--                                <: include components::forms::csrf_token :>-->
-<!--                                <: include components::forms::input { name => 'role', value => $role.role } :>-->
-<!--                            </form>-->
-<!--                        </td>-->
-<!--                        <td x-show="editing" class="px-4 py-4 whitespace-no-wrap border-b border-gray-200 leading-5 text-right">-->
-<!--                            <a @click.prevent @click="editing = false" class="px-4 py-2 inline-block text-sm cursor-pointer text-gray-700 bg-red-300 hover:bg-red-200">Cancel</a>-->
-<!--                            <button form="<: $role.role :>" type="submit" class="px-6 py-2 text-sm text-gray-700 bg-sky-300 hover:bg-sky-200">-->
-<!--                                Save-->
-<!--                            </button>-->
-<!--                        </td>-->
-<!--                    </tr>-->
-<!--                <: } :>-->
-<!--                </tbody>-->
-<!--            </table>-->
         </div>
     </div>
 </div>
+
+    <div x-data="{ show: false, form: null }"
+         x-cloak
+         x-show="show"
+         @confirm.window="show = true; form = $event.detail.id;"
+         class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 max-w-sm w-full bg-white shadow-md rounded-md overflow-hidden border"
+    >
+        <div class="flex justify-between items-center px-5 py-3 text-gray-700 border-b">
+            <h3 class="text-sm">Are you shure?</h3>
+        </div>
+
+        <div class="px-5 py-6 bg-gray-200 text-gray-700 border-b">
+            <p>
+                Continuing will delete role permanently.
+            </p>
+        </div>
+
+        <div class="flex justify-between items-center px-4 py-3">
+            <button @click="show=false"
+                    class="px-3 py-1 text-gray-700 text-sm rounded-md bg-gray-200 hover:bg-gray-300 focus:outline-none">Cancel</button>
+            <button @click="form.submit()"
+                    class="px-3 py-1 bg-sky-600 text-white rounded-md text-sm hover:bg-sky-500 focus:outline-none">Continue</button>
+        </div>
+    </div>
 <: } :>

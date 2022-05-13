@@ -85,7 +85,7 @@ sub delete {
     try {
         rset('Role')->single({ role => $role })->delete;
 
-        my $message = "Role: $role deleted.";
+        my $message = "Role: $role deleted";
 
         info $message;
         deferred success => $message;
