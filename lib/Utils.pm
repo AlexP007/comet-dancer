@@ -6,7 +6,7 @@ use Constant;
 use Dancer2::Core::Error;
 
 sub check_csrf_token {
-    my $app  = shift;
+    my ($app) = @_;
 
     if ($app->request->is_post) {
         my $csrf_token = $app->request->body_parameters->{csrf_token};

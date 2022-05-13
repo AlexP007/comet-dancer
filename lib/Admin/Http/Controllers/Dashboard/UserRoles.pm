@@ -50,7 +50,9 @@ sub store {
 
             info $message;
             deferred success => $message;
-            redirect '/dashboard/users/roles';
+
+            my $routes = var 'routes';
+            redirect $routes->{roles};
         } catch ($e) {
             error $e;
             deferred error => $e;

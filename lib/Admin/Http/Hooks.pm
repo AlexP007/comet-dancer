@@ -17,8 +17,24 @@ hook after_authenticate_user => \&Admin::Http::Hooks::Auth::login_process;
 ### Check CSRF token ###
 hook before => \&Utils::check_csrf_token;
 
+### Set routes var ###
+hook before => sub {
+    var routes => {
+        'dashboard'   => '/dashboard',
+        'users'       => '/dashboard/users',
+        'roles'       => '/dashboard/users/roles',
+        'role_create' => '/dashboard/users/roles/create',
+        'role_store'  => '/dashboard/users/roles/store',
+        'role_delete' => '/dashboard/users/roles/%s/delete',
+        'role_update' => '/dashboard/users/roles/%s/update',
+        'user_create' => '/dashboard/users/store',
+    };
+
+    return;
+};
+
 hook before_template_render => sub {
-    my $tokens = shift;
+    my ($tokens) = @_;
 
     ### Logged in user ###
     $tokens->{user} = logged_in_user;
@@ -26,29 +42,26 @@ hook before_template_render => sub {
     ### CSRF token ###
     $tokens->{csrf_token} = get_csrf_token;
 
+    ### Routes full-qualified ###
+    my %routes = %{ var 'routes' };
+
+    foreach my $route (keys %routes) {
+        my $path = $routes{$route};
+        $routes{$route} = uri_for $path;
+    }
+
+    ### Set them as template tokens ###
+    my %merged_routes = (%routes, %{ $tokens->{routes} // {} });
+    $tokens->{routes} = \%merged_routes;
+
     ### Sidebar menu ###
     my $sidebar = [
-        { name => 'Dashboard', path => '/dashboard' ,           icon => 'chart_pie'  },
-        { name => 'Users',     path => '/dashboard/users',      icon => 'user_group' },
-        { name => 'Roles',     path => '/dashboard/users/roles', icon => 'user_roles' },
+        { name => 'Dashboard', path => $routes{dashboard}, icon => 'chart_pie'  },
+        { name => 'Users',     path => $routes{users},     icon => 'user_group' },
+        { name => 'Roles',     path => $routes{roles},     icon => 'user_roles' },
     ];
 
     $tokens->{sidebar} = Utils::set_active_menu_item($sidebar, request->path);
-
-    ### Routes ###
-    my $prefix = '/admin/dashboard';
-
-    my %routes = (
-        'roles'       => "$prefix/users/roles",
-        'role_create' => "$prefix/users/roles/create",
-        'role_store'  => "$prefix/users/roles/store",
-        'role_delete' => "$prefix/users/roles/%s/delete",
-        'role_update' => "$prefix/users/roles/%s/update",
-        'user_create' => "$prefix/users/store",
-    );
-
-    my %merged_routes = (%routes, %{ $tokens->{routes} // {} });
-    $tokens->{routes} = \%merged_routes;
 
     return;
 };
