@@ -38,13 +38,13 @@
                         <: for $actions -> $action { :>
                             <: if ($action.type == 'link') { :>
                                 <a href="<: sprintf($action.route, $row.id) :>"
-                                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-sky-300"
+                                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-amber-400"
                                 >
                                     <span class="capitalize"><: $action.name :></span>
                                 </a>
                             <: } :>
                             <: if ($action.type == 'form') { :>
-                                <div class="text-sm text-gray-700 hover:bg-red-300">
+                                <div class="text-sm text-gray-700 hover:bg-amber-400">
                                     <form id="<: $row.id :>"
                                           method="post"
                                           action="<: sprintf($action.route, $row.id) :>"
