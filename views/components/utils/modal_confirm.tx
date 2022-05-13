@@ -4,16 +4,12 @@
      @confirm.window="show = true; form = $event.detail.id; id = form.id"
      class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 max-w-sm w-full bg-white shadow-md rounded-md overflow-hidden border"
 >
-    <div class="flex justify-between items-center px-5 py-3 text-gray-700 border-b">
-        <h3 class="text-sm"><: $heading :></h3>
-    </div>
-
-    <div class="px-5 py-6 bg-gray-200 text-gray-700 border-b">
+    <h3 class="px-5 py-3 bg-gray-200 text-gray-700 border-b"><: $heading :></h3>
+    <div class="px-5 py-6 text-sm">
         <p>
             Continuing will delete <: $name :>:<span x-text="id"></span> permanently.
         </p>
     </div>
-
     <div class="flex justify-between items-center px-4 py-3">
         <button @click="show=false"
                 class="px-3 py-1 text-gray-700 text-sm rounded-md bg-gray-200 hover:bg-gray-300 focus:outline-none">Cancel</button>
