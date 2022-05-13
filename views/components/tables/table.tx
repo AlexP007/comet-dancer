@@ -12,19 +12,30 @@
     <: for $rows-> $row { :>
         <tr>
             <: for $row.data -> $data { :>
-                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500"><: $data.value :></td>
+                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
+                    <: $data.value :>
+                </td>
             <: } :>
-            <td x-data="{ dropdownOpen: false }"
+            <td x-data="{ show: false }"
                 class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500"
             >
                 <div class="relative flex justify-end">
-                    <button @click="dropdownOpen = ! dropdownOpen" class="relative block w-12 h-8 text-lg overflow-hidden underline focus:outline-none">
+                    <button @click="show = !show"
+                            class="relative block w-12 h-8 text-lg overflow-hidden underline focus:outline-none"
+                    >
                         <: include components::icons::menu :>
                     </button>
 
-                    <div x-cloak x-show="dropdownOpen" @click="dropdownOpen = false" class="fixed inset-0 z-10 w-full h-full"></div>
+                    <div x-cloak
+                         x-show="show"
+                         @click="show = false"
+                         class="fixed inset-0 z-10 w-full h-full">
+                    </div>
 
-                    <div x-cloak x-show="dropdownOpen" class="absolute bg-stone-50 right-0 z-10 w-48 mt-2 overflow-hidden bg-white rounded-md shadow-xl">
+                    <div x-cloak
+                         x-show="show"
+                         class="absolute bg-stone-50 right-0 z-10 w-48 mt-2 overflow-hidden bg-white rounded-md shadow-xl"
+                    >
                         <a href="<: sprintf($routes.edit, $row.id) :>"
                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-sky-300"
                         >
