@@ -21,9 +21,7 @@
             </header>
         <: } :>
         <main class="flex-1 overflow-x-hidden overflow-y-auto bg-stone-100">
-
-                <: $content | raw :>
-            </div>
+            <: $content | raw :>
         </main>
     </div>
 </div>

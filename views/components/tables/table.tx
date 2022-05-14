@@ -1,77 +1,78 @@
-<table class="min-w-full">
-    <thead>
-    <tr>
-        <: for $headings -> $heading { :>
-            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"><: $heading :></th>
-        <: } :>
-        <th class="px-8 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-    </tr>
-    </thead>
+<div class="-my-2 py-2 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+    <div class="align-middle min-w-full shadow sm:rounded-lg border-b border-gray-200">
+        <table class="min-w-full">
+            <thead>
+            <tr>
+                <: for $headings -> $heading { :>
+                    <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"><: $heading :></th>
+                <: } :>
+                <th class="px-8 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+            </tr>
+            </thead>
 
-    <tbody class="bg-white">
-    <: for $rows-> $row { :>
-        <tr>
-            <: for $row.data -> $data { :>
-                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
-                    <: $data.value :>
-                </td>
-            <: } :>
-            <td x-data="{ show: false }"
-                class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 text-gray-500"
-            >
-                <div class="inline-block relative">
-                    <button @click="show = !show"
-                            class="relative block w-12 h-8 text-lg overflow-hidden underline focus:outline-none"
+            <tbody class="bg-white">
+            <: for $rows-> $row { :>
+                <tr>
+                    <: for $row.data -> $data { :>
+                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
+                            <: $data.value :>
+                        </td>
+                    <: } :>
+                    <td x-data="{ show: false }"
+                        class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 text-gray-500"
                     >
-                        <: include components::icons::menu :>
-                    </button>
+                        <div class="inline-block relative">
+                            <button @click="show = !show"
+                                    class="relative block w-12 h-8 text-lg overflow-hidden underline focus:outline-none"
+                            >
+                                <: include components::icons::menu :>
+                            </button>
 
-                    <div x-cloak
-                         x-show="show"
-                         @click="show = false"
-                         class="fixed inset-0 z-10 w-full h-full">
-                    </div>
-                    <div x-cloak
-                         x-show="show"
-                         class="absolute text-left bg-stone-50 right-0 z-10 w-48 mt-2 overflow-hidden bg-white rounded-md shadow-xl"
-                    >
-                        <: for $actions -> $action { :>
-                            <: if ($action.type == 'link') { :>
-                                <a href="<: sprintf($action.route, $row.id) :>"
-                                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-amber-400"
-                                >
-                                    <span class="capitalize"><: $action.name :></span>
-                                </a>
-                            <: } :>
-                            <: if ($action.type == 'form') { :>
-                                <div class="text-sm text-gray-700 hover:bg-amber-400">
-                                    <form id="<: $row.id :>"
-                                          method="post"
-                                          action="<: sprintf($action.route, $row.id) :>"
-                                          <: if ($action.confirm) { :>
-                                              @submit.prevent="
-                                              show = false;
-                                              $dispatch('confirm', { id: <: $row.id :> });
-                                              "
-                                          <: } :>
-                                    >
-                                        <: include components::forms::csrf_token :>
-                                            <button type="submit" class="px-4 py-2 w-full h-full text-left">
-                                                <span class="capitalize"><: $action.name :></span>
-                                            </button>
-                                    </form>
-                                </div>
-                             <: } :>
-                        <: } :>
-                    </div>
-                </div>
-            </td>
-        </tr>
-        <: } :>
-    </tbody>
-</table>
+                            <div x-cloak
+                                 x-show="show"
+                                 @click.outside="show = false"
+                                 class="absolute text-left bg-stone-50 right-0 z-10 w-48 mt-2 overflow-hidden bg-white rounded-md shadow-xl"
+                            >
+                                <: for $actions -> $action { :>
+                                    <: if ($action.type == 'link') { :>
+                                        <a href="<: sprintf($action.route, $row.id) :>"
+                                           class="block px-4 py-2 text-sm text-gray-700 hover:bg-amber-400"
+                                        >
+                                            <span class="capitalize"><: $action.name :></span>
+                                        </a>
+                                    <: } :>
+                                    <: if ($action.type == 'form') { :>
+                                        <div class="text-sm text-gray-700 hover:bg-amber-400">
+                                            <form id="<: $row.id :>"
+                                                  method="post"
+                                                  action="<: sprintf($action.route, $row.id) :>"
+                                                  <: if ($action.confirm) { :>
+                                                      @submit.prevent="
+                                                      show = false;
+                                                      $dispatch('confirm', { id: <: $row.id :> });
+                                                      "
+                                                  <: } :>
+                                            >
+                                                <: include components::forms::csrf_token :>
+                                                    <button type="submit" class="px-4 py-2 w-full h-full text-left">
+                                                        <span class="capitalize"><: $action.name :></span>
+                                                    </button>
+                                            </form>
+                                        </div>
+                                     <: } :>
+                                <: } :>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <: } :>
+            </tbody>
+        </table>
+    </div>
 
-<: include components::utils::modal_confirm {
-    heading => 'Are you shure?',
-    name    => $name,
-} :>
+    <: include components::utils::modal_confirm {
+       heading => 'Are you shure?',
+        name    => $name,
+    } :>
+
+</div>
