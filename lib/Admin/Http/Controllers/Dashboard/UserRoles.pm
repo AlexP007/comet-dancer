@@ -84,7 +84,7 @@ sub edit {
 
         template 'admin/dashboard/user_roles/form', {
             title  => 'Update Role',
-            action => $action,
+            action => route('role_update'),
             button => 'Update',
             role   => $role,
         }

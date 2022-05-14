@@ -15,6 +15,9 @@ template: 'Xslate'
 # Session engine.
 session: 'Redis'
 
+# Custom dsl.
+dsl_class: 'Dsl'
+
 # === Engines ===
 
 engines:
