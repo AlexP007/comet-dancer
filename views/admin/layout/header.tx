@@ -12,16 +12,21 @@
 
 <div class="flex items-center">
 
-    <div x-data="{ dropdownOpen: false }"  class="relative">
-        <button @click="dropdownOpen = ! dropdownOpen" class="relative block w-12 h-8 text-gray-700 text-lg overflow-hidden underline focus:outline-none">
+    <div x-data="{ show: false }"
+         class="relative">
+        <button @click="show = !show"
+                class="relative block w-12 h-8 text-gray-700 text-lg overflow-hidden underline focus:outline-none"
+        >
             <: $user.username :>
         </button>
 
-        <div x-cloak x-show="dropdownOpen" @click="dropdownOpen = false" class="fixed inset-0 z-10 w-full h-full"></div>
-
-        <div x-cloak x-show="dropdownOpen" class="absolute bg-stone-50 right-0 z-10 w-48 mt-2 overflow-hidden bg-white rounded-md shadow-xl">
-            <a href="/admin/dashboard/profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-sky-300">Profile</a>
-            <a href="/admin/logout" class="block px-4 py-2 text-sm text-gray-700 hover:bg-sky-300">Logout</a>
+        <div x-cloak
+             x-show="show"
+             @click.outside="show = false"
+             class="absolute bg-stone-50 right-0 z-10 w-48 mt-2 overflow-hidden bg-white rounded-md shadow-xl"
+        >
+            <a href="/admin/dashboard/profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-amber-400">Profile</a>
+            <a href="/admin/logout" class="block px-4 py-2 text-sm text-gray-700 hover:bg-amber-400">Logout</a>
         </div>
     </div>
 </div>
