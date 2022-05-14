@@ -39,8 +39,12 @@ sub index {
 }
 
 sub create {
-    template 'admin/dashboard/user_roles/create', {
-        title => 'Create Role',
+    my $action = uri_for var('routes')->{role_store};
+
+    template 'admin/dashboard/user_roles/form', {
+        title  => 'Create Role',
+        action => $action,
+        button => 'Create',
     }
 }
 
@@ -63,6 +67,33 @@ sub store {
     }
 
     redirect request->referer;
+}
+
+sub edit {
+    my $role_name = route_parameters->{role};
+
+    my $role = rset('Role')->single({
+        role => $role_name,
+    });
+
+    if ($role) {
+        my $action = uri_for sprintf(
+            var('routes')->{role_update},
+            $role->role,
+        );
+
+        template 'admin/dashboard/user_roles/form', {
+            title  => 'Update Role',
+            action => $action,
+            button => 'Update',
+            role   => $role,
+        }
+    }
+    else {
+        my $message = sprintf('Route: %s not found', $role_name);
+        warning $message;
+        send_error($message, 404);
+    }
 }
 
 sub update {

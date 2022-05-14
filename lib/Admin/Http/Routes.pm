@@ -28,6 +28,7 @@ prefix '/dashboard' => sub {
     prefix '/users/roles' => sub {
         get  ''              => \&Admin::Http::Controllers::Dashboard::UserRoles::index;
         get  '/create'       => \&Admin::Http::Controllers::Dashboard::UserRoles::create;
+        get  '/:role/edit'   => \&Admin::Http::Controllers::Dashboard::UserRoles::edit;
         post '/store'        => \&Admin::Http::Controllers::Dashboard::UserRoles::store;
         post '/:role/update' => \&Admin::Http::Controllers::Dashboard::UserRoles::update;
         post '/:role/delete' => \&Admin::Http::Controllers::Dashboard::UserRoles::delete;

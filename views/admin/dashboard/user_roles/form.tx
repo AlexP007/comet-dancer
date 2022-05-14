@@ -4,12 +4,16 @@
 <h3 class="text-gray-700 text-3xl font-semibold"><: $title :></h3>
 
 <div class="mt-4">
-    <form method="post" action="<: $routes.role_store :>">
+    <form method="post" action="<: $action :>">
         <: include components::forms::csrf_token :>
 
-        <: include components::forms::input_group {label => 'Role', name => 'role' } :>
+        <: include components::forms::input_group {
+           label => 'Role',
+           name  => 'role',
+           value => $role.role
+        } :>
         <div class="flex justify-end items-baseline">
-            <: include components::forms::button {text => 'Create'} :>
+            <: include components::forms::button { text => $button } :>
         </div>
     </form>
 </div>
