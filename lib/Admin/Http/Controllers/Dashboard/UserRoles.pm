@@ -56,11 +56,11 @@ sub store {
 
             my $message = "Role: $v->{role} created";
 
-            info $message;
+            info     $message;
             deferred success => $message;
             redirect route('roles');
         } catch ($e) {
-            error $e;
+            error    $e;
             deferred error => $e;
         };
     }
@@ -85,7 +85,8 @@ sub edit {
     }
     else {
         my $message = sprintf('Route: %s not found', $role_name);
-        warning $message;
+
+        warning    $message;
         send_error $message => 404;
     }
 }
@@ -99,10 +100,10 @@ sub update {
 
         my $message = "Role: $role updated to $new_role.";
 
-        info $message;
+        info     $message;
         deferred success => $message;
     } catch ($e) {
-        error $e;
+        error    $e;
         deferred error => $e;
     };
 
