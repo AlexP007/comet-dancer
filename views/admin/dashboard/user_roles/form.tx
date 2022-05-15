@@ -10,10 +10,10 @@
         <: include components::forms::input_group {
            label => 'Role',
            name  => 'role',
-           value => $role.role
+           value => $role.role,
         } :>
         <div class="flex justify-end items-baseline">
-            <: include components::forms::button { text => $button } :>
+            <: include components::forms::button {text => $button} :>
         </div>
     </form>
 </div>

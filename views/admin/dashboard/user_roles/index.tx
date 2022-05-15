@@ -8,7 +8,7 @@
            text  => 'New',
             link  => $routes.role_create,
             color => 'sky',
-            } :>
+        } :>
     </div>
 </div>
 

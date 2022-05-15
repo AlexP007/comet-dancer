@@ -65,7 +65,7 @@ sub store {
         };
     }
 
-    redirect request->referer;
+    redirect route('roles');
 }
 
 sub edit {
@@ -98,7 +98,7 @@ sub update {
     try {
         rset('Role')->single({ role => $role })->update({ role => $new_role });
 
-        my $message = "Role: $role updated to $new_role.";
+        my $message = "Role: $role updated to $new_role";
 
         info     $message;
         deferred success => $message;
@@ -107,7 +107,7 @@ sub update {
         deferred error => $e;
     };
 
-    redirect request->referer;
+    redirect route('roles');
 }
 
 sub delete {
@@ -125,7 +125,7 @@ sub delete {
         deferred error => $e;
     };
 
-    redirect request->referer;
+    redirect route('roles');
 }
 
 true;
