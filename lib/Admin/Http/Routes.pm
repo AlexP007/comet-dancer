@@ -20,9 +20,10 @@ prefix '/dashboard' => sub {
     };
 
     prefix '/users' => sub {
-        get  ''        => \&Admin::Http::Controllers::Dashboard::User::index;
-        get  '/create' => \&Admin::Http::Controllers::Dashboard::User::create;
-        post '/store'  => \&Admin::Http::Controllers::Dashboard::User::store;
+        get  ''            => \&Admin::Http::Controllers::Dashboard::User::index;
+        get  '/create'     => \&Admin::Http::Controllers::Dashboard::User::create;
+        get  '/:user/edit' => \&Admin::Http::Controllers::Dashboard::User::edit;
+        post '/store'      => \&Admin::Http::Controllers::Dashboard::User::store;
     };
 
     prefix '/users/roles' => sub {

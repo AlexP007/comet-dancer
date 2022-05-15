@@ -5,7 +5,6 @@ use Dancer2 appname  =>'Admin';
 use Dancer2::Plugin::DBIC;
 use Dancer2::Plugin::FormValidator;
 use Dancer2::Plugin::Auth::Extensible;
-use Dancer2::Plugin::Deferred;
 use Admin::Http::Forms::UserForm;
 
 use feature 'try';
@@ -31,8 +30,8 @@ sub index {
         headings => [ qw(Username Email Name Status Roles) ],
         rows     => \@rows,
         actions  => [
-            { name => 'edit',   type => 'link', confirm => false, route => route('user_edit')   },
-            { name => 'delete', type => 'form', confirm => true,  route => route('user_delete') },
+            { name => 'edit',   type => 'link', confirm => 0, route => route('user_edit')   },
+            { name => 'delete', type => 'form', confirm => 1, route => route('user_delete') },
         ],
     };
 
@@ -83,17 +82,49 @@ sub store {
 
                 my $message = "User: $v->{username} created";
 
-                info     $message;
-                deferred success => $message;
+                info          $message;
+                flash_success $message;
                 redirect route('users');
             }
         } catch ($e) {
-            error    $e;
-            deferred error => $e;
+            error       $e;
+            flash_error $e;
         };
     }
 
     redirect request->referer;
+}
+
+sub edit {
+    my $username = route_parameters->{user};
+
+    my $user = rset('User')->single({
+        username => $username,
+    });
+
+    if ($user) {
+        my @roles = map {
+            {
+                text     => $_->role,
+                value    => $_->role,
+                selected => $user->has_role($_->role),
+            }
+        } (rset('Role')->all);
+
+        template 'admin/dashboard/users/form', {
+            title  => 'Update User',
+            user   => $user,
+            roles  => \@roles,
+            button => 'Update',
+            action => route('user_update', $user->username),
+        }
+    }
+    else {
+        my $message = sprintf('User: %s not found', $username);
+
+        warning    $message;
+        send_error $message => 404;
+    }
 }
 
 true;

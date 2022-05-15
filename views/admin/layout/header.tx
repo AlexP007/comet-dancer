@@ -17,7 +17,7 @@
         <button @click="show = !show"
                 class="relative block w-12 h-8 text-gray-700 text-lg overflow-hidden underline focus:outline-none"
         >
-            <: $user.username :>
+            <: $current_user.username :>
         </button>
 
         <div x-cloak

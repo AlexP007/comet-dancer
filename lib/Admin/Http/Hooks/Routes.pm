@@ -10,6 +10,7 @@ sub set {
         user_store  => '/dashboard/users/store',
         user_delete => '/dashboard/users/%s/delete',
         user_edit   => '/dashboard/users/%s/edit',
+        user_update => '/dashboard/users/%s/update',
         roles       => '/dashboard/users/roles',
         role_create => '/dashboard/users/roles/create',
         role_store  => '/dashboard/users/roles/store',

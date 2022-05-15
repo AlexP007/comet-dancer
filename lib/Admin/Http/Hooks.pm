@@ -25,7 +25,7 @@ hook before_template_render => sub {
     my ($tokens) = @_;
 
     ### Logged in user ###
-    $tokens->{user} = logged_in_user;
+    $tokens->{current_user} = logged_in_user;
 
     ### CSRF token ###
     $tokens->{csrf_token} = get_csrf_token;

@@ -24,8 +24,8 @@ sub index {
         headings => [ qw(Role) ],
         rows     => \@rows,
         actions  => [
-            { name => 'edit',   type => 'link', confirm => false, route => route('role_edit')   },
-            { name => 'delete', type => 'form', confirm => true,  route => route('role_delete') },
+            { name => 'edit',   type => 'link', confirm => 0, route => route('role_edit')   },
+            { name => 'delete', type => 'form', confirm => 1, route => route('role_delete') },
         ],
     };
 
