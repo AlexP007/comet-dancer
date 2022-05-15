@@ -1,22 +1,23 @@
 <: cascade admin::dashboard::container :>
 <: around body -> { :>
-<h3 class="text-gray-700 text-3xl font-semibold">Create User</h3>
+<h3 class="text-gray-700 text-3xl font-semibold"><: $title :></h3>
 
 <div class="mt-4">
-    <form method="post" action="<: $routes.user_create :>">
+    <form method="post" action="<: $action :>">
         <: include components::forms::csrf_token :>
 
         <div class="grid grid-cols-2 gap-x-4">
             <div>
                 <: include components::forms::input_group  { label => 'Username',  name  => 'username' } :>
                 <: include components::forms::input_group  { label => 'Real Name', name  => 'name'     } :>
-                <: include components::forms::input_group  { label => 'Email', name  => 'email' } :>
+                <: include components::forms::input_group  { label => 'Email',     name  => 'email'    } :>
             </div>
             <: include components::forms::select_group {
                 label    => 'Roles',
                 name     => 'roles',
                 options  => $roles,
                 multiple => 1,
+                size     => 5,
             } :>
         </div>
 
@@ -26,7 +27,7 @@
         </div>
 
         <div class="flex justify-end items-baseline">
-            <: include components::forms::button {text => 'Create'} :>
+            <: include components::forms::button {text => $button} :>
         </div>
     </form>
 </div>

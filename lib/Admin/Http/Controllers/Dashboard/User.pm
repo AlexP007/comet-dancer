@@ -46,16 +46,13 @@ sub index {
 }
 
 sub create {
-    my @roles_result = rset('Role')->all;
-    my @roles = ();
+    my @roles = map { { text => $_->role, value => $_->role } } (rset('Role')->all);
 
-    for my $role (@roles_result) {
-        push @roles => { text => $role->role, value => $role->role },
-    }
-
-    template 'admin/dashboard/user_create', {
-        title => 'Create user',
-        roles => \@roles,
+    template 'admin/dashboard/users/form', {
+        title  => 'Create User',
+        button => 'Create',
+        roles  => \@roles,
+        action => route('user_store'),
     }
 }
 
