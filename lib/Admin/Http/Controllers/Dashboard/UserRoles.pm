@@ -4,6 +4,7 @@ use Dancer2 appname  =>'Admin';
 
 use Constant;
 use Dancer2::Plugin::DBIC;
+use Dancer2::Plugin::FormValidator;
 use Admin::Http::Forms::RoleForm;
 
 use feature 'try';
@@ -90,22 +91,26 @@ sub edit {
 }
 
 sub update {
-    my $role     = route_parameters->{role};
-    my $new_role = body_parameters->{role};
+    my $role = route_parameters->{role};
 
-    try {
-        rset('Role')->single({ role => $role })->update({ role => $new_role });
+    if (validate profile => Admin::Http::Forms::RoleForm->new) {
+        my $new_role = validated->{role};
 
-        my $message = sprintf('Role: %s updated to %s', $role, $new_role);
+        try {
+            rset('Role')->single({ role => $role })->update({ role => $new_role });
 
-        info          $message;
-        flash_success $message;
-        redirect      route('roles');
-    } catch ($e) {
-        error         $e;
-        flash_error   $e;
-        redirect      request->referer;
-    };
+            my $message = sprintf('Role: %s updated to %s', $role, $new_role);
+
+            info          $message;
+            flash_success $message;
+            redirect      route('roles');
+        } catch ($e) {
+            error         $e;
+            flash_error   $e;
+        };
+    }
+
+    redirect request->referer;
 }
 
 sub delete {
