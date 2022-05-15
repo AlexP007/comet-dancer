@@ -2,11 +2,11 @@
 <: around body -> { :>
 
 <div class="flex justify-between items-center">
-    <h3 class="text-gray-700 text-3xl font-semibold"><: $title :></h3>
+    <h3 class="text-gray-700 text-3xl font-medium">Users</h3>
     <div class="pr-1">
         <: include components::utils::button_link {
            text  => 'New',
-           link  => $routes.role_create,
+           link  => $routes.user_create,
            color => 'sky',
         } :>
     </div>

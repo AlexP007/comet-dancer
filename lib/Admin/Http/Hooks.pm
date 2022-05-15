@@ -7,32 +7,19 @@ use Utils;
 use Dancer2::Plugin::CSRF;
 use Dancer2::Plugin::Auth::Extensible;
 use Admin::Http::Hooks::Auth;
+use Admin::Http::Hooks::Routes;
 
 ### Protect admin space ###
 hook before => \&Admin::Http::Hooks::Auth::admin_only;
 
-### Processing authentication ###
-hook after_authenticate_user => \&Admin::Http::Hooks::Auth::login_process;
-
 ### Check CSRF token ###
 hook before => \&Utils::check_csrf_token;
 
-### Set routes var ###
-hook before => sub {
-    routes {
-        dashboard   => '/dashboard',
-        users       => '/dashboard/users',
-        user_create => '/dashboard/users/store',
-        roles       => '/dashboard/users/roles',
-        role_create => '/dashboard/users/roles/create',
-        role_store  => '/dashboard/users/roles/store',
-        role_delete => '/dashboard/users/roles/%s/delete',
-        role_edit   => '/dashboard/users/roles/%s/edit',
-        role_update => '/dashboard/users/roles/%s/update',
-    };
+### Processing authentication ###
+hook after_authenticate_user => \&Admin::Http::Hooks::Auth::login_process;
 
-    return;
-};
+### Set routes ###
+hook before => \&Admin::Http::Hooks::Routes::set;
 
 hook before_template_render => sub {
     my ($tokens) = @_;

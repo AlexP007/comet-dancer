@@ -16,7 +16,7 @@ sub index {
     my @rows  = map {
         {
             id   => $_->role,
-            data => [ { value => $_->role } ],
+            data => [ { value => $_->role, type => 'text' } ],
         }
     } @roles;
 

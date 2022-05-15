@@ -15,7 +15,15 @@
                 <tr>
                     <: for $row.data -> $data { :>
                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
-                            <: $data.value :>
+                            <: if $data.type == 'toggle' { :>
+                                <: include components::utils::toggle {value => $data.value } :>
+                            <: } elsif $data.type == 'list' {:>
+                                <: for $data.value -> $list_value { :>
+                                    <p><: $list_value :></p>
+                                <: } :>
+                            <: } else {:>
+                                <: $data.value :>
+                            <: } :>
                         </td>
                     <: } :>
                     <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 text-gray-500">

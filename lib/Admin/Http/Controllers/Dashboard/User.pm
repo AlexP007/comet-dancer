@@ -16,24 +16,32 @@ sub index {
     my @rows  = map {
         {
             id       => $_->username,
-                data     => [
-                    { value => $_->username,    name => 'username' },
-                    { value => $_->email,       name => 'email'    },
-                    { value => $_->name,        name => 'name'     },
-                    { value => $_->deleted,     name => 'deleted'  },
-                    { value => $_->roles_names, name => 'roles'    },
-                ],
+            data     => [
+                { value => $_->username,   type => 'text'   },
+                { value => $_->email,      type => 'text'   },
+                { value => $_->name,       type => 'text'   },
+                { value => $_->deleted,    type => 'toggle' },
+                { value => $_->role_names, type => 'list'   },
+            ],
         }
     } @users;
 
     my $table = {
+        name     => 'user',
         headings => [ qw(Username Email Name Status Roles) ],
         rows     => \@rows,
+        actions  => [
+            { name => 'edit',   type => 'link', confirm => false, route => route('user_edit')   },
+            { name => 'delete', type => 'form', confirm => true,  route => route('user_delete') },
+        ],
     };
 
-    template 'admin/dashboard/users', {
+    template 'admin/dashboard/users/index', {
         title => 'Users',
         table => $table,
+        routes => {
+            user_create => route('user_create'),
+        }
     }
 }
 

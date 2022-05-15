@@ -104,7 +104,7 @@ sub has_role {
     return $role ? $role->role eq $role_name : undef;
 }
 
-sub roles_names {
+sub role_names {
     my @roles = map { $_->role } ( shift->roles->all );
     return \@roles;
 }
