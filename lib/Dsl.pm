@@ -1,8 +1,12 @@
 package Dsl;
 
 use Moo;
-
 extends 'Dancer2::Core::DSL';
+
+use constant {
+    success => 'flash_success',
+    error   => 'flash_error',
+};
 
 my $routes;
 
@@ -11,8 +15,10 @@ around dsl_keywords => sub {
 
     my $keywords = $parent->($method);
 
-    $keywords->{routes} = { is_global => 1 };
-    $keywords->{route}  = { is_global => 1 };
+    $keywords->{routes}        = { is_global => 1 };
+    $keywords->{route}         = { is_global => 1 };
+    $keywords->{flash_success} = { is_global => 1 };
+    $keywords->{flash_error}   = { is_global => 1 };
 
     return $keywords;
 };
@@ -31,6 +37,26 @@ sub route {
     }
 
     return $self->uri_for($route);
+}
+
+sub flash_success {
+    my ($self, $message) = @_;
+
+    $self->app
+         ->with_plugin('Dancer2::Plugin::Deferred')
+         ->deferred(success, $message);
+
+    return;
+}
+
+sub flash_error {
+    my ($self, $message) = @_;
+
+    $self->app
+         ->with_plugin('Dancer2::Plugin::Deferred')
+         ->deferred(error, $message);
+
+    return;
 }
 
 1;

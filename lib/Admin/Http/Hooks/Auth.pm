@@ -35,7 +35,7 @@ sub login_process {
             redirect '/login';
         }
         else {
-            deferred success => 'Login successful'
+            flash_success 'Login successful';
         }
     }
     else {

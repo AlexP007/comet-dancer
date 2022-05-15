@@ -15,7 +15,7 @@ sub check_csrf_token {
                 or $app->with_plugin('Dancer2::Plugin::CSRF')->validate_csrf_token($csrf_token)
             )
         ) {
-            $app->send_error('Page expired' => 419)
+            $app->send_error('Page expired', 419)
         }
     }
 

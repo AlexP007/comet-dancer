@@ -5,7 +5,6 @@ use Dancer2 appname  =>'Admin';
 use Constant;
 use Dancer2::Plugin::DBIC;
 use Dancer2::Plugin::FormValidator;
-use Dancer2::Plugin::Deferred;
 use Admin::Http::Forms::RoleForm;
 
 use feature 'try';
@@ -56,16 +55,16 @@ sub store {
 
             my $message = "Role: $v->{role} created";
 
-            info     $message;
-            deferred success => $message;
-            redirect route('roles');
+            info          $message;
+            flash_success $message;
+            redirect      route('roles');
         } catch ($e) {
-            error    $e;
-            deferred error => $e;
+            error         $e;
+            flash_error   $e;
         };
     }
 
-    redirect route('roles');
+    redirect request->referer;
 }
 
 sub edit {
@@ -100,14 +99,14 @@ sub update {
 
         my $message = "Role: $role updated to $new_role";
 
-        info     $message;
-        deferred success => $message;
+        info          $message;
+        flash_success $message;
+        redirect      route('roles');
     } catch ($e) {
-        error    $e;
-        deferred error => $e;
+        error         $e;
+        flash_error   $e;
+        redirect      request->referer;
     };
-
-    redirect route('roles');
 }
 
 sub delete {
@@ -118,14 +117,14 @@ sub delete {
 
         my $message = "Role: $role deleted";
 
-        info $message;
-        deferred success => $message;
+        info          $message;
+        flash_success $message;
+        redirect      route('roles');
     } catch ($e) {
-        error $e;
-        deferred error => $e;
+        error         $e;
+        flash_error   $e;
+        redirect      request->referer;
     };
-
-    redirect route('roles');
 }
 
 true;

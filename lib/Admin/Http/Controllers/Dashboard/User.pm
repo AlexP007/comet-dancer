@@ -15,8 +15,8 @@ sub index {
     my @users = rset('User')->users_with_roles;
     my @rows  = map {
         {
-            id       => $_->username,
-            data     => [
+            id   => $_->username,
+            data => [
                 { value => $_->username,   type => 'text'   },
                 { value => $_->email,      type => 'text'   },
                 { value => $_->name,       type => 'text'   },
@@ -37,8 +37,8 @@ sub index {
     };
 
     template 'admin/dashboard/users/index', {
-        title => 'Users',
-        table => $table,
+        title  => 'Users',
+        table  => $table,
         routes => {
             user_create => route('user_create'),
         }
@@ -83,13 +83,12 @@ sub store {
 
                 my $message = "User: $v->{username} created";
 
-                info $message;
+                info     $message;
                 deferred success => $message;
-
-                redirect '/dashboard/users'
+                redirect route('users');
             }
         } catch ($e) {
-            error $e;
+            error    $e;
             deferred error => $e;
         };
     }
