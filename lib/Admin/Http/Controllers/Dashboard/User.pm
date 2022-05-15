@@ -80,7 +80,7 @@ sub store {
                     new_password => $v->{password},
                 );
 
-                my $message = "User: $v->{username} created";
+                my $message = sprintf('User: %s created', $v->{username});
 
                 info          $message;
                 flash_success $message;

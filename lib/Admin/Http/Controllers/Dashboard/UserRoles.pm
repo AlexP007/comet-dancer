@@ -4,7 +4,6 @@ use Dancer2 appname  =>'Admin';
 
 use Constant;
 use Dancer2::Plugin::DBIC;
-use Dancer2::Plugin::FormValidator;
 use Admin::Http::Forms::RoleForm;
 
 use feature 'try';
@@ -53,7 +52,7 @@ sub store {
         try {
             rset('Role')->create({ role => $v->{role} });
 
-            my $message = "Role: $v->{role} created";
+            my $message = sprintf('Role: %s created', $v->{role});
 
             info          $message;
             flash_success $message;
@@ -97,7 +96,7 @@ sub update {
     try {
         rset('Role')->single({ role => $role })->update({ role => $new_role });
 
-        my $message = "Role: $role updated to $new_role";
+        my $message = sprintf('Role: %s updated to %s', $role, $new_role);
 
         info          $message;
         flash_success $message;
@@ -115,7 +114,7 @@ sub delete {
     try {
         rset('Role')->single({ role => $role })->delete;
 
-        my $message = "Role: $role deleted";
+        my $message = sprintf('Role: %s deleted', $role);
 
         info          $message;
         flash_success $message;
