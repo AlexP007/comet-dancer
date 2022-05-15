@@ -20,31 +20,30 @@ sub index {
         }
     } @roles;
 
-    my $routes = var 'routes';
-
     my $table = {
         name     => 'role',
         headings => [ qw(Role) ],
         rows     => \@rows,
         actions  => [
-            { name => 'edit',   type => 'link', confirm => false, route => uri_for $routes->{role_edit}   },
-            { name => 'delete', type => 'form', confirm => true,  route => uri_for $routes->{role_delete} },
+            { name => 'edit',   type => 'link', confirm => false, route => route('role_edit')   },
+            { name => 'delete', type => 'form', confirm => true,  route => route('role_delete') },
         ],
     };
 
     template 'admin/dashboard/user_roles/index' , {
-        title => 'Roles',
-        table => $table,
+        title  => 'Roles',
+        table  => $table,
+        routes => {
+            role_create => route('role_create'),
+        }
     }
 }
 
 sub create {
-    my $action = uri_for var('routes')->{role_store};
-
     template 'admin/dashboard/user_roles/form', {
         title  => 'Create Role',
-        action => $action,
         button => 'Create',
+        action => route('role_store'),
     }
 }
 
@@ -59,7 +58,7 @@ sub store {
 
             info $message;
             deferred success => $message;
-            redirect var('routes')->{roles};
+            redirect route('roles');
         } catch ($e) {
             error $e;
             deferred error => $e;
@@ -77,22 +76,17 @@ sub edit {
     });
 
     if ($role) {
-        my $action = uri_for sprintf(
-            var('routes')->{role_update},
-            $role->role,
-        );
-
         template 'admin/dashboard/user_roles/form', {
             title  => 'Update Role',
-            action => route('role_update'),
-            button => 'Update',
             role   => $role,
+            button => 'Update',
+            action => route('role_update', $role->role),
         }
     }
     else {
         my $message = sprintf('Route: %s not found', $role_name);
         warning $message;
-        send_error($message, 404);
+        send_error $message => 404;
     }
 }
 

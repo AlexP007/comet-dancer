@@ -4,24 +4,33 @@ use Moo;
 
 extends 'Dancer2::Core::DSL';
 
-# use Dancer2 ':syntax';
+my $routes;
 
 around dsl_keywords => sub {
     my ($parent, $method) = @_;
 
     my $keywords = $parent->($method);
 
-    $keywords->{route} = { is_global => 0 };
+    $keywords->{routes} = { is_global => 1 };
+    $keywords->{route}  = { is_global => 1 };
 
     return $keywords;
 };
 
-sub route {
-    my ($self, $name) = @_;
+sub routes {
+    $routes = $_[1];
+    return;
+}
 
-    return $self->uri_for(
-        $self->var('routes')->{$name},
-    );
+sub route {
+    my ($self, $name, @params) = @_;
+
+    my $route = $routes->{$name};
+    if (@params) {
+        $route = sprintf($route, @params);
+    }
+
+    return $self->uri_for($route);
 }
 
 1;
