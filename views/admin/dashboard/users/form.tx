@@ -9,9 +9,10 @@
         <div class="grid grid-cols-2 gap-x-4">
             <div>
                 <: include components::forms::input_group {
-                   label => 'Username',
-                   name  => 'username',
-                   value => $user.username,
+                   label    => 'Username',
+                   name     => 'username',
+                   value    => $user.username,
+                   disabled => $freeze_username,
                 } :>
                 <: include components::forms::input_group {
                    label => 'Real Name',

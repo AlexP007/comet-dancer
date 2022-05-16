@@ -1,7 +1,9 @@
 <: if $errors[$name] != nil { :>
     <div class="pl-1">
     <: for $errors[$name] -> $error { :>
-        <small class="text-red-400"><: $error :></small>
+        <small class="text-red-400">
+            <: $error :><: if !$~error.is_last { :>,<: } :>
+        </small>
     <: } :>
     </div>
 <: } :>

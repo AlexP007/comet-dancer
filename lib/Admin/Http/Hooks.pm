@@ -19,7 +19,7 @@ hook before => \&Utils::check_csrf_token;
 hook after_authenticate_user => \&Admin::Http::Hooks::Auth::login_process;
 
 ### Set routes ###
-hook before => \&Admin::Http::Hooks::Routes::set;
+hook before => \&Admin::Http::Hooks::Routes::set_routes;
 
 hook before_template_render => sub {
     my ($tokens) = @_;

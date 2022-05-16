@@ -11,9 +11,9 @@ use constant {
 my $routes;
 
 around dsl_keywords => sub {
-    my ($parent, $method) = @_;
+    my ($orig, $self) = @_;
 
-    my $keywords = $parent->($method);
+    my $keywords = $orig->($self);
 
     $keywords->{routes}        = { is_global => 1 };
     $keywords->{route}         = { is_global => 1 };

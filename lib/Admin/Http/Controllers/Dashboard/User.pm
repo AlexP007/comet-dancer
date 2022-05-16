@@ -56,16 +56,18 @@ sub create {
 }
 
 sub store {
-    if (validate profile => Admin::Http::Forms::UserForm->new) {
+    my $profile = Admin::Http::Forms::UserForm->new(
+        require_username => 1,
+        require_password => 1,
+    );
+
+    if (validate profile => $profile) {
         my $v = validated;
 
         try {
-            my @roles = ref $v->{roles} eq 'ARRAY' ? @{ $v->{roles} } : ($v->{roles});
-            my $roles = {};
-
-            for my $role (@roles) {
-                $roles->{$role} = 1;
-            }
+            my $roles = prepare_roles(
+                ref $v->{roles} eq 'ARRAY' ? @{ $v->{roles} } : ($v->{roles})
+            );
 
             my $user = create_user(
                 username => $v->{username},
@@ -89,7 +91,7 @@ sub store {
         } catch ($e) {
             error       $e;
             flash_error $e;
-        };
+        }
     }
 
     redirect request->referer;
@@ -98,9 +100,7 @@ sub store {
 sub edit {
     my $username = route_parameters->{user};
 
-    my $user = rset('User')->single({
-        username => $username,
-    });
+    my $user = get_user_details $username;
 
     if ($user) {
         my @roles = map {
@@ -112,11 +112,12 @@ sub edit {
         } (rset('Role')->all);
 
         template 'admin/dashboard/users/form', {
-            title  => 'Update User',
-            user   => $user,
-            roles  => \@roles,
-            button => 'Update',
-            action => route('user_update', $user->username),
+            title           => 'Update User',
+            user            => $user,
+            roles           => \@roles,
+            button          => 'Update',
+            action          => route('user_update', $user->username),
+            freeze_username => 1,
         }
     }
     else {
@@ -125,6 +126,63 @@ sub edit {
         warning    $message;
         send_error $message => 404;
     }
+}
+
+sub update {
+    my $username = route_parameters->{user};
+    my $user     = get_user_details $username;
+
+    my $profile  = Admin::Http::Forms::UserForm->new(
+        require_username => 0,
+        require_password => 0,
+        current_email    => $user->email,
+    );
+
+    if (validate profile => $profile) {
+        my $v = validated;
+
+        try {
+            my $roles = prepare_roles(
+                ref $v->{roles} eq 'ARRAY' ? @{ $v->{roles} } : ($v->{roles})
+            );
+
+            update_user($username,
+                name     => $v->{name},
+                email    => $v->{email},
+                roles    => $roles,
+            );
+
+            if ($v->{password}) {
+                user_password(
+                    username     => $v->{username},
+                    new_password => $v->{password},
+                );
+            }
+
+            my $message = sprintf('User: %s updated', $username);
+
+            info          $message;
+            flash_success $message;
+            redirect      route('users');
+        } catch ($e) {
+            error         $e;
+            flash_error   $e;
+        }
+    }
+
+    redirect request->referer;
+}
+
+### Utils ###
+
+sub prepare_roles {
+    my $roles = {};
+
+    for my $role (@_) {
+        $roles->{$role} = 1;
+    }
+
+    return $roles;
 }
 
 true;

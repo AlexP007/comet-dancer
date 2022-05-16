@@ -2,7 +2,7 @@ package Admin::Http::Hooks::Routes;
 
 use Dancer2 appname  =>'Admin';
 
-sub set {
+sub set_routes {
     routes {
         dashboard   => '/dashboard',
         users       => '/dashboard/users',

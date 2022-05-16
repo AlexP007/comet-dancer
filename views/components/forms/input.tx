@@ -9,7 +9,15 @@
         autocomplete="off"
     <: } :>
 
+    <: if $readonly == 1 { :>
+        readonly
+    <: } :>
+
+    <: if $disabled == 1 { :>
+        disabled
+    <: } :>
+
     <: if $form != nil { :>
         form="<: $form :>"
-   <: } :>
+    <: } :>
 >
