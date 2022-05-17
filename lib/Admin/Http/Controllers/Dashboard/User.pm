@@ -57,10 +57,17 @@ sub index {
         rows     => \@rows,
     };
 
+    my $pagination = pagination(
+        total => rset('User')->count,
+        page  => query_parameters->{page},
+        url   => route('users'),
+    );
+
     template 'admin/dashboard/users/index', {
-        title  => 'Users',
-        table  => $table,
-        routes => {
+        title      => 'Users',
+        table      => $table,
+        pagination => $pagination,
+        routes     => {
             user_create => route('user_create'),
         }
     }
