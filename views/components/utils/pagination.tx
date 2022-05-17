@@ -1,36 +1,35 @@
-<nav class="flex rounded-md bg-white py-4 px-4 overflow-x-auto">
+<nav class="flex justify-end rounded-md bg-white py-4 px-4 overflow-x-auto">
     <ul class="flex rounded mr-4">
         <li>
             <a href="<: $prev_url :>"
-               class="py-2 px-3 leading-tight bg-white border border-gray-200 text-blue-700 border-r-0 ml-0 rounded-l hover:bg-indigo-500 hover:text-white"
-                <: if $is_first { :>
-                    style="pointer-events: none"
-                <: } :>
+               class="py-2 px-3 leading-tight bg-white border border-gray-200 text-sky-700 border-r-0 ml-0 rounded-l hover:bg-sky-500 hover:text-white
+                    <: if $is_first { :>
+                        pointer-events-none bg-gray-200
+                    <: } :>
+                "
             >
                 <span>Previous</span>
             </a>
         </li>
         <: for $controls -> $control { :>
-            <: if $control.curr { :>
-                <li>
-                    <a href="<: $control.url :>" aria-current="page" class="py-2 px-3 leading-tight bg-white border border-gray-200 text-blue-700 border-r-0 hover:bg-indigo-500 hover:text-white">
-                        <: $control.page :>
-                    </a>
-                </li>
-            <: } else { :>
-                <li>
-                    <a href="<: $control.url :>" class="py-2 px-3 leading-tight bg-white border border-gray-200 text-blue-700 border-r-0 hover:bg-indigo-500 hover:text-white">
-                        <: $control.page :>
-                    </a>
-                </li>
-            <: } :>
+            <li>
+                <a href="<: $control.url :>" aria-current="page" class="py-2 px-3 leading-tight bg-white border border-gray-200 text-sky-700 border-r-0 hover:bg-sky-500 hover:text-white
+                    <: if $control.curr { :>
+                        pointer-events-none bg-gray-200
+                    <: } :>
+                "
+                >
+                    <: $control.page :>
+                </a>
+            </li>
         <: } :>
         <li>
             <a href="<: $next_url :>"
-               class="py-2 px-3 leading-tight bg-white border border-gray-200 text-blue-700 rounded-r hover:bg-indigo-500 hover:text-white"
-                <: if $is_last { :>
-                    style="pointer-events: none"
-                <: } :>
+               class="py-2 px-3 leading-tight bg-white border border-gray-200 text-sky-700 rounded-r hover:bg-sky-500 hover:text-white
+                    <: if $is_last { :>
+                        pointer-events-none bg-gray-200
+                    <: } :>
+               "
             >
                 <span>Next</span>
             </a>
