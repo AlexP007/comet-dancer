@@ -143,6 +143,8 @@ sub pagination {
     }
 
     return {
+        page     => $paginator->curr,
+        size     => $paginator->page_size,
         is_first => $paginator->curr == $paginator->first,
         is_last  => $paginator->curr == $paginator->last,
         prev_url => $paginator->prev_url,
