@@ -11,7 +11,17 @@ use feature 'try';
 no warnings 'experimental::try';
 
 sub index {
-    my @users = rset('User')->users_with_roles;
+    my $pagination = pagination(
+        total => rset('User')->count,
+        page  => query_parameters->{page},
+        url   => route('users'),
+    );
+
+    my @users = rset('User')->users_with_roles(
+        page => $pagination->{page},
+        size => $pagination->{size},
+    );
+
     my @rows  = map {
         {
             id      => $_->username,
@@ -56,12 +66,6 @@ sub index {
         headings => [ qw(Username Email Name Status Roles) ],
         rows     => \@rows,
     };
-
-    my $pagination = pagination(
-        total => rset('User')->count,
-        page  => query_parameters->{page},
-        url   => route('users'),
-    );
 
     template 'admin/dashboard/users/index', {
         title      => 'Users',
