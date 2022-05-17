@@ -90,8 +90,22 @@ __PACKAGE__->many_to_many(roles => 'user_roles', 'role');
 
 ### Methods ###
 
-sub is_admin {
-    return shift->has_role(Constant::role_admin);
+sub admin {
+    my ($self) = @_;
+
+    return $self->has_role(Constant::role_admin);
+}
+
+sub inactive {
+    my ($self) = @_;
+
+    return $self->deleted == 1;
+}
+
+sub active {
+    my ($self) = @_;
+
+    return $self->deleted == 0;
 }
 
 sub has_role {

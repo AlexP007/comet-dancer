@@ -22,9 +22,31 @@ sub index {
                 { value => $_->deleted,    type => 'toggle' },
                 { value => $_->role_names, type => 'list'   },
             ],
-            actions => [
-                { name => 'edit',       type => 'link', confirm => 0, route => route('user_edit',   $_->username) },
-                { name => 'deactivate', type => 'form', confirm => 1, route => route('user_delete', $_->username) },
+            actions => $_->active ? [
+                {
+                    name    => 'edit',
+                    type    => 'link',
+                    route   => route('user_edit', $_->username)
+                },
+                {
+                    name    => 'deactivate',
+                    type    => 'form',
+                    confirm => {
+                        heading => 'Are you sure?',
+                        message => sprintf('User: %s will be deactivated.', $_->username),
+                    },
+                    route   => route('user_deactivate', $_->username)
+                },
+            ] : [
+                {
+                    name    => 'activate',
+                    type    => 'form',
+                    confirm => {
+                        heading => 'Are you sure?',
+                        message => sprintf('User: %s will be activated.', $_->username),
+                    },
+                    route   => route('user_activate', $_->username)
+                },
             ],
         }
     } @users;
@@ -183,6 +205,42 @@ sub prepare_roles {
     }
 
     return $roles;
+}
+
+sub deactivate {
+    my $user = route_parameters->{user};
+
+    try {
+        deactivate_user $user;
+
+        my $message = sprintf('User: %s deactivated', $user);
+
+        info          $message;
+        flash_success $message;
+        redirect      route('users');
+    } catch ($e) {
+        error         $e;
+        flash_error   $e;
+        redirect      back;
+    }
+}
+
+sub activate {
+    my $user = route_parameters->{user};
+
+    try {
+        activate_user $user;
+
+        my $message = sprintf('User: %s activated', $user);
+
+        info          $message;
+        flash_success $message;
+        redirect      route('users');
+    } catch ($e) {
+        error         $e;
+        flash_error   $e;
+        redirect      back;
+    }
 }
 
 true;

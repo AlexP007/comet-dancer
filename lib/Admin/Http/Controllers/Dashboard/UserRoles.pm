@@ -19,8 +19,20 @@ sub index {
                 { value => $_->role, type => 'text' }
             ],
             actions => [
-                { name => 'edit',   type => 'link', confirm => 0, route => route('role_edit',   $_->role) },
-                { name => 'delete', type => 'form', confirm => 1, route => route('role_delete', $_->role) },
+                {
+                    name    => 'edit',
+                    type    => 'link',
+                    route   => route('role_edit', $_->role)
+                },
+                {
+                    name    => 'delete',
+                    type    => 'form',
+                    confirm => {
+                        heading => 'Are you sure?',
+                        message => sprintf('Role: %s will be deleted permanently.', $_->role),
+                    },
+                    route   => route('role_delete', $_->role),
+                },
             ],
         }
     } @roles;

@@ -22,9 +22,7 @@ sub login_process {
     my ($auth_result) = @_;
 
     if ($auth_result->{success} == 1) {
-        my $user = get_user_details($auth_result->{username});
-
-        if (not $user->is_admin) {
+        if (not user_admin $auth_result->{username}) {
             app->destroy_session;
 
             deferred auth_result => {
@@ -39,9 +37,15 @@ sub login_process {
         }
     }
     else {
+        my $message = 'Invalid credentials';
+
+        if (user_inactive $auth_result->{username}) {
+            $message = 'Access denied';
+        }
+
         deferred auth_result => {
             failed  => 1,
-            message => 'Invalid credentials',
+            message => $message,
         };
     }
 }

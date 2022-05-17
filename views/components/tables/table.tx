@@ -57,7 +57,12 @@
                                                   <: if ($action.confirm) { :>
                                                       @submit.prevent="
                                                       show = false;
-                                                      $dispatch('confirm', { id: <: $row.id :> });
+                                                      $dispatch('confirm', {
+                                                            id: '<: $row.id :>',
+                                                            heading: '<: $action.confirm.heading :>',
+                                                            message: '<: $action.confirm.message :>'
+                                                        }
+                                                      );
                                                       "
                                                   <: } :>
                                             >
@@ -78,9 +83,6 @@
         </table>
     </div>
 
-    <: include components::utils::modal_confirm {
-       heading => 'Are you shure?',
-        name    => $name,
-    } :>
+    <: include components::utils::modal_confirm :>
 
 </div>

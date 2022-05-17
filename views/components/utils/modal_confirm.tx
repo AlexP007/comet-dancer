@@ -1,19 +1,26 @@
-<div x-data="{ show: false, form: null, id: null }"
+<div x-data="{ show: false, id: null, heading: null, message: null }"
      x-cloak
      x-show="show"
-     @confirm.window="show = true; form = $event.detail.id; id = form.id"
+     @confirm.window="
+        show = true;
+        id = $event.detail.id;
+        heading = $event.detail.heading;
+        message = $event.detail.message;
+    "
      class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 max-w-sm w-full bg-white shadow-md rounded-md overflow-hidden border"
 >
-    <h3 class="px-5 py-3 bg-gray-200 text-gray-700 border-b"><: $heading :></h3>
+    <h3 class="px-5 py-3 bg-gray-200 text-gray-700 border-b">
+        <span x-text="heading"></span>
+    </h3>
     <div class="px-5 py-6 text-sm">
         <p>
-            Continuing will delete <: $name :>:<span x-text="id"></span> permanently.
+            <span x-text="message"></span>
         </p>
     </div>
     <div class="flex justify-between items-center px-4 py-3">
         <button @click="show=false"
                 class="px-3 py-1 text-gray-700 text-sm rounded-md bg-gray-200 hover:bg-gray-300 focus:outline-none">Cancel</button>
-        <button @click="form.submit()"
+        <button @click="document.getElementById(id).submit()"
                 class="px-3 py-1 bg-sky-600 text-white rounded-md text-sm hover:bg-sky-500 focus:outline-none">Continue</button>
     </div>
 </div>
