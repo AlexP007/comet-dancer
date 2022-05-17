@@ -15,7 +15,7 @@
     <div x-data="{ show: false }"
          class="relative">
         <button @click="show = !show"
-                class="relative block w-12 h-8 text-gray-700 text-lg overflow-hidden underline focus:outline-none"
+                class="relative block min-w-12 h-8 text-gray-700 text-lg overflow-hidden underline focus:outline-none"
         >
             <: $current_user.username :>
         </button>
