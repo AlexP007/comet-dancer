@@ -22,49 +22,10 @@ sub index {
         size => $pagination->{size},
     );
 
-    my @rows  = map {
-        {
-            id      => $_->username,
-            data    => [
-                { value => $_->username,   type => 'text'   },
-                { value => $_->email,      type => 'text'   },
-                { value => $_->name,       type => 'text'   },
-                { value => $_->deleted,    type => 'toggle' },
-                { value => $_->role_names, type => 'list'   },
-            ],
-            actions => $_->active ? [
-                {
-                    name    => 'edit',
-                    type    => 'link',
-                    route   => route('user_edit', $_->username)
-                },
-                {
-                    name    => 'deactivate',
-                    type    => 'form',
-                    confirm => {
-                        heading => 'Are you sure?',
-                        message => sprintf('User: %s will be deactivated.', $_->username),
-                    },
-                    route   => route('user_deactivate', $_->username)
-                },
-            ] : [
-                {
-                    name    => 'activate',
-                    type    => 'form',
-                    confirm => {
-                        heading => 'Are you sure?',
-                        message => sprintf('User: %s will be activated.', $_->username),
-                    },
-                    route   => route('user_activate', $_->username)
-                },
-            ],
-        }
-    } @users;
-
     my $table = {
         name     => 'user',
         headings => [ qw(Username Email Name Status Roles) ],
-        rows     => \@rows,
+        rows     => _user_rows(@users),
     };
 
     template 'admin/dashboard/users/index', {
@@ -252,6 +213,49 @@ sub activate {
         flash_error   $e;
         redirect      back;
     }
+}
+
+sub _user_rows {
+    my @rows = map {
+        {
+            id      => $_->username,
+                data    => [
+                    { value => $_->username,   type => 'text'   },
+                    { value => $_->email,      type => 'text'   },
+                    { value => $_->name,       type => 'text'   },
+                    { value => $_->deleted,    type => 'toggle' },
+                    { value => $_->role_names, type => 'list'   },
+                ],
+                actions => $_->active ? [
+                    {
+                        name    => 'edit',
+                        type    => 'link',
+                        route   => route('user_edit', $_->username)
+                    },
+                    {
+                        name    => 'deactivate',
+                        type    => 'form',
+                        confirm => {
+                            heading => 'Are you sure?',
+                            message => sprintf('User: %s will be deactivated.', $_->username),
+                        },
+                        route   => route('user_deactivate', $_->username)
+                    },
+                ] : [
+                    {
+                        name    => 'activate',
+                        type    => 'form',
+                        confirm => {
+                            heading => 'Are you sure?',
+                            message => sprintf('User: %s will be activated.', $_->username),
+                        },
+                        route   => route('user_activate', $_->username)
+                    },
+                ],
+        }
+    } @_;
+
+    return \@rows
 }
 
 true;
