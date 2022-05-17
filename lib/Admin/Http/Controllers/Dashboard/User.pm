@@ -56,35 +56,18 @@ sub store {
     );
 
     if (validate profile => $profile) {
-        my $v = validated;
+        my $validated = validated;
 
         try {
-            my $roles = prepare_roles(
-                ref $v->{roles} eq 'ARRAY' ? @{ $v->{roles} } : ($v->{roles})
-            );
+            my $user    = _user_store(%{ $validated });
+            my $message = sprintf('User: %s created', $user->username);
 
-            my $user = create_user(
-                username => $v->{username},
-                name     => $v->{name},
-                email    => $v->{email},
-                roles    => $roles,
-            );
-
-            if ($user) {
-                user_password(
-                    username     => $user->username,
-                    new_password => $v->{password},
-                );
-
-                my $message = sprintf('User: %s created', $v->{username});
-
-                info          $message;
-                flash_success $message;
-                redirect route('users');
-            }
+            info          $message;
+            flash_success $message;
+            redirect      route('users');
         } catch ($e) {
-            error       $e;
-            flash_error $e;
+            error         $e;
+            flash_error   $e;
         }
     }
 
@@ -136,7 +119,7 @@ sub update {
         my $v = validated;
 
         try {
-            my $roles = prepare_roles(
+            my $roles = _prepare_roles(
                 ref $v->{roles} eq 'ARRAY' ? @{ $v->{roles} } : ($v->{roles})
             );
 
@@ -165,18 +148,6 @@ sub update {
     }
 
     redirect back;
-}
-
-### Utils ###
-
-sub prepare_roles {
-    my $roles = {};
-
-    for my $role (@_) {
-        $roles->{$role} = 1;
-    }
-
-    return $roles;
 }
 
 sub deactivate {
@@ -214,6 +185,8 @@ sub activate {
         redirect      back;
     }
 }
+
+### Usecases ###
 
 sub _user_rows {
     my @rows = map {
@@ -256,6 +229,49 @@ sub _user_rows {
     } @_;
 
     return \@rows
+}
+
+sub _user_store {
+    my (%args) = @_;
+
+    my $roles = _prepare_roles(
+        ref $args{roles} eq 'ARRAY' ? @{ $args{roles} } : ($args{roles})
+    );
+
+    my $username = $args{username};
+    my $password = $args{password};
+    my $name     = $args{name};
+    my $email    = $args{email};
+
+    my $user = create_user(
+        username => $username,
+        name     => $name,
+        email    => $email,
+        roles    => $roles,
+    );
+
+    if ($user) {
+        user_password(
+            username     => $username,
+            new_password => $password,
+        );
+
+        return $user;
+    }
+
+    return undef;
+}
+
+### Utils ###
+
+sub _prepare_roles {
+    my $roles = {};
+
+    for my $role (@_) {
+        $roles->{$role} = 1;
+    }
+
+    return $roles;
 }
 
 true;
