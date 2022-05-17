@@ -116,25 +116,38 @@ sub user_admin {
 sub pagination {
     my ($self, %args) = @_;
 
+    my $page  = $args{page}  || 1;
+    my $size  = $args{size}  || 3;
+    my $frame = $args{frame} || 3;
+    my $total = $args{total};
+    my $url   = $args{url};
+    my $mode  = 'query';
+
     my $paginator = $self->app->with_plugin('Dancer2::Plugin::Paginator')->paginator(
-        curr        => $args{page} || 1,
-        items       => $args{total},
-        base_url    => $args{url},
-        mode        => $args{mode} || 'query',
-        frame_size  => $args{controls} || 3,
-        page_size   => $args{size} || 3,
+        curr        => $page,
+        page_size   => $size,
+        frame_size  => $frame,
+        items       => $total,
+        base_url    => $url,
+        mode        => $mode,
     );
 
+    my @controls;
+
+    for my $i ($paginator->begin .. $paginator->end) {
+        push @controls => {
+            page => $i,
+            url  => $paginator->page_url($i),
+            curr => $paginator->curr == $i,
+        };
+    }
+
     return {
-        is_first  => $paginator->curr == $paginator->first,
-        is_last   => $paginator->curr == $paginator->last,
-        curr      => $paginator->curr,
-        prev      => $paginator->prev,
-        next      => $paginator->next,
-        first_url => $paginator->first,
-        last_url  => $paginator->last_url,
-        prev_url  => $paginator->prev_url,
-        next_url  => $paginator->next_url,
+        is_first => $paginator->curr == $paginator->first,
+        is_last  => $paginator->curr == $paginator->last,
+        prev_url => $paginator->prev_url,
+        next_url => $paginator->next_url,
+        controls => \@controls,
     };
 }
 
