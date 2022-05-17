@@ -64,7 +64,7 @@ sub store {
         }
     }
 
-    redirect request->referer;
+    redirect back;
 }
 
 sub edit {
@@ -110,7 +110,7 @@ sub update {
         }
     }
 
-    redirect request->referer;
+    redirect back;
 }
 
 sub delete {
@@ -127,7 +127,7 @@ sub delete {
     } catch ($e) {
         error         $e;
         flash_error   $e;
-        redirect      request->referer;
+        redirect      back;
     }
 }
 

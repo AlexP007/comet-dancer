@@ -19,6 +19,7 @@ around dsl_keywords => sub {
     $keywords->{route}         = { is_global => 1 };
     $keywords->{flash_success} = { is_global => 1 };
     $keywords->{flash_error}   = { is_global => 1 };
+    $keywords->{back}          = { is_global => 0 };
 
     return $keywords;
 };
@@ -57,6 +58,10 @@ sub flash_error {
          ->deferred(error, $message);
 
     return;
+}
+
+sub back {
+    return $Dancer2::Core::Route::REQUEST->referer;
 }
 
 1;

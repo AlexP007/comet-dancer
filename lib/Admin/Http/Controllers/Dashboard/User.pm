@@ -94,7 +94,7 @@ sub store {
         }
     }
 
-    redirect request->referer;
+    redirect back;
 }
 
 sub edit {
@@ -154,7 +154,7 @@ sub update {
 
             if ($v->{password}) {
                 user_password(
-                    username     => $v->{username},
+                    username     => $username,
                     new_password => $v->{password},
                 );
             }
@@ -170,7 +170,7 @@ sub update {
         }
     }
 
-    redirect request->referer;
+    redirect back;
 }
 
 ### Utils ###

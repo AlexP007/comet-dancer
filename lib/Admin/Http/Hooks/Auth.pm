@@ -32,7 +32,7 @@ sub login_process {
                 message => 'Not enough rights',
             };
 
-            redirect '/login';
+            redirect Constant::page_login;
         }
         else {
             flash_success 'Login successful';
