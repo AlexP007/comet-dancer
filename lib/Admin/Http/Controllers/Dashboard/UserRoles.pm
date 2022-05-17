@@ -14,8 +14,14 @@ sub index {
     my @roles = rset('Role')->all;
     my @rows  = map {
         {
-            id   => $_->role,
-            data => [ { value => $_->role, type => 'text' } ],
+            id      => $_->role,
+            data    => [
+                { value => $_->role, type => 'text' }
+            ],
+            actions => [
+                { name => 'edit',   type => 'link', confirm => 0, route => route('role_edit',   $_->role) },
+                { name => 'delete', type => 'form', confirm => 1, route => route('role_delete', $_->role) },
+            ],
         }
     } @roles;
 
@@ -23,10 +29,6 @@ sub index {
         name     => 'role',
         headings => [ qw(Role) ],
         rows     => \@rows,
-        actions  => [
-            { name => 'edit',   type => 'link', confirm => 0, route => route('role_edit')   },
-            { name => 'delete', type => 'form', confirm => 1, route => route('role_delete') },
-        ],
     };
 
     template 'admin/dashboard/user_roles/index' , {

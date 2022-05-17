@@ -41,9 +41,9 @@
                                  @click.outside="show = false"
                                  class="absolute text-left bg-stone-50 right-0 z-10 w-48 mt-2 overflow-hidden bg-white rounded-md shadow-xl"
                             >
-                                <: for $actions -> $action { :>
+                                <: for $row.actions -> $action { :>
                                     <: if ($action.type == 'link') { :>
-                                        <a href="<: sprintf($action.route, $row.id) :>"
+                                        <a href="<: $action.route :>"
                                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-amber-400"
                                         >
                                             <span class="capitalize"><: $action.name :></span>
@@ -53,7 +53,7 @@
                                         <div class="text-sm text-gray-700 hover:bg-amber-400">
                                             <form id="<: $row.id :>"
                                                   method="post"
-                                                  action="<: sprintf($action.route, $row.id) :>"
+                                                  action="<: $action.route :>"
                                                   <: if ($action.confirm) { :>
                                                       @submit.prevent="
                                                       show = false;

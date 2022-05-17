@@ -14,13 +14,17 @@ sub index {
     my @users = rset('User')->users_with_roles;
     my @rows  = map {
         {
-            id   => $_->username,
-            data => [
+            id      => $_->username,
+            data    => [
                 { value => $_->username,   type => 'text'   },
                 { value => $_->email,      type => 'text'   },
                 { value => $_->name,       type => 'text'   },
                 { value => $_->deleted,    type => 'toggle' },
                 { value => $_->role_names, type => 'list'   },
+            ],
+            actions => [
+                { name => 'edit',       type => 'link', confirm => 0, route => route('user_edit',   $_->username) },
+                { name => 'deactivate', type => 'form', confirm => 1, route => route('user_delete', $_->username) },
             ],
         }
     } @users;
@@ -29,10 +33,6 @@ sub index {
         name     => 'user',
         headings => [ qw(Username Email Name Status Roles) ],
         rows     => \@rows,
-        actions  => [
-            { name => 'edit',   type => 'link', confirm => 0, route => route('user_edit')   },
-            { name => 'delete', type => 'form', confirm => 1, route => route('user_delete') },
-        ],
     };
 
     template 'admin/dashboard/users/index', {

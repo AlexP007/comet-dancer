@@ -17,7 +17,6 @@
        name        => $table.name,
        headings    => $table.headings,
        rows        => $table.rows,
-       actions     => $table.actions,
     } :>
 </div>
 
