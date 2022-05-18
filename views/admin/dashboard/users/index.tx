@@ -10,9 +10,10 @@
                 <div class="flex">
                     <div class="relative">
                         <: include components::forms::select {
-                            class   => 'appearance-none h-full rounded-l border block w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500',
-                            name    => 'role',
-                            options => $roles,
+                            class       => 'appearance-none h-full rounded-l border block w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500',
+                            name        => 'role',
+                            options     => $roles,
+                            placeholder => 'Role',
                         } :>
 
                         <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -23,8 +24,8 @@
                         <: include components::forms::select {
                             class   => 'appearance-none h-full rounded-r border-t sm:rounded-r-none sm:border-r-0 border-r border-b block w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500',
                             name    => 'active',
+                            placeholder => 'All',
                             options => [
-                                { text => 'All',      value => ''},
                                 { text => 'Active',   value => 0 },
                                 { text => 'Inactive', value => 1 },
                             ],
