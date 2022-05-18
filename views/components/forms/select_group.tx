@@ -1,26 +1,11 @@
 <div class="pt-1">
     <: include components::forms::label { id => $name, text => $label } :>
-    <select
-            id="<: $name :>"
-            name="<: $name :>"
-            class="w-full p-2 border border-2 text-sm  mt-1 rounded-md focus:ring-indigo-100 focus:border-indigo-100"
-            <: if $multiple == 1 { :>
-                multiple
-            <: } :>
-            <: if $size != nil { :>
-                size="<: $size :>"
-            <: } :>
-    >
-        <: for $options -> $option { :>
-            <option class="p-2"
-                    value="<: $option.value :>"
-                    <: if $option.selected == 1 { :>
-                        selected
-                    <: } :>
-            >
-                <: $option.text :>
-            </option>
-       <: } :>
-    </select>
+    <: include components::forms::select {
+         name     => $name,
+         class    => $class,
+         multiple => $multiple,
+         size     => $size,
+         options  => $options,
+    } :>
     <: include components::forms::error { name => $name } :>
 </div>
