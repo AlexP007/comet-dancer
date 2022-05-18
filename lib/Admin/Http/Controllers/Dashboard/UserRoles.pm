@@ -84,9 +84,7 @@ sub store {
 sub edit {
     my $role_name = route_parameters->{role};
 
-    my $role = rset('Role')->single({
-        role => $role_name,
-    });
+    my $role = rset('Role')->find({ role => $role_name });
 
     if ($role) {
         template 'admin/dashboard/user_roles/form', {
