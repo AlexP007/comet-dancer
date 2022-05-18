@@ -3,7 +3,7 @@
 
 <div class="flex justify-between items-center">
     <h3 class="text-gray-700 text-3xl font-medium">Users</h3>
-    <div class="pr-1">
+    <div class="pr-4">
         <: include components::utils::button_link {
            text  => 'New',
            link  => $routes.user_create,
@@ -20,7 +20,7 @@
     } :>
 </div>
 
-<div class="mt-4">
+<div class="mt-2">
     <: include components::utils::pagination {$pagination} :>
 </div>
 
