@@ -3,8 +3,11 @@
     id="<: $name :>"
     name="<: $name :>"
     value="<: $value || $old[$name] :>"
-    class="border border-2 w-full h-5 px-4 py-5 mt-1 rounded-md
-           hover:outline-none focus:outline-none focus:ring-1 focus:ring-indigo-100"
+
+    <: if $class != nil { :>
+        class="<: $class :>"
+    <: } :>
+
     <: if $autocomplete == 0 { :>
         autocomplete="off"
     <: } :>
@@ -19,5 +22,9 @@
 
     <: if $form != nil { :>
         form="<: $form :>"
+    <: } :>
+
+    <: if $placeholder != nil { :>
+        placeholder="<: $placeholder :>"
     <: } :>
 >

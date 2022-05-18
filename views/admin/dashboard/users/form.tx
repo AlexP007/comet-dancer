@@ -17,7 +17,7 @@
                 <: include components::forms::input_group {
                    label => 'Real Name',
                    name  => 'name',
-                    value => $user.name,
+                   value => $user.name,
                 } :>
                 <: include components::forms::input_group {
                    label => 'Email',
@@ -30,7 +30,7 @@
                 name     => 'roles',
                 options  => $roles,
                 multiple => 1,
-                size     => 5,
+                size     => 7,
             } :>
         </div>
 

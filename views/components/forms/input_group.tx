@@ -2,6 +2,7 @@
     <: include components::forms::label { id => $name, text => $label } :>
     <: include components::forms::input {
         name         => $name,
+        class        => $class || 'border border-2 w-full h-5 px-4 py-5 mt-1 rounded-md hover:outline-none focus:outline-none focus:ring-1 focus:ring-indigo-100',
         type         => $type,
         value        => $value,
         autocomplete => $autocomplete,

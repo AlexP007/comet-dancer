@@ -1,13 +1,14 @@
 <select id="<: $name :>"
         name="<: $name :>"
+
         <: if $class != nil { :>
             class="<: $class :>"
-        <: } else { :>
-            class="w-full p-2 border border-2 text-sm mt-1 rounded-md focus:ring-indigo-100 focus:border-indigo-100"
         <: } :>
+
         <: if $multiple == 1 { :>
             multiple
         <: } :>
+
         <: if $size != nil { :>
             size="<: $size :>"
         <: } :>

@@ -22,6 +22,8 @@ sub index {
         size => $pagination->{size},
     );
 
+    my @roles = map { { text => $_->role, value => $_->role } } (rset('Role')->all);
+
     my $table = {
         name     => 'user',
         headings => [ qw(Username Email Name Status Roles) ],
@@ -32,6 +34,7 @@ sub index {
         title      => 'Users',
         table      => $table,
         pagination => $pagination,
+        roles      => \@roles,
         routes     => {
             user_create => route('user_create'),
         }
@@ -196,7 +199,7 @@ sub _user_rows {
                     { value => $_->username,   type => 'text'   },
                     { value => $_->email,      type => 'text'   },
                     { value => $_->name,       type => 'text'   },
-                    { value => $_->deleted,    type => 'toggle' },
+                    { value => $_->active,     type => 'toggle' },
                     { value => $_->role_names, type => 'list'   },
                 ],
                 actions => $_->active ? [

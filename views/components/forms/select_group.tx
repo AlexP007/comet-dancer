@@ -2,7 +2,7 @@
     <: include components::forms::label { id => $name, text => $label } :>
     <: include components::forms::select {
          name     => $name,
-         class    => $class,
+         class    => $class || 'w-full p-2 border border-2 text-sm mt-1 rounded-md focus:ring-indigo-100 focus:border-indigo-100',
          multiple => $multiple,
          size     => $size,
          options  => $options,
