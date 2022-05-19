@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/css/style.css">
     <script defer src="/js/bundle.js"></script>
 </head>
-<body>
+<body class="min-w-admin">
 <div x-data="{ sidebarOpen: false }" class="flex h-screen bg-gray-200 font-roboto">
     <: if $exclude_bars != 1 { :>
         <: include admin::layout::sidebar :>

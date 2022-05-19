@@ -2,6 +2,10 @@ module.exports = {
   content: ["./views/**/*.tx", "./public/**/*.html"],
   theme: {
     extend: {},
+    minWidth: {
+      'admin': '1024px',
+      'full': '100%',
+    },
   },
   plugins: [],
   safelist: [
@@ -19,6 +23,8 @@ module.exports = {
     'border-t',
     'border-r',
     'border-b',
+    'sm:border',
+    'md:border',
     'focus:border-l',
     'focus:border-r',
     'sm:rounded-r-none',
