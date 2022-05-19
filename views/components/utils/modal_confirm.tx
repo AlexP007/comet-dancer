@@ -21,6 +21,7 @@
         <button @click="show=false"
                 class="px-3 py-1 text-gray-700 text-sm rounded-md bg-gray-200 hover:bg-gray-300 focus:outline-none">Cancel</button>
         <button @click="document.getElementById(id).submit()"
+                x-trap="show"
                 class="px-3 py-1 bg-sky-600 text-white rounded-md text-sm hover:bg-sky-500 focus:outline-none">Continue</button>
     </div>
 </div>
