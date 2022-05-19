@@ -13,6 +13,7 @@
                             class       => 'appearance-none rounded-l border block w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500',
                             name        => 'role',
                             options     => $roles,
+                            selected    => $query.role,
                             placeholder => 'Role',
                         } :>
 
@@ -24,11 +25,12 @@
                         <: include components::forms::select {
                             class   => 'appearance-none border-t border-r border-b sm:rounded-r-none sm:border-r-0 block w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500',
                             name    => 'active',
-                            placeholder => 'All',
                             options => [
-                                { text => 'Active',   value => 0 },
-                                { text => 'Inactive', value => 1 },
+                                { text => 'Active',   value => 1 },
+                                { text => 'Inactive', value => 0 },
                             ],
+                            selected    => $query.active,
+                            placeholder => 'All',
                         } :>
 
                         <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -42,8 +44,8 @@
                     </span>
 
                     <: include components::forms::input {
-                        name        => $name,
                         class       => 'appearance-none border border-gray-400 block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:border-gray-500 focus:bg-white focus:placeholder-gray-600 focus:outline-none',
+                        name        => 'q',
                         type        => 'search',
                         placeholder => 'Search',
                     } :>

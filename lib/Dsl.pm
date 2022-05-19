@@ -20,7 +20,7 @@ around dsl_keywords => sub {
     $keywords->{route}           = { is_global => 1 };
     $keywords->{flash_success}   = { is_global => 1 };
     $keywords->{flash_error}     = { is_global => 1 };
-    $keywords->{back}            = { is_global => 0 };
+    $keywords->{back}            = { is_global => 1 };
     $keywords->{activate_user}   = { is_global => 1 };
     $keywords->{deactivate_user} = { is_global => 1 };
     $keywords->{user_inactive}   = { is_global => 1 };
@@ -43,7 +43,7 @@ sub route {
         $route = sprintf($route, @params);
     }
 
-    return $self->uri_for($route);
+    return $self->request->base . $route;
 }
 
 sub flash_success {
@@ -67,7 +67,8 @@ sub flash_error {
 }
 
 sub back {
-    return $Dancer2::Core::Route::REQUEST->referer;
+    my ($self) = @_;
+    return $self->request->referer;
 }
 
 sub activate_user {
@@ -124,12 +125,13 @@ sub pagination {
     my $mode  = 'query';
 
     my $paginator = $self->app->with_plugin('Dancer2::Plugin::Paginator')->paginator(
-        curr        => $page,
-        page_size   => $size,
-        frame_size  => $frame,
-        items       => $total,
-        base_url    => $url,
-        mode        => $mode,
+        curr       => $page,
+        page_size  => $size,
+        frame_size => $frame,
+        items      => $total,
+        base_url   => $url,
+        mode       => $mode,
+        params     => $self->app->request->query_parameters->as_hashref_mixed, # Add query params
     );
 
     my @controls;

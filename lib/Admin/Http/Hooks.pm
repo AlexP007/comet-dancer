@@ -39,6 +39,9 @@ hook before_template_render => sub {
 
     $tokens->{sidebar} = Utils::set_active_menu_item($sidebar, request->path);
 
+    ### Query ###
+    $tokens->{query} = query_parameters->as_hashref_mixed;
+
     return;
 };
 

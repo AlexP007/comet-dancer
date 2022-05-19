@@ -14,12 +14,12 @@
         <: } :>
 >
     <: if $placeholder != nil { :>
-        <option value="" disabled selected><: $placeholder :></option>
+        <option value=""><: $placeholder :></option>
     <: } :>
         
     <: for $options -> $option { :>
         <option value="<: $option.value :>"
-                <: if $option.selected == 1 { :>
+                <: if $option.selected == 1 || $option.value == $selected { :>
                     selected
                 <: } :>
         >
