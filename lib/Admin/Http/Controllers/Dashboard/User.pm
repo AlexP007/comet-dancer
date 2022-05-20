@@ -8,7 +8,7 @@ use Dancer2::Plugin::DBIC;
 use Dancer2::Plugin::FormValidator;
 use Dancer2::Plugin::Auth::Extensible;
 use Admin::Http::Forms::UserForm;
-use Admin::Usecases::User::Queries::Search;
+use Admin::Usecases::User::Queries::UserSearch;
 
 use feature 'try';
 no warnings 'experimental::try';
@@ -16,7 +16,8 @@ no warnings 'experimental::try';
 sub index {
     my $page = query_parameters->{page} || 1;
 
-    my $rset = Admin::Usecases::User::Queries::Search->new(
+    my $rset = Admin::Usecases::User::Queries::UserSearch->new(
+        rset          => rset('User'),
         role          => query_parameters->{role},
         active        => query_parameters->{active},
         search_phrase => trim(query_parameters->{q}),

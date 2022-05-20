@@ -1,13 +1,16 @@
-package Admin::Usecases::User::Queries::Search;
+package Admin::Usecases::User::Queries::UserSearch;
 
 use strict; use warnings;
 
-use Dancer2 appname  =>'Admin';
-
 use Moo;
-use Types::Standard qw(Maybe Str Bool);
-use Dancer2::Plugin::DBIC;
+use Types::Standard qw(InstanceOf Maybe Str Bool);
 use namespace::clean;
+
+has rset => (
+    is       => 'ro',
+    isa      => InstanceOf['Schema::Auth::ResultSet::User'],
+    required => 1,
+);
 
 has role => (
     is       => 'ro',
@@ -27,10 +30,10 @@ has search_phrase => (
 sub invoke {
     my ($self) = @_;
 
-    my $rset = rset('User')->users_with_roles;
+    my $rset = $self->rset->users_with_roles;
 
     if ($self->role) {
-        my $username_rset = rset('User')->search_rs({
+        my $username_rset = $self->rset->search_rs({
                 'role.role' => $self->role,
             }, {
                 join => { user_roles => 'role' },
@@ -44,11 +47,9 @@ sub invoke {
         });
     }
 
-    if ($self->active) {
-        my $deleted = $self->active != 1;
-
+    if ($self->active eq '1' or $self->active eq '0') {
         $rset = $rset->search_rs({
-            deleted => $deleted,
+            deleted => not $self->active,
         });
     }
 
