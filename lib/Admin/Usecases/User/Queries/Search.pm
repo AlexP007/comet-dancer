@@ -5,21 +5,9 @@ use strict; use warnings;
 use Dancer2 appname  =>'Admin';
 
 use Moo;
-use Types::Standard qw(Str Int Bool Maybe);
+use Types::Standard qw(Maybe Str Bool);
 use Dancer2::Plugin::DBIC;
 use namespace::clean;
-
-has page => (
-    is       => 'ro',
-    isa      => Int,
-    required => 1,
-);
-
-has size => (
-    is       => 'ro',
-    isa      => Int,
-    required => 1,
-);
 
 has role => (
     is       => 'ro',
@@ -39,11 +27,7 @@ has search_phrase => (
 sub invoke {
     my ($self) = @_;
 
-
-    my $rset = rset('User')->users_with_roles(
-        size => $self->size,
-        page => $self->page,
-    );
+    my $rset = rset('User')->users_with_roles;
 
     if ($self->role) {
         my $username_rset = rset('User')->search_rs({

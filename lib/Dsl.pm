@@ -1,7 +1,6 @@
 package Dsl;
 
 use Moo;
-use Constant;
 extends 'Dancer2::Core::DSL';
 
 use constant {
@@ -117,9 +116,9 @@ sub user_admin {
 sub pagination {
     my ($self, %args) = @_;
 
-    my $page  = $args{page}  || 1;
-    my $size  = $args{size}  || Constant::pagination_page_size;
-    my $frame = $args{frame} || Constant::pagination_frame_size;
+    my $page  = $args{page};
+    my $size  = $args{size};
+    my $frame = $args{frame};
     my $total = $args{total};
     my $url   = $args{url};
     my $mode  = 'query';

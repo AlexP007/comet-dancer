@@ -2,6 +2,7 @@ package Admin::Http::Controllers::Dashboard::User;
 
 use Dancer2 appname  =>'Admin';
 
+use Constant;
 use String::Util qw(trim);
 use Dancer2::Plugin::DBIC;
 use Dancer2::Plugin::FormValidator;
@@ -13,19 +14,26 @@ use feature 'try';
 no warnings 'experimental::try';
 
 sub index {
-    my $pagination = pagination(
-        total => rset('User')->count,
-        page  => query_parameters->{page},
-        url   => route('users'),
-    );
+    my $page = query_parameters->{page} || 1;
 
-    my @users = Admin::Usecases::User::Queries::Search->new(
-        page          => $pagination->{page},
-        size          => $pagination->{size},
+    my $rset = Admin::Usecases::User::Queries::Search->new(
         role          => query_parameters->{role},
         active        => query_parameters->{active},
         search_phrase => trim(query_parameters->{q}),
-    )->invoke->all;
+    )->invoke;
+
+    my $pagination = pagination(
+        total => $rset->count,
+        page  => $page,
+        size  => Constant::pagination_page_size,
+        frame => Constant::pagination_frame_size,
+        url   => route('users'),
+    );
+
+    my @users = $rset->search(undef, {
+        page => $page,
+        size => Constant::pagination_page_size,
+    })->all;
 
     my @roles = map { { text => $_->role, value => $_->role } } (rset('Role')->all);
 

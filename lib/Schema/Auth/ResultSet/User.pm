@@ -12,8 +12,6 @@ sub users_with_roles {
         $args{search},
         {
             prefetch => { user_roles => 'role' },
-            page     => $args{page},
-            rows     => $args{size},
         }
     );
 }
