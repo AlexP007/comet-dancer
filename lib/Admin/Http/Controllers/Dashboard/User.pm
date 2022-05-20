@@ -9,6 +9,7 @@ use Dancer2::Plugin::FormValidator;
 use Dancer2::Plugin::Auth::Extensible;
 use Admin::Http::Forms::UserForm;
 use Admin::Usecases::User::Queries::UserSearch;
+use Admin::Usecases::User::Utils::UsersToTableStruct;
 
 use feature 'try';
 no warnings 'experimental::try';
@@ -38,10 +39,15 @@ sub index {
 
     my @roles = map { { text => $_->role, value => $_->role } } (rset('Role')->all);
 
+    my $rows = Admin::Usecases::User::Utils::UsersToTableStruct->new(
+        users => \@users,
+        route => \&route,
+    )->invoke;
+
     my $table = {
         name     => 'user',
         headings => [ qw(Username Email Name Status Roles) ],
-        rows     => _user_rows(@users),
+        rows     => $rows,
     };
 
     template 'admin/dashboard/users/index', {
@@ -204,49 +210,6 @@ sub activate {
 }
 
 ### Usecases ###
-
-sub _user_rows {
-    my @rows = map {
-        {
-            id      => $_->username,
-            data    => [
-                { value => $_->username,   type => 'text'   },
-                { value => $_->email,      type => 'text'   },
-                { value => $_->name,       type => 'text'   },
-                { value => $_->active,     type => 'toggle' },
-                { value => $_->role_names, type => 'list'   },
-            ],
-            actions => $_->active ? [
-                {
-                    name    => 'edit',
-                    type    => 'link',
-                    route   => route('user_edit', $_->username)
-                },
-                {
-                    name    => 'deactivate',
-                    type    => 'form',
-                    confirm => {
-                        heading => 'Are you sure?',
-                        message => sprintf('User: %s will be deactivated.', $_->username),
-                    },
-                    route   => route('user_deactivate', $_->username)
-                },
-            ] : [
-                {
-                    name    => 'activate',
-                    type    => 'form',
-                    confirm => {
-                        heading => 'Are you sure?',
-                        message => sprintf('User: %s will be activated.', $_->username),
-                    },
-                    route   => route('user_activate', $_->username)
-                },
-            ],
-        }
-    } @_;
-
-    return \@rows
-}
 
 sub _user_store {
     my (%args) = @_;

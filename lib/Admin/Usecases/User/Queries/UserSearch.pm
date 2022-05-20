@@ -1,9 +1,11 @@
 package Admin::Usecases::User::Queries::UserSearch;
 
 use strict; use warnings;
+use feature qw(signatures);
 
 use Moo;
 use Types::Standard qw(InstanceOf Maybe Str Bool);
+no warnings qw(experimental::signatures);
 use namespace::clean;
 
 has rset => (
@@ -27,9 +29,7 @@ has search_phrase => (
     isa      => Maybe[Str],
 );
 
-sub invoke {
-    my ($self) = @_;
-
+sub invoke($self) {
     my $rset = $self->rset->users_with_roles;
 
     if ($self->role) {
