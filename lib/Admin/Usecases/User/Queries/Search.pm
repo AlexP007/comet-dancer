@@ -60,12 +60,20 @@ sub invoke {
         });
     }
 
-    if (defined $self->active) {
-        my $deleted = not $self->active;
+    if ($self->active) {
+        my $deleted = $self->active != 1;
 
         $rset = $rset->search_rs({
             deleted => $deleted,
         });
+    }
+
+    if (my $phrase = $self->search_phrase) {
+        $rset = $rset->search_rs([
+            { username => { -like => "%$phrase%" } },
+            { name     => { -like => "%$phrase%" } },
+            { email    => { -like => "%$phrase%" } },
+        ]);
     }
 
     return $rset;

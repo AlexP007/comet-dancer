@@ -9,7 +9,7 @@ sub users_with_roles {
     my ($self, %args) = @_;
 
     return $self->search_rs(
-        undef,
+        $args{search},
         {
             prefetch => { user_roles => 'role' },
             page     => $args{page},

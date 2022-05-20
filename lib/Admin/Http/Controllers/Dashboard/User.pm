@@ -19,15 +19,14 @@ sub index {
         url   => route('users'),
     );
 
-    my $query = Admin::Usecases::User::Queries::Search->new(
+    my @users = Admin::Usecases::User::Queries::Search->new(
         page          => $pagination->{page},
         size          => $pagination->{size},
         role          => query_parameters->{role},
         active        => query_parameters->{active},
         search_phrase => trim(query_parameters->{q}),
-    );
+    )->invoke->all;
 
-    my @users = $query->invoke->all;
     my @roles = map { { text => $_->role, value => $_->role } } (rset('Role')->all);
 
     my $table = {
