@@ -15,6 +15,7 @@ requires "Dancer2::Plugin::Paginator"                          => "0";
 
 requires "Moo"             => "0";
 requires "DBD::mysql"      => "0";
+requires "String::Util"    => "0";
 requires "Sereal::Decoder" => "0";
 requires "Sereal::Encoder" => "0";
 

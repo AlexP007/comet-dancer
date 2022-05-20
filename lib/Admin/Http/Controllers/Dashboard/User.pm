@@ -2,10 +2,12 @@ package Admin::Http::Controllers::Dashboard::User;
 
 use Dancer2 appname  =>'Admin';
 
+use String::Util qw(trim);
 use Dancer2::Plugin::DBIC;
 use Dancer2::Plugin::FormValidator;
 use Dancer2::Plugin::Auth::Extensible;
 use Admin::Http::Forms::UserForm;
+use Admin::Usecases::User::Queries::Search;
 
 use feature 'try';
 no warnings 'experimental::try';
@@ -17,11 +19,15 @@ sub index {
         url   => route('users'),
     );
 
-    my @users = rset('User')->users_with_roles(
-        page => $pagination->{page},
-        size => $pagination->{size},
+    my $query = Admin::Usecases::User::Queries::Search->new(
+        page          => $pagination->{page},
+        size          => $pagination->{size},
+        role          => query_parameters->{role},
+        active        => query_parameters->{active},
+        search_phrase => trim(query_parameters->{q}),
     );
 
+    my @users = $query->invoke->all;
     my @roles = map { { text => $_->role, value => $_->role } } (rset('Role')->all);
 
     my $table = {
@@ -195,39 +201,39 @@ sub _user_rows {
     my @rows = map {
         {
             id      => $_->username,
-                data    => [
-                    { value => $_->username,   type => 'text'   },
-                    { value => $_->email,      type => 'text'   },
-                    { value => $_->name,       type => 'text'   },
-                    { value => $_->active,     type => 'toggle' },
-                    { value => $_->role_names, type => 'list'   },
-                ],
-                actions => $_->active ? [
-                    {
-                        name    => 'edit',
-                        type    => 'link',
-                        route   => route('user_edit', $_->username)
+            data    => [
+                { value => $_->username,   type => 'text'   },
+                { value => $_->email,      type => 'text'   },
+                { value => $_->name,       type => 'text'   },
+                { value => $_->active,     type => 'toggle' },
+                { value => $_->role_names, type => 'list'   },
+            ],
+            actions => $_->active ? [
+                {
+                    name    => 'edit',
+                    type    => 'link',
+                    route   => route('user_edit', $_->username)
+                },
+                {
+                    name    => 'deactivate',
+                    type    => 'form',
+                    confirm => {
+                        heading => 'Are you sure?',
+                        message => sprintf('User: %s will be deactivated.', $_->username),
                     },
-                    {
-                        name    => 'deactivate',
-                        type    => 'form',
-                        confirm => {
-                            heading => 'Are you sure?',
-                            message => sprintf('User: %s will be deactivated.', $_->username),
-                        },
-                        route   => route('user_deactivate', $_->username)
+                    route   => route('user_deactivate', $_->username)
+                },
+            ] : [
+                {
+                    name    => 'activate',
+                    type    => 'form',
+                    confirm => {
+                        heading => 'Are you sure?',
+                        message => sprintf('User: %s will be activated.', $_->username),
                     },
-                ] : [
-                    {
-                        name    => 'activate',
-                        type    => 'form',
-                        confirm => {
-                            heading => 'Are you sure?',
-                            message => sprintf('User: %s will be activated.', $_->username),
-                        },
-                        route   => route('user_activate', $_->username)
-                    },
-                ],
+                    route   => route('user_activate', $_->username)
+                },
+            ],
         }
     } @_;
 

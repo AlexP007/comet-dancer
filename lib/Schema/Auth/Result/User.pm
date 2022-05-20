@@ -119,7 +119,9 @@ sub has_role {
 }
 
 sub role_names {
-    my @roles = map { $_->role } ( shift->roles->all );
+    my ($self) = @_;
+
+    my @roles = map { $_->role } ( $self->roles->all );
     return \@roles;
 }
 
