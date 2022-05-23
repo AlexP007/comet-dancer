@@ -10,6 +10,7 @@ use Dancer2::Plugin::Auth::Extensible;
 use Admin::Http::Forms::UserForm;
 use Admin::Usecases::User::Queries::UserSearch;
 use Admin::Usecases::User::Utils::UsersToTableStruct;
+use Admin::Usecases::User::Utils::RolesToSelectOptionsStruct;
 
 use feature 'try';
 no warnings 'experimental::try';
@@ -37,7 +38,7 @@ sub index {
         size => Constant::pagination_page_size,
     })->all;
 
-    my @roles = map { { text => $_->role, value => $_->role } } (rset('Role')->all);
+    my @roles = rset('Role')->all;
 
     my $rows = Admin::Usecases::User::Utils::UsersToTableStruct->new(
         users  => \@users,
@@ -46,6 +47,10 @@ sub index {
             user_activate   => route('user_activate'),
             user_deactivate => route('user_deactivate'),
         },
+    )->invoke;
+
+    my $roles_select = Admin::Usecases::User::Utils::RolesToSelectOptionsStruct->new(
+        roles => \@roles,
     )->invoke;
 
     my $table = {
@@ -58,7 +63,7 @@ sub index {
         title      => 'Users',
         table      => $table,
         pagination => $pagination,
-        roles      => \@roles,
+        roles      => $roles_select,
         routes     => {
             user_create => route('user_create'),
         }
@@ -66,12 +71,15 @@ sub index {
 }
 
 sub create {
-    my @roles = map { { text => $_->role, value => $_->role } } (rset('Role')->all);
+    my @roles        = rset('Role')->all;
+    my $roles_select = Admin::Usecases::User::Utils::RolesToSelectOptionsStruct->new(
+        roles => \@roles,
+    )->invoke;
 
     template 'admin/dashboard/users/form', {
         title  => 'Create User',
         button => 'Create',
-        roles  => \@roles,
+        roles  => $roles_select,
         action => route('user_store'),
     }
 }
@@ -107,18 +115,16 @@ sub edit {
     my $user = get_user_details $username;
 
     if ($user) {
-        my @roles = map {
-            {
-                text     => $_->role,
-                value    => $_->role,
-                selected => $user->has_role($_->role),
-            }
-        } (rset('Role')->all);
+        my @roles        = rset('Role')->all;
+        my $roles_select = Admin::Usecases::User::Utils::RolesToSelectOptionsStruct->new(
+            roles    => \@roles,
+            selected => $user->role_names,
+        )->invoke;
 
         template 'admin/dashboard/users/form', {
             title           => 'Update User',
             user            => $user,
-            roles           => \@roles,
+            roles           => $roles_select,
             button          => 'Update',
             action          => route('user_update', $user->username),
             freeze_username => 1,
