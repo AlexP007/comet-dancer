@@ -40,8 +40,12 @@ sub index {
     my @roles = map { { text => $_->role, value => $_->role } } (rset('Role')->all);
 
     my $rows = Admin::Usecases::User::Utils::UsersToTableStruct->new(
-        users => \@users,
-        route => \&route,
+        users  => \@users,
+        routes => {
+            user_edit       => route('user_edit'),
+            user_activate   => route('user_activate'),
+            user_deactivate => route('user_deactivate'),
+        },
     )->invoke;
 
     my $table = {

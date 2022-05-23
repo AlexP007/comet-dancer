@@ -4,7 +4,7 @@ use strict; use warnings;
 use feature qw(signatures);
 
 use Moo;
-use Types::Standard qw(ArrayRef InstanceOf CodeRef);
+use Types::Standard qw(ArrayRef InstanceOf Dict Str);
 no warnings qw(experimental::signatures);
 use namespace::clean;
 
@@ -14,9 +14,13 @@ has users => (
     required => 1,
 );
 
-has route => (
+has routes => (
     is       => 'ro',
-    isa      => CodeRef,
+    isa      => Dict[
+        user_edit       => Str,
+        user_activate   => Str,
+        user_deactivate => Str,
+    ],
     required => 1,
 );
 
@@ -35,7 +39,7 @@ sub invoke($self) {
                 {
                     name    => 'edit',
                     type    => 'link',
-                    route   => $self->route->('user_edit', $_->username)
+                    route   => $self->_route('user_edit', $_->username)
                 },
                 {
                     name    => 'deactivate',
@@ -44,7 +48,7 @@ sub invoke($self) {
                         heading => 'Are you sure?',
                         message => sprintf('User: %s will be deactivated.', $_->username),
                     },
-                    route   => $self->route->('user_deactivate', $_->username)
+                    route   => $self->_route('user_deactivate', $_->username)
                 },
             ] : [
                 {
@@ -54,13 +58,17 @@ sub invoke($self) {
                         heading => 'Are you sure?',
                         message => sprintf('User: %s will be activated.', $_->username),
                     },
-                    route   => $self->route->('user_activate', $_->username)
+                    route   => $self->_route('user_activate', $_->username)
                 },
             ],
         }
     } @{ $self->users };
 
     return \@rows
+}
+
+sub _route($self, $route, $id) {
+    return sprintf($self->routes->{$route}, $id);
 }
 
 1;
