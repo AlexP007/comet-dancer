@@ -6,8 +6,10 @@
     </button>
 </div>
 
-<div>
-    <: include components::utils::flash :>
+<div class="relative min-w-16">
+    <div class="absolute min-w-16 z-10">
+        <: include components::utils::flash :>
+    </div>
 </div>
 
 <div class="flex items-center">

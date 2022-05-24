@@ -5,6 +5,7 @@ module.exports = {
     minWidth: {
       'admin': '1024px',
       'full': '100%',
+      '16': '16rem',
     },
   },
   plugins: [],

@@ -20,10 +20,9 @@ around dsl_keywords => sub {
     $keywords->{flash_success}   = { is_global => 1 };
     $keywords->{flash_error}     = { is_global => 1 };
     $keywords->{back}            = { is_global => 1 };
+    $keywords->{get_user}        = { is_global => 1 };
     $keywords->{activate_user}   = { is_global => 1 };
     $keywords->{deactivate_user} = { is_global => 1 };
-    $keywords->{user_inactive}   = { is_global => 1 };
-    $keywords->{user_admin}      = { is_global => 1 };
     $keywords->{pagination}      = { is_global => 0 };
 
     return $keywords;
@@ -70,6 +69,16 @@ sub back {
     return $self->request->referer;
 }
 
+sub get_user {
+    my ($self, $username) = @_;
+
+    return $self
+        ->app
+        ->with_plugin('Dancer2::Plugin::DBIC')
+        ->rset('User')
+        ->find({ username => $username });
+}
+
 sub activate_user {
     my ($self, $username) = @_;
 
@@ -90,27 +99,6 @@ sub deactivate_user {
         ->rset('User')
         ->single({ username => $username })
         ->update({ deleted => 1 });
-}
-
-sub user_inactive {
-    my ($self, $username) = @_;
-
-    return $self
-        ->app
-        ->with_plugin('Dancer2::Plugin::DBIC')
-        ->rset('User')
-        ->single({ username => $username })
-        ->inactive;
-}
-
-sub user_admin {
-    my ($self, $username) = @_;
-
-    return $self
-        ->app
-        ->with_plugin('Dancer2::Plugin::Auth::Extensible')
-        ->get_user_details($username)
-        ->admin;
 }
 
 sub pagination {

@@ -1,6 +1,6 @@
 <: if $deferred.flash_success != nil { :>
     <div
-            class="py-2 px-4 min-w-[48] text-emerald-700 text-center bg-green-200 rounded-sm shadow-sm opacity-80"
+            class="py-2 px-4 text-emerald-700 text-center bg-green-200 rounded-sm shadow-sm opacity-80"
             x-data="{ show : true }"
             x-show="show"
             x-init="setTimeout(() => show = false, 3000)"
@@ -10,12 +10,27 @@
 <: } :>
 
 <: if $deferred.flash_error != nil { :>
-    <div
-            class="py-2 px-4 min-w-[48] text-red-800 text-center bg-red-300 rounded-sm shadow-sm opacity-80"
-            x-data="{ show : true }"
-            x-show="show"
-            x-init="setTimeout(() => show = false, 8000)"
-    >
-        <: $deferred.flash_error :>
-    </div>
+    <: if is_array_ref($deferred.flash_error) {:>
+        <: for $deferred.flash_error -> $errors { :>
+            <: for $errors -> $error { :>
+                <div
+                        class="py-2 px-4 mb-1 text-red-800 text-center bg-red-300 rounded-sm shadow-sm opacity-80"
+                        x-data="{ show : true }"
+                        x-show="show"
+                        x-init="setTimeout(() => show = false, 8000)"
+                >
+                    <: $error :>
+                </div>
+            <: } :>
+        <: } :>
+    <: } else {:>
+        <div
+                class="py-2 px-4 text-red-800 text-center bg-red-300 rounded-sm shadow-sm opacity-80"
+                x-data="{ show : true }"
+                x-show="show"
+                x-init="setTimeout(() => show = false, 8000)"
+        >
+            <: $deferred.flash_error :>
+        </div>
+    <: } :>
 <: } :>

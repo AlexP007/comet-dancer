@@ -8,6 +8,7 @@ use Dancer2::Plugin::DBIC;
 use Dancer2::Plugin::FormValidator;
 use Dancer2::Plugin::Auth::Extensible;
 use Admin::Http::Forms::UserForm;
+use Admin::Http::Forms::UserSearchForm;
 use Admin::Usecases::User::Queries::UserSearch;
 use Admin::Usecases::User::Utils::UsersToTableStruct;
 use Admin::Usecases::User::Utils::RolesToSelectOptionsStruct;
@@ -16,14 +17,27 @@ use feature 'try';
 no warnings 'experimental::try';
 
 sub index {
-    my $page = query_parameters->{page} || 1;
+    my $rset = rset('User');
+    my $page = 1;
 
-    my $rset = Admin::Usecases::User::Queries::UserSearch->new(
-        rset          => rset('User'),
-        role          => query_parameters->{role},
-        active        => query_parameters->{active},
-        search_phrase => trim(query_parameters->{q}),
-    )->invoke;
+    if (validate profile => Admin::Http::Forms::UserSearchForm->new) {
+        my $validated = validated;
+
+        $page = $validated->{page} || $page;
+
+        $rset = Admin::Usecases::User::Queries::UserSearch->new(
+            rset          => $rset,
+            role          => $validated->{role},
+            active        => $validated->{active},
+            search_phrase => trim($validated->{q}),
+        )->invoke;
+    }
+    else {
+        my $errors   = errors;
+        my @messages = values(%{ $errors });
+
+        flash_error \@messages;
+    }
 
     my $pagination = pagination(
         total => $rset->count,
