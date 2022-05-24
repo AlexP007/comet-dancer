@@ -33,7 +33,6 @@ sub index {
     }
     else {
         my $errors = errors;
-
         flash_error [ values(%{ $errors }) ];
     }
 
@@ -70,15 +69,12 @@ sub index {
 }
 
 sub create {
-    my @roles        = rset('Role')->all;
-    my $roles_select = Admin::Usecases::User::Utils::RolesToSelectOptionsStruct->new(
-        roles => \@roles,
-    )->invoke;
+    my @roles = rset('Role')->all;
 
     template 'admin/dashboard/users/form', {
         title  => 'Create User',
         button => 'Create',
-        roles  => $roles_select,
+        roles  => _roles_to_select(\@roles),
         action => route('user_store'),
     }
 }
@@ -110,11 +106,10 @@ sub store {
 
 sub edit {
     my $username = route_parameters->{user};
-
-    my $user = get_user_details $username;
+    my $user     = get_user_details $username;
 
     if ($user) {
-        my @roles        = rset('Role')->all;
+        my @roles = rset('Role')->all;
 
         template 'admin/dashboard/users/form', {
             title           => 'Update User',
@@ -144,27 +139,11 @@ sub update {
     );
 
     if (validate profile => $profile) {
-        my $v = validated;
+        my $validated = validated;
 
         try {
-            my $roles = _prepare_roles(
-                ref $v->{roles} eq 'ARRAY' ? @{ $v->{roles} } : ($v->{roles})
-            );
-
-            update_user($username,
-                name     => $v->{name},
-                email    => $v->{email},
-                roles    => $roles,
-            );
-
-            if ($v->{password}) {
-                user_password(
-                    username     => $username,
-                    new_password => $v->{password},
-                );
-            }
-
-            my $message = sprintf('User: %s updated', $username);
+            my $user    = _user_update($username, %{ $validated });
+            my $message = sprintf('User: %s updated', $user->username);
 
             info          $message;
             flash_success $message;
@@ -322,14 +301,15 @@ sub _set_selected {
 sub _user_store {
     my (%args) = @_;
 
-    my $roles = _prepare_roles(
-        ref $args{roles} eq 'ARRAY' ? @{ $args{roles} } : ($args{roles})
-    );
+    my $roles_or_role = $args{roles};
+    my $username      = $args{username};
+    my $password      = $args{password};
+    my $name          = $args{name};
+    my $email         = $args{email};
 
-    my $username = $args{username};
-    my $password = $args{password};
-    my $name     = $args{name};
-    my $email    = $args{email};
+    my $roles = _prepare_roles(
+        ref $args{roles} eq 'ARRAY' ? @{ $roles_or_role } : ($roles_or_role)
+    );
 
     my $user = create_user(
         username => $username,
@@ -343,6 +323,38 @@ sub _user_store {
             username     => $username,
             new_password => $password,
         );
+
+        return $user;
+    }
+
+    return undef;
+}
+
+sub _user_update {
+    my ($username, %args) = @_;
+
+    my $roles_or_role = $args{roles};
+    my $password      = $args{password};
+    my $name          = $args{name};
+    my $email         = $args{email};
+
+    my $roles = _prepare_roles(
+        ref $args{roles} eq 'ARRAY' ? @{ $roles_or_role } : ($roles_or_role)
+    );
+
+    my $user = update_user($username,
+        name     => $name,
+        email    => $email,
+        roles    => $roles,
+    );
+
+    if ($user) {
+        if ($password) {
+            user_password(
+                username     => $username,
+                new_password => $password,
+            );
+        }
 
         return $user;
     }
