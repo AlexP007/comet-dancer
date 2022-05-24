@@ -9,7 +9,6 @@ use Dancer2::Plugin::FormValidator;
 use Dancer2::Plugin::Auth::Extensible;
 use Admin::Http::Forms::UserForm;
 use Admin::Http::Forms::UserSearchForm;
-use Admin::Usecases::User::Queries::UserSearch;
 use Admin::Usecases::User::Utils::UsersToTableStruct;
 use Admin::Usecases::User::Utils::RolesToSelectOptionsStruct;
 
@@ -23,20 +22,20 @@ sub index {
     if (validate profile => Admin::Http::Forms::UserSearchForm->new) {
         my $validated = validated;
 
-        $page = $validated->{page} || $page;
+        $page = $validated->{page} > 0
+            ? $validated->{page}
+            : $page;
 
-        $rset = Admin::Usecases::User::Queries::UserSearch->new(
-            rset          => $rset,
-            role          => $validated->{role},
-            active        => $validated->{active},
-            search_phrase => trim($validated->{q}),
-        )->invoke;
+        $rset = _user_search($rset,
+            role   => $validated->{role},
+            active => $validated->{active},
+            search => trim($validated->{q}),
+        );
     }
     else {
-        my $errors   = errors;
-        my @messages = values(%{ $errors });
+        my $errors = errors;
 
-        flash_error \@messages;
+        flash_error [ values(%{ $errors }) ];
     }
 
     my $pagination = pagination(
@@ -234,6 +233,42 @@ sub activate {
 }
 
 ### Usecases ###
+
+sub _user_search {
+    my ($rset, %args) = @_;
+
+    my $role   = $args{role};
+    my $active = $args{active};
+    my $search = $args{search};
+
+    $rset = $rset->users_with_roles;
+
+    if ($role) {
+        my $username_rset = $rset->users_by_role($role);
+
+        $rset = $rset->search_rs({
+            username =>  {
+                -in => $username_rset->get_column('username')->as_query,
+            },
+        });
+    }
+
+    if ($active eq '1' or $active eq '0') {
+        $rset = $rset->search_rs({
+            deleted => not $active,
+        });
+    }
+
+    if ($search) {
+        $rset = $rset->search_rs([
+            { username => { -like => "%$search%" } },
+            { name     => { -like => "%$search%" } },
+            { email    => { -like => "%$search%" } },
+        ]);
+    }
+
+    return $rset;
+}
 
 sub _user_store {
     my (%args) = @_;

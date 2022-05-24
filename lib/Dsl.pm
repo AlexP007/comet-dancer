@@ -83,10 +83,7 @@ sub activate_user {
     my ($self, $username) = @_;
 
     return $self
-        ->app
-        ->with_plugin('Dancer2::Plugin::DBIC')
-        ->rset('User')
-        ->single({ username => $username })
+        ->get_user($username)
         ->update({ deleted  => 0 });
 }
 
@@ -94,10 +91,7 @@ sub deactivate_user {
     my ($self, $username) = @_;
 
     return $self
-        ->app
-        ->with_plugin('Dancer2::Plugin::DBIC')
-        ->rset('User')
-        ->single({ username => $username })
+        ->get_user($username)
         ->update({ deleted => 1 });
 }
 
