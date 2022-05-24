@@ -3,14 +3,13 @@ package Admin::Http::Controllers::Dashboard::User;
 use Dancer2 appname  =>'Admin';
 
 use Constant;
+use List::Util qw(any);
 use String::Util qw(trim);
 use Dancer2::Plugin::DBIC;
 use Dancer2::Plugin::FormValidator;
 use Dancer2::Plugin::Auth::Extensible;
 use Admin::Http::Forms::UserForm;
 use Admin::Http::Forms::UserSearchForm;
-use Admin::Usecases::User::Utils::UsersToTableStruct;
-use Admin::Usecases::User::Utils::RolesToSelectOptionsStruct;
 
 use feature 'try';
 no warnings 'experimental::try';
@@ -53,30 +52,17 @@ sub index {
 
     my @roles = rset('Role')->all;
 
-    my $rows = Admin::Usecases::User::Utils::UsersToTableStruct->new(
-        users  => \@users,
-        routes => {
-            user_edit       => route('user_edit'),
-            user_activate   => route('user_activate'),
-            user_deactivate => route('user_deactivate'),
-        },
-    )->invoke;
-
-    my $roles_select = Admin::Usecases::User::Utils::RolesToSelectOptionsStruct->new(
-        roles => \@roles,
-    )->invoke;
-
     my $table = {
         name     => 'user',
         headings => [ qw(Username Email Name Status Roles) ],
-        rows     => $rows,
+        rows     => _users_to_table(\@users),
     };
 
     template 'admin/dashboard/users/index', {
         title      => 'Users',
         table      => $table,
         pagination => $pagination,
-        roles      => $roles_select,
+        roles      => _roles_to_select(\@roles),
         routes     => {
             user_create => route('user_create'),
         }
@@ -129,15 +115,11 @@ sub edit {
 
     if ($user) {
         my @roles        = rset('Role')->all;
-        my $roles_select = Admin::Usecases::User::Utils::RolesToSelectOptionsStruct->new(
-            roles    => \@roles,
-            selected => $user->role_names,
-        )->invoke;
 
         template 'admin/dashboard/users/form', {
             title           => 'Update User',
             user            => $user,
-            roles           => $roles_select,
+            roles           => _roles_to_select(\@roles, $user->role_names),
             button          => 'Update',
             action          => route('user_update', $user->username),
             freeze_username => 1,
@@ -268,6 +250,73 @@ sub _user_search {
     }
 
     return $rset;
+}
+
+sub _users_to_table {
+    my ($users) = @_;
+
+    my @rows = map {
+        {
+            id      => $_->username,
+                data    => [
+                    { value => $_->username,   type => 'text'   },
+                    { value => $_->email,      type => 'text'   },
+                    { value => $_->name,       type => 'text'   },
+                    { value => $_->active,     type => 'toggle' },
+                    { value => $_->role_names, type => 'list'   },
+                ],
+                actions => $_->active ? [
+                    {
+                        name    => 'edit',
+                        type    => 'link',
+                        route   => route('user_edit', $_->username)
+                    },
+                    {
+                        name    => 'deactivate',
+                        type    => 'form',
+                        confirm => {
+                            heading => 'Are you sure?',
+                            message => sprintf('User: %s will be deactivated.', $_->username),
+                        },
+                        route   => route('user_deactivate', $_->username)
+                    },
+                ] : [
+                    {
+                        name    => 'activate',
+                        type    => 'form',
+                        confirm => {
+                            heading => 'Are you sure?',
+                            message => sprintf('User: %s will be activated.', $_->username),
+                        },
+                        route   => route('user_activate', $_->username)
+                    },
+                ],
+        }
+    } @{ $users };
+
+    return \@rows
+}
+
+sub _roles_to_select {
+    my ($roles, $selected) = @_;
+
+    my @select = map {
+        {
+            text     => $_->role,
+            value    => $_->role,
+            selected => _set_selected($_->role, $selected),
+        }
+    } @{ $roles };
+
+    return \@select;
+}
+
+sub _set_selected {
+    my ($role, $selected) = @_;
+
+    return $selected
+        ? any { $_ eq $role } @{ $selected }
+        : undef;
 }
 
 sub _user_store {
