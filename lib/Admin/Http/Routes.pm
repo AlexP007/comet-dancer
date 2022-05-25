@@ -3,6 +3,7 @@ package Admin::Http::Routes;
 use Dancer2 appname  =>'Admin';
 
 use Admin::Http::Controllers::Login;
+use Admin::Http::Controllers::Dashboard;
 use Admin::Http::Controllers::Dashboard::User;
 use Admin::Http::Controllers::Dashboard::UserRoles;
 
@@ -13,11 +14,7 @@ get '/' => sub {
 get '/login' => \&Admin::Http::Controllers::Login::index;
 
 prefix '/dashboard' => sub {
-    get '' => sub {
-        template 'admin/dashboard/index', {
-            title => 'Dashboard',
-        }
-    };
+    get '' => \&Admin::Http::Controllers::Dashboard::index;
 
     prefix '/users' => sub {
         get  ''                  => \&Admin::Http::Controllers::Dashboard::User::index;
