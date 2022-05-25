@@ -22,7 +22,7 @@ sub login_process {
     my ($auth_result) = @_;
 
     if ($auth_result->{success} == 1) {
-        my $user = get_user $auth_result->{username};
+        my $user = get_user_details $auth_result->{username};
 
         if (not $user->admin) {
             app->destroy_session;
