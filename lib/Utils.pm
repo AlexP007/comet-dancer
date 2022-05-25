@@ -76,4 +76,18 @@ sub table_row_action {
     };
 }
 
+sub select {
+    my (%args) = @_;
+
+    my $text     = $args{text};
+    my $value    = $args{value};
+    my $selected = $args{selected};
+
+    return {
+        text     => $text,
+        value    => $value,
+        selected => $selected,
+    }
+}
+
 1;

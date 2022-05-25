@@ -281,11 +281,11 @@ sub _roles_to_select {
     my ($roles, $selected) = @_;
 
     my @select = map {
-        {
+        Utils::select(
             text     => $_->role,
             value    => $_->role,
             selected => _set_selected($_->role, $selected),
-        }
+        )
     } @{ $roles };
 
     return \@select;
