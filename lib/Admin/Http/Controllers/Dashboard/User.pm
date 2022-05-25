@@ -3,6 +3,7 @@ package Admin::Http::Controllers::Dashboard::User;
 use Dancer2 appname  =>'Admin';
 
 use Constant;
+use Utils;
 use List::Util qw(any);
 use String::Util qw(trim);
 use Dancer2::Plugin::DBIC;
@@ -51,11 +52,11 @@ sub index {
 
     my @roles = rset('Role')->all;
 
-    my $table = {
+    my $table = Utils::table(
         name     => 'user',
         headings => [ qw(Username Email Name Status Roles) ],
         rows     => _users_to_table(\@users),
-    };
+    );
 
     template 'admin/dashboard/users/index', {
         title      => 'Users',
@@ -237,39 +238,39 @@ sub _users_to_table {
     my @rows = map {
         {
             id      => $_->username,
-                data    => [
-                    { value => $_->username,   type => 'text'   },
-                    { value => $_->email,      type => 'text'   },
-                    { value => $_->name,       type => 'text'   },
-                    { value => $_->active,     type => 'toggle' },
-                    { value => $_->role_names, type => 'list'   },
-                ],
-                actions => $_->active ? [
-                    {
-                        name    => 'edit',
-                        type    => 'link',
-                        route   => route('user_edit', $_->username)
+            data    => [
+                Utils::table_row_data(value => $_->username,   type => 'text'),
+                Utils::table_row_data(value => $_->email,      type => 'text'),
+                Utils::table_row_data(value => $_->name,       type => 'text'),
+                Utils::table_row_data(value => $_->active,     type => 'toggle'),
+                Utils::table_row_data(value => $_->role_names, type => 'list'),
+            ],
+            actions => $_->active ? [
+                Utils::table_row_action(
+                    name    => 'edit',
+                    type    => 'link',
+                    route   => route('user_edit', $_->username)
+                ),
+                Utils::table_row_action(
+                    name    => 'deactivate',
+                    type    => 'form',
+                    confirm => {
+                        heading => 'Are you sure?',
+                        message => sprintf('User: %s will be deactivated.', $_->username),
                     },
-                    {
-                        name    => 'deactivate',
-                        type    => 'form',
-                        confirm => {
-                            heading => 'Are you sure?',
-                            message => sprintf('User: %s will be deactivated.', $_->username),
-                        },
-                        route   => route('user_deactivate', $_->username)
+                    route   => route('user_deactivate', $_->username)
+                ),
+            ] : [
+                Utils::table_row_action(
+                    name    => 'activate',
+                    type    => 'form',
+                    confirm => {
+                        heading => 'Are you sure?',
+                        message => sprintf('User: %s will be activated.', $_->username),
                     },
-                ] : [
-                    {
-                        name    => 'activate',
-                        type    => 'form',
-                        confirm => {
-                            heading => 'Are you sure?',
-                            message => sprintf('User: %s will be activated.', $_->username),
-                        },
-                        route   => route('user_activate', $_->username)
-                    },
-                ],
+                    route   => route('user_activate', $_->username)
+                ),
+            ],
         }
     } @{ $users };
 

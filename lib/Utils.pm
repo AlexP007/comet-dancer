@@ -34,4 +34,46 @@ sub set_active_menu_item {
     return $items;
 }
 
+sub table {
+    my (%args) = @_;
+
+    my $name     = $args{name};
+    my $headings = $args{headings};
+    my $rows     = $args{rows};
+
+    return {
+        name     => $name,
+        headings => $headings,
+        rows     => $rows,
+    };
+}
+
+sub table_row_data {
+    my (%args) = @_;
+
+    my $value = $args{value};
+    my $type  = $args{type};
+
+    return {
+        value => $value,
+        type  => $type,
+    };
+}
+
+sub table_row_action {
+    my (%args) = @_;
+
+    my $name    = $args{name};
+    my $type    = $args{type};
+    my $route   = $args{route};
+    my $confirm = $args{confirm};
+
+    return {
+        name    => $name,
+        type    => $type,
+        route   => $route,
+        confirm => $confirm,
+    };
+}
+
 1;
