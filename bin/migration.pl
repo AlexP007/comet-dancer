@@ -1,12 +1,13 @@
 #!/usr/bin/perl
 
-use Dancer2;
 use FindBin;
-use Dancer2::Plugin::DBIC;
-use DBIx::Class::Migration;
 use lib "$FindBin::Bin/../lib";
 
-my $action = shift;
+use Dancer2;
+use Dancer2::Plugin::DBIC;
+use DBIx::Class::Migration;
+
+my ($action) = @ARGV;
 
 my $migration = DBIx::Class::Migration->new(
     schema     => schema,
@@ -14,8 +15,10 @@ my $migration = DBIx::Class::Migration->new(
 );
 
 for ($action) {
+    $migration->status      if /^status$/;
     $migration->prepare     if /^prepare$/;
     $migration->install     if /^install$/;
+    $migration->upgrade     if /^upgrade$/;
     $migration->downgrade   if /^downgrade$/;
     $migration->drop_tables if /^drop_tables$/;
 }

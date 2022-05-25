@@ -1,12 +1,14 @@
 package Schema::Auth::Result::User;
 
-use strict;
-use warnings;
+use strict; use warnings;
 use Constant;
 
 use parent qw(DBIx::Class::Core);
 
 __PACKAGE__->table('users');
+
+### Components ###
+__PACKAGE__->load_components("TimeStamp");
 
 ### Columns ###
 
@@ -46,6 +48,11 @@ __PACKAGE__->add_columns(
         data_type     => 'tinyint',
         size          => 1,
         default_value => 0,
+    },
+
+    registered => {
+        data_type     => 'datetime',
+        set_on_create => 1,
     },
 
     lastlogin => {
@@ -123,6 +130,12 @@ sub role_names {
 
     my @roles = map { $_->role } ( $self->roles->all );
     return \@roles;
+}
+
+sub get_timestamp {
+    my ($self) = @_;
+
+    return $self->SUPER::get_timestamp->set_time_zone('local');
 }
 
 1;

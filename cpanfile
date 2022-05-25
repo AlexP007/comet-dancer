@@ -28,6 +28,7 @@ requires "Log::Dispatch"                       => "0";
 # Support.
 
 requires "DBIx::Class::Migration"     => "0";
+requires "DBIx::Class::TimeStamp"     => "0";
 requires "Text::Xslate::Bridge::Star" => "0";
 
 recommends "YAML"                    => "0";
