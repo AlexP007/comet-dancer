@@ -3,6 +3,7 @@ package Admin::Http::Controllers::Dashboard::UserRoles;
 use Dancer2 appname  =>'Admin';
 
 use Constant;
+use Utils;
 use Dancer2::Plugin::DBIC;
 use Dancer2::Plugin::FormValidator;
 use Admin::Http::Forms::RoleForm;
@@ -16,15 +17,15 @@ sub index {
         {
             id      => $_->role,
             data    => [
-                { value => $_->role, type => 'text' }
+                Utils::table_row_data(value => $_->role, type => 'text'),
             ],
             actions => [
-                {
+                Utils::table_row_action(
                     name    => 'edit',
                     type    => 'link',
-                    route   => route('role_edit', $_->role)
-                },
-                {
+                    route   => route('role_edit', $_->role),
+                ),
+                Utils::table_row_action(
                     name    => 'delete',
                     type    => 'form',
                     confirm => {
@@ -32,16 +33,16 @@ sub index {
                         message => sprintf('Role: %s will be deleted permanently.', $_->role),
                     },
                     route   => route('role_delete', $_->role),
-                },
+                ),
             ],
         }
     } @roles;
 
-    my $table = {
+    my $table = Utils::table(
         name     => 'role',
         headings => [ qw(Role) ],
         rows     => \@rows,
-    };
+    );
 
     template 'admin/dashboard/user_roles/index' , {
         title  => 'Roles',
