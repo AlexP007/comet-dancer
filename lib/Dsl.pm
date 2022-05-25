@@ -4,11 +4,10 @@ use Moo;
 extends 'Dancer2::Core::DSL';
 
 use constant {
-    success => 'flash_success',
-    error   => 'flash_error',
+    routes_var => 'routes',
+    success    => 'flash_success',
+    error      => 'flash_error',
 };
-
-my $routes;
 
 around dsl_keywords => sub {
     my ($orig, $self) = @_;
@@ -29,14 +28,16 @@ around dsl_keywords => sub {
 };
 
 sub routes {
-    $routes = $_[1];
+    my ($self, $routes) = @_;
+
+    $self->var(routes_var, $routes);
     return;
 }
 
 sub route {
     my ($self, $name, @params) = @_;
 
-    my $route = $routes->{$name};
+    my $route = $self->var(routes_var)->{$name};
     if (@params) {
         $route = sprintf($route, @params);
     }

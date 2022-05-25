@@ -1,7 +1,7 @@
 package Utils;
 
-use strict;
-use warnings;
+use strict; use warnings;
+
 use Constant;
 
 sub check_csrf_token {
