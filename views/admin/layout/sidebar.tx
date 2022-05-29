@@ -7,6 +7,8 @@
 
     <nav class="mt-8">
         <: for $sidebar -> $item { :>
+            <: next if not $item.show  :>
+
             <a
                 class="flex items-center px-6 py-2 mt-4 text-white <: $item.active ? 'bg-gray-900 bg-opacity-25' : 'hover:bg-gray-900 hover:bg-opacity-25' :>"
                 href="<: $item.path :>"

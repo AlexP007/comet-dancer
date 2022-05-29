@@ -41,17 +41,20 @@ hook before => sub {
 hook before_template_render => sub {
     my ($tokens) = @_;
 
+    my $user     = logged_in_user;
+    my $is_admin = $user && $user->admin;
+
     ### Logged in user ###
-    $tokens->{current_user} = logged_in_user;
+    $tokens->{current_user} = $user;
 
     ### CSRF token ###
     $tokens->{csrf_token}   = get_csrf_token;
 
     ### Sidebar menu ###
     my $sidebar = [
-        { name => 'Dashboard', path => route('dashboard'), icon => 'chart_pie'  },
-        { name => 'Users',     path => route('users'),     icon => 'user_group' },
-        { name => 'Roles',     path => route('roles'),     icon => 'user_roles' },
+        { name => 'Dashboard', path => route('dashboard'), icon => 'chart_pie',  show => 1         },
+        { name => 'Users',     path => route('users'),     icon => 'user_group', show => $is_admin },
+        { name => 'Roles',     path => route('roles'),     icon => 'user_roles', show => $is_admin },
     ];
 
     $tokens->{sidebar} = Utils::set_active_menu_item($sidebar, request->path);

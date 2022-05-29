@@ -1,6 +1,6 @@
 package Admin::Http::Controllers::Dashboard::UserRoles;
 
-use Dancer2 appname  =>'Admin';
+use Dancer2 appname  => 'Admin';
 
 use Constant;
 use Utils;
