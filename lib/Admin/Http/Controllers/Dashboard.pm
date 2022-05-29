@@ -10,7 +10,7 @@ sub index {
     template 'admin/dashboard/index', {
         title       => 'Dashboard',
         total_users => $total_users,
-    }
+    };
 }
 
 true;

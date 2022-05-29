@@ -1,13 +1,17 @@
 package Dsl;
 
-use Moo;
-extends 'Dancer2::Core::DSL';
+use strict; use warnings;
 
 use constant {
     routes_var => 'routes',
-    success    => 'flash_success',
-    error      => 'flash_error',
 };
+
+use Moo;
+use Utils;
+
+extends 'Dancer2::Core::DSL';
+
+use namespace::clean;
 
 around dsl_keywords => sub {
     my ($orig, $self) = @_;
@@ -47,22 +51,12 @@ sub route {
 
 sub flash_success {
     my ($self, $message) = @_;
-
-    $self->app
-         ->with_plugin('Dancer2::Plugin::Deferred')
-         ->deferred(success, $message);
-
-    return;
+    return Utils::flash_success($self->app, $message);
 }
 
 sub flash_error {
     my ($self, $message) = @_;
-
-    $self->app
-         ->with_plugin('Dancer2::Plugin::Deferred')
-         ->deferred(error, $message);
-
-    return;
+    return Utils::flash_error($self->app, $message);
 }
 
 sub back {

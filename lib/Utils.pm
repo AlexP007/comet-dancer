@@ -2,6 +2,11 @@ package Utils;
 
 use strict; use warnings;
 
+use constant {
+    success    => 'flash_success',
+    error      => 'flash_error',
+};
+
 use Constant;
 
 sub check_csrf_token {
@@ -22,7 +27,7 @@ sub check_csrf_token {
     return;
 }
 
-sub auth_forbidden_handler {
+sub auth_forbidden_message {
     my ($app, $auth_result) = @_;
 
     if (not $auth_result->{success}) {
@@ -37,7 +42,7 @@ sub auth_forbidden_handler {
     return;
 }
 
-sub permission_denied_handler {
+sub logout_and_show_error_message {
     my ($app) = @_;
 
     $app->destroy_session;
@@ -52,6 +57,21 @@ sub permission_denied_handler {
     $app->redirect(Constant::page_login);
 }
 
+sub flash_success {
+    my ($app, $message) = @_;
+
+    $app->with_plugin('Dancer2::Plugin::Deferred')->deferred(success, $message);
+
+    return;
+}
+
+sub flash_error {
+    my ($app, $message) = @_;
+
+    $app->with_plugin('Dancer2::Plugin::Deferred')->deferred(error, $message);
+
+    return;
+}
 
 sub set_active_menu_item {
     my ($items, $path) = @_;
