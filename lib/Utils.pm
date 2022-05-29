@@ -96,12 +96,14 @@ sub table_row_action {
 
     my $name    = $args{name};
     my $type    = $args{type};
+    my $show    = $args{show};
     my $route   = $args{route};
     my $confirm = $args{confirm};
 
     return {
         name    => $name,
         type    => $type,
+        show    => $show,
         route   => $route,
         confirm => $confirm,
     };

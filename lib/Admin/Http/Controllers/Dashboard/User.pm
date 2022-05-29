@@ -245,30 +245,32 @@ sub _users_to_table {
                 Utils::table_row_data(value => $_->active,     type => 'toggle'),
                 Utils::table_row_data(value => $_->role_names, type => 'list'),
             ],
-            actions => $_->active ? [
+            actions => [
                 Utils::table_row_action(
                     name    => 'edit',
                     type    => 'link',
-                    route   => route('user_edit', $_->username)
+                    show    => $_->active,
+                    route   => route('user_edit', $_->username),
                 ),
                 Utils::table_row_action(
                     name    => 'deactivate',
                     type    => 'form',
+                    show    => $_->active,
+                    route   => route('user_deactivate', $_->username),
                     confirm => {
                         heading => 'Are you sure?',
                         message => sprintf('User: %s will be deactivated.', $_->username),
                     },
-                    route   => route('user_deactivate', $_->username)
                 ),
-            ] : [
                 Utils::table_row_action(
                     name    => 'activate',
                     type    => 'form',
+                    show    => $_->inactive,
+                    route   => route('user_activate', $_->username),
                     confirm => {
                         heading => 'Are you sure?',
                         message => sprintf('User: %s will be activated.', $_->username),
                     },
-                    route   => route('user_activate', $_->username)
                 ),
             ],
         }

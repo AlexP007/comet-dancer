@@ -42,14 +42,15 @@
                                  class="absolute text-left bg-stone-50 right-0 z-10 w-48 mt-2 overflow-hidden bg-white rounded-md shadow-xl"
                             >
                                 <: for $row.actions -> $action { :>
+                                    <: next if not $action.show :>
+
                                     <: if ($action.type == 'link') { :>
                                         <a href="<: $action.route :>"
                                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-amber-400"
                                         >
                                             <span class="capitalize"><: $action.name :></span>
                                         </a>
-                                    <: } :>
-                                    <: if ($action.type == 'form') { :>
+                                    <: } elsif ($action.type == 'form') { :>
                                         <div class="text-sm text-gray-700 hover:bg-amber-400">
                                             <form id="<: $row.id :>"
                                                   method="post"

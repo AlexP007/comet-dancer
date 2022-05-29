@@ -23,16 +23,18 @@ sub index {
                 Utils::table_row_action(
                     name    => 'edit',
                     type    => 'link',
+                    show    => 1,
                     route   => route('role_edit', $_->role),
                 ),
                 Utils::table_row_action(
                     name    => 'delete',
                     type    => 'form',
+                    show    => 1,
+                    route   => route('role_delete', $_->role),
                     confirm => {
                         heading => 'Are you sure?',
                         message => sprintf('Role: %s will be deleted permanently.', $_->role),
                     },
-                    route   => route('role_delete', $_->role),
                 ),
             ],
         }
