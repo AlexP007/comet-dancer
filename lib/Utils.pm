@@ -8,6 +8,7 @@ use constant {
 };
 
 use Constant;
+use Paginator::Lite;
 
 sub check_csrf_token {
     my ($app) = @_;
@@ -63,6 +64,48 @@ sub set_active_menu_item {
     }
 
     return $items;
+}
+
+sub pagination {
+    my (%args) = @_;
+
+    my $page   = $args{page};
+    my $size   = $args{size};
+    my $frame  = $args{frame};
+    my $total  = $args{total};
+    my $url    = $args{url};
+    my $params = $args{params};
+    my $mode   = 'query';
+
+    my $paginator = Paginator::Lite->new({
+        curr       => $page,
+        page_size  => $size,
+        frame_size => $frame,
+        items      => $total,
+        base_url   => $url,
+        mode       => $mode,
+        params     => $params,
+    });
+
+    my @controls;
+
+    for my $i ($paginator->begin .. $paginator->end) {
+        push @controls => {
+            page => $i,
+            url  => $paginator->page_url($i),
+            curr => $paginator->curr == $i,
+        };
+    }
+
+    return {
+        page     => $paginator->curr,
+        size     => $paginator->page_size,
+        is_first => $paginator->curr == $paginator->first,
+        is_last  => $paginator->curr == $paginator->last,
+        prev_url => $paginator->prev_url,
+        next_url => $paginator->next_url,
+        controls => \@controls,
+    };
 }
 
 sub table {

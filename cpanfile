@@ -12,13 +12,13 @@ requires "Dancer2::Plugin::FormValidator"                      => "0";
 requires "Dancer2::Plugin::FormValidator::Extension::Password" => "0";
 requires "Dancer2::Plugin::FormValidator::Extension::DBIC"     => "0";
 requires "Dancer2::Plugin::Syntax::ParamKeywords"              => "0";
-requires "Dancer2::Plugin::Paginator"                          => "0";
 
 ### Modules.
 
 requires "Moo"                        => "0";
 requires "DBD::mysql"                 => "0";
 requires "String::Util"               => "0";
+requires "Paginator::Lite"            => "0";
 requires "Sereal::Decoder"            => "0";
 requires "Sereal::Encoder"            => "0";
 requires "DBIx::Class::Migration"     => "0";

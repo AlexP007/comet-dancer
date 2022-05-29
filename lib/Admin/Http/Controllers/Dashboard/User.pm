@@ -38,12 +38,13 @@ sub index {
         flash_error [ values(%{ $errors }) ];
     }
 
-    my $pagination = pagination(
-        total => $rset->count,
-        page  => $page,
-        size  => Constant::pagination_page_size,
-        frame => Constant::pagination_frame_size,
-        url   => route('users'),
+    my $pagination = Utils::pagination(
+        total  => $rset->count,
+        page   => $page,
+        size   => Constant::pagination_page_size,
+        frame  => Constant::pagination_frame_size,
+        url    => route('users'),
+        params => query_params->as_hashref,
     );
 
     my @users = $rset->search(undef, {
