@@ -9,6 +9,7 @@ use String::Util qw(trim);
 use Dancer2::Plugin::DBIC;
 use Dancer2::Plugin::FormValidator;
 use Dancer2::Plugin::Auth::Extensible;
+use Dancer2::Plugin::Syntax::ParamKeywords;
 use Admin::Http::Forms::UserForm;
 use Admin::Http::Forms::UserSearchForm;
 
@@ -130,7 +131,7 @@ sub edit {
 }
 
 sub update {
-    my $username = route_parameters->{user};
+    my $username = route_param      'user';
     my $user     = get_user_details $username;
 
     my $profile  = Admin::Http::Forms::UserForm->new(
@@ -159,7 +160,7 @@ sub update {
 }
 
 sub deactivate {
-    my $user = route_parameters->{user};
+    my $user = route_param 'user';
 
     try {
         deactivate_user $user;
@@ -177,7 +178,7 @@ sub deactivate {
 }
 
 sub activate {
-    my $user = route_parameters->{user};
+    my $user = route_param 'user';
 
     try {
         activate_user $user;

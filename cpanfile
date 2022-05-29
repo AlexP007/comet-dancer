@@ -1,3 +1,5 @@
+### Dancer2 and plugins.
+
 requires "Dancer2"                                             => "0.400000";
 requires "Dancer2::Plugin::DBIC"                               => "0";
 requires "Dancer2::Plugin::Auth::Extensible::Provider::DBIC"   => "0";
@@ -9,27 +11,25 @@ requires "Dancer2::Plugin::Deferred"                           => "0";
 requires "Dancer2::Plugin::FormValidator"                      => "0";
 requires "Dancer2::Plugin::FormValidator::Extension::Password" => "0";
 requires "Dancer2::Plugin::FormValidator::Extension::DBIC"     => "0";
+requires "Dancer2::Plugin::Syntax::ParamKeywords"              => "0";
 requires "Dancer2::Plugin::Paginator"                          => "0";
 
-# Basic.
+### Modules.
 
-requires "Moo"             => "0";
-requires "DBD::mysql"      => "0";
-requires "String::Util"    => "0";
-requires "Sereal::Decoder" => "0";
-requires "Sereal::Encoder" => "0";
-
-# Plack.
-
-requires "Plack::Handler::Starman"             => "0";
-requires "Plack::Middleware::AccessLog::Timed" => "0";
-requires "Log::Dispatch"                       => "0";
-
-# Support.
-
+requires "Moo"                        => "0";
+requires "DBD::mysql"                 => "0";
+requires "String::Util"               => "0";
+requires "Sereal::Decoder"            => "0";
+requires "Sereal::Encoder"            => "0";
 requires "DBIx::Class::Migration"     => "0";
 requires "DBIx::Class::TimeStamp"     => "0";
 requires "Text::Xslate::Bridge::Star" => "0";
+
+### Plack modules.
+
+requires "Plack::Handler::Starman" => "0";
+
+### Support.
 
 recommends "YAML"                    => "0";
 recommends "URL::Encode::XS"         => "0";
@@ -44,7 +44,7 @@ recommends "Math::Random::ISAAC::XS" => "0";
 recommends "MooX::TypeTiny"          => "0";
 recommends "Type::Tiny::XS"          => "0";
 
-# Accelerate.
+### Accelerate.
 
 feature 'accelerate', 'Accelerate Dancer2 app performance with XS modules' => sub {
     requires "URL::Encode::XS"         => "0";
@@ -64,4 +64,3 @@ on "test" => sub {
     requires "Test::More"            => "0";
     requires "HTTP::Request::Common" => "0";
 };
-

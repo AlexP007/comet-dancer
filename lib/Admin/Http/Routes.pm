@@ -1,6 +1,6 @@
 package Admin::Http::Routes;
 
-use Dancer2 appname  =>'Admin';
+use Dancer2 appname  => 'Admin';
 
 use Constant;
 use Dancer2::Plugin::Auth::Extensible;

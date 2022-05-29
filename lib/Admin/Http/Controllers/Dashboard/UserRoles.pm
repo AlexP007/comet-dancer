@@ -6,6 +6,7 @@ use Constant;
 use Utils;
 use Dancer2::Plugin::DBIC;
 use Dancer2::Plugin::FormValidator;
+use Dancer2::Plugin::Syntax::ParamKeywords;
 use Admin::Http::Forms::RoleForm;
 
 use feature 'try';
@@ -85,7 +86,7 @@ sub store {
 }
 
 sub edit {
-    my $role_name = route_parameters->{role};
+    my $role_name = route_param 'role';
 
     my $role = rset('Role')->find({ role => $role_name });
 
@@ -106,7 +107,7 @@ sub edit {
 }
 
 sub update {
-    my $role = route_parameters->{role};
+    my $role = route_param 'role';
 
     if (validate profile => Admin::Http::Forms::RoleForm->new) {
         my $new_role = validated->{role};
@@ -129,7 +130,7 @@ sub update {
 }
 
 sub delete {
-    my $role = route_parameters->{role};
+    my $role = route_param 'role';
 
     try {
         rset('Role')->single({ role => $role })->delete;
