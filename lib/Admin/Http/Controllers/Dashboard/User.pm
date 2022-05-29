@@ -4,7 +4,7 @@ use Dancer2 appname  =>'Admin';
 
 use Constant;
 use Utils;
-use List::Util qw(any);
+use List::Util;
 use String::Util qw(trim);
 use Dancer2::Plugin::DBIC;
 use Dancer2::Plugin::FormValidator;
@@ -22,9 +22,9 @@ sub index {
     if (validate profile => Admin::Http::Forms::UserSearchForm->new) {
         my $validated = validated;
 
-        $page = $validated->{page} > 0
-            ? $validated->{page}
-            : $page;
+        if ($validated->{page} and $validated->{page} > 0) {
+            $page = $validated->{page};
+        }
 
         $rset = _user_search($rset,
             role   => $validated->{role},
@@ -215,7 +215,7 @@ sub _user_search {
         });
     }
 
-    if ($active eq '1' or $active eq '0') {
+    if (defined $active and ($active eq '1' or $active eq '0')) {
         $rset = $rset->search_rs({
             deleted => not $active,
         });
@@ -297,7 +297,7 @@ sub _set_selected {
     my ($role, $selected) = @_;
 
     return $selected
-        ? any { $_ eq $role } @{ $selected }
+        ? List::Util::any { $_ eq $role } @{ $selected }
         : undef;
 }
 
