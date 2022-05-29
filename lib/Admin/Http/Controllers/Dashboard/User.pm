@@ -164,7 +164,7 @@ sub deactivate {
     my $user = route_param 'user';
 
     try {
-        deactivate_user $user;
+        _deactivate_user($user);
 
         my $message = sprintf('User: %s deactivated', $user);
 
@@ -182,7 +182,7 @@ sub activate {
     my $user = route_param 'user';
 
     try {
-        activate_user $user;
+        _activate_user($user);
 
         my $message = sprintf('User: %s activated', $user);
 
@@ -367,6 +367,16 @@ sub _user_update {
     return undef;
 }
 
+sub _deactivate_user {
+    my ($username) = @_;
+    return _get_user($username)->update({ deleted  => 1 });
+}
+
+sub _activate_user {
+    my ($username) = @_;
+    return _get_user($username)->update({ deleted  => 0 });
+}
+
 ### Utils ###
 
 sub _prepare_roles {
@@ -377,6 +387,11 @@ sub _prepare_roles {
     }
 
     return $roles;
+}
+
+sub _get_user {
+    my ($username) = @_;
+    return rset('User')->find({ username => $username });
 }
 
 true;

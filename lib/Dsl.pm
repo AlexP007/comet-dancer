@@ -20,13 +20,10 @@ around dsl_keywords => sub {
 
     $keywords->{routes}          = { is_global => 1 };
     $keywords->{route}           = { is_global => 1 };
+    $keywords->{login_failed}    = { is_global => 1 };
     $keywords->{flash_success}   = { is_global => 1 };
     $keywords->{flash_error}     = { is_global => 1 };
     $keywords->{back}            = { is_global => 1 };
-    $keywords->{login_failed}    = { is_global => 1 };
-    $keywords->{get_user}        = { is_global => 1 };
-    $keywords->{activate_user}   = { is_global => 1 };
-    $keywords->{deactivate_user} = { is_global => 1 };
 
     return $keywords;
 };
@@ -49,6 +46,11 @@ sub route {
     return $self->request->base . $route;
 }
 
+sub login_failed {
+    my ($self) = @_;
+    return $self->app->request->var('login_failed');
+}
+
 sub flash_success {
     my ($self, $message) = @_;
     return Utils::flash_success($self->app, $message);
@@ -62,37 +64,6 @@ sub flash_error {
 sub back {
     my ($self) = @_;
     return $self->request->referer;
-}
-
-sub login_failed {
-    my ($self) = @_;
-    return $self->app->request->var('login_failed');
-}
-
-sub get_user {
-    my ($self, $username) = @_;
-
-    return $self
-        ->app
-        ->with_plugin('Dancer2::Plugin::DBIC')
-        ->rset('User')
-        ->find({ username => $username });
-}
-
-sub activate_user {
-    my ($self, $username) = @_;
-
-    return $self
-        ->get_user($username)
-        ->update({ deleted  => 0 });
-}
-
-sub deactivate_user {
-    my ($self, $username) = @_;
-
-    return $self
-        ->get_user($username)
-        ->update({ deleted => 1 });
 }
 
 1;
