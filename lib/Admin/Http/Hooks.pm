@@ -9,14 +9,13 @@ use Dancer2::Plugin::Auth::Extensible;
 use Admin::Http::Hooks::Auth;
 use Admin::Http::Hooks::Routes;
 
-### Protect admin space ###
-hook before => \&Admin::Http::Hooks::Auth::admin_only;
-
 ### Check CSRF token ###
 hook before => \&Utils::check_csrf_token;
 
-### Processing authentication ###
-hook after_authenticate_user => \&Admin::Http::Hooks::Auth::login_process;
+### Processing forbidden message ###
+hook after_authenticate_user => \&Admin::Http::Hooks::Auth::auth_forbidden_handler;
+
+hook permission_denied => \&Admin::Http::Hooks::Auth::permission_denied_handler;
 
 ### Set routes ###
 hook before => \&Admin::Http::Hooks::Routes::set_routes;

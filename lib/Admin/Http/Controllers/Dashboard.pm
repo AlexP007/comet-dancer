@@ -1,6 +1,6 @@
 package Admin::Http::Controllers::Dashboard;
 
-use Dancer2 appname  =>'Admin';
+use Dancer2 appname  => 'Admin';
 
 use Dancer2::Plugin::DBIC;
 
