@@ -20,48 +20,29 @@ sub check_csrf_token {
                 or $app->with_plugin('Dancer2::Plugin::CSRF')->validate_csrf_token($csrf_token)
             )
         ) {
-            $app->send_error('Page expired', 419)
+            $app->send_error('Page expired', 419);
         }
     }
 
     return;
 }
 
-sub auth_forbidden_message {
-    my ($app, $auth_result) = @_;
-
-    if (not $auth_result->{success}) {
-        $app->with_plugin('Dancer2::Plugin::Deferred')->deferred(
-            'auth_result', {
-                failed  => 1,
-                message => 'Invalid credentials',
-            }
-        );
-    }
-
-    return;
+sub login_success_message {
+    my ($app, $message) = @_;
+    return flash_success($app, $message);
 }
 
-sub logout_and_show_error_message {
+sub logout_and_show_403 {
     my ($app) = @_;
 
     $app->destroy_session;
-
-    $app->with_plugin('Dancer2::Plugin::Deferred')->deferred(
-        'auth_result', {
-            failed  => 1,
-            message => 'Permission Denied',
-        }
-    );
-
-    $app->redirect(Constant::page_login);
+    $app->send_error('Forbidden', 403);
 }
 
 sub flash_success {
     my ($app, $message) = @_;
 
     $app->with_plugin('Dancer2::Plugin::Deferred')->deferred(success, $message);
-
     return;
 }
 
@@ -69,7 +50,6 @@ sub flash_error {
     my ($app, $message) = @_;
 
     $app->with_plugin('Dancer2::Plugin::Deferred')->deferred(error, $message);
-
     return;
 }
 

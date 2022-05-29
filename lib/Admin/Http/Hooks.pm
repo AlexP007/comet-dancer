@@ -10,14 +10,11 @@ use Dancer2::Plugin::Auth::Extensible;
 ### Check CSRF token ###
 hook before => \&Utils::check_csrf_token;
 
-### Processing forbidden message ###
-hook after_authenticate_user => sub { Utils::auth_forbidden_message(app, $_[0]) };
-
 ### Processing success message ###
-hook after_login_success     => sub { flash_success 'Login successful'          };
+hook after_login_success => sub { Utils::login_success_message(app) };
 
 ### Processing permission denied message + logout  ###
-hook permission_denied       => sub { Utils::logout_and_show_error_message(app) };
+hook permission_denied   => sub { Utils::logout_and_show_403(app)   };
 
 ### Set routes ###
 hook before => sub {

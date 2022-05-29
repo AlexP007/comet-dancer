@@ -23,6 +23,7 @@ around dsl_keywords => sub {
     $keywords->{flash_success}   = { is_global => 1 };
     $keywords->{flash_error}     = { is_global => 1 };
     $keywords->{back}            = { is_global => 1 };
+    $keywords->{login_failed}    = { is_global => 1 };
     $keywords->{get_user}        = { is_global => 1 };
     $keywords->{activate_user}   = { is_global => 1 };
     $keywords->{deactivate_user} = { is_global => 1 };
@@ -62,6 +63,11 @@ sub flash_error {
 sub back {
     my ($self) = @_;
     return $self->request->referer;
+}
+
+sub login_failed {
+    my ($self) = @_;
+    return $self->app->request->var('login_failed');
 }
 
 sub get_user {
