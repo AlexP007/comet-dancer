@@ -6,19 +6,37 @@ use Constant;
 use Utils;
 use Dancer2::Plugin::CSRF;
 use Dancer2::Plugin::Auth::Extensible;
-use Admin::Http::Hooks::Auth;
-use Admin::Http::Hooks::Routes;
 
 ### Check CSRF token ###
 hook before => \&Utils::check_csrf_token;
 
 ### Processing forbidden message ###
-hook after_authenticate_user => \&Admin::Http::Hooks::Auth::auth_forbidden_handler;
+hook after_authenticate_user => sub { \&Utils::auth_forbidden_handler(app, $_[0]) };
 
-hook permission_denied => \&Admin::Http::Hooks::Auth::permission_denied_handler;
+### Processing permission denied message + logout  ###
+hook permission_denied => sub { \&Utils::permission_denied_handler(app) };
 
 ### Set routes ###
-hook before => \&Admin::Http::Hooks::Routes::set_routes;
+hook before => sub {
+    routes {
+        dashboard       => '/dashboard',
+            users           => '/users',
+            user_create     => '/users/create',
+            user_store      => '/users/store',
+            user_deactivate => '/users/%s/deactivate',
+            user_activate   => '/users/%s/activate',
+            user_edit       => '/users/%s/edit',
+            user_update     => '/users/%s/update',
+            roles           => '/users/roles',
+            role_create     => '/users/roles/create',
+            role_store      => '/users/roles/store',
+            role_delete     => '/users/roles/%s/delete',
+            role_edit       => '/users/roles/%s/edit',
+            role_update     => '/users/roles/%s/update',
+    };
+
+    return;
+};
 
 hook before_template_render => sub {
     my ($tokens) = @_;

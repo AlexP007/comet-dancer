@@ -22,6 +22,37 @@ sub check_csrf_token {
     return;
 }
 
+sub auth_forbidden_handler {
+    my ($app, $auth_result) = @_;
+
+    if (not $auth_result->{success}) {
+        $app->with_plugin('Dancer2::Plugin::Deferred')->deferred(
+            'auth_result', {
+                failed  => 1,
+                message => 'Invalid credentials',
+            }
+        );
+    }
+
+    return;
+}
+
+sub permission_denied_handler {
+    my ($app) = @_;
+
+    $app->destroy_session;
+
+    $app->with_plugin('Dancer2::Plugin::Deferred')->deferred(
+        'auth_result', {
+            failed  => 1,
+            message => 'Permission Denied',
+        }
+    );
+
+    $app->redirect(Constant::page_login);
+}
+
+
 sub set_active_menu_item {
     my ($items, $path) = @_;
 
