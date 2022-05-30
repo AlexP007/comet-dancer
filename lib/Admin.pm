@@ -6,10 +6,10 @@ our $VERSION = '0.1';
 
 set layout => 'admin';
 
-### Hooks ###
+### Hooks.
 require Admin::Http::Hooks;
 
-### Routes ###
+### Routes.
 require Admin::Http::Routes;
 
 true;

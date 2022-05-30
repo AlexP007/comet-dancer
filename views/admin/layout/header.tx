@@ -27,8 +27,13 @@
              @click.outside="show = false"
              class="absolute bg-stone-50 right-0 z-10 w-48 mt-2 overflow-hidden bg-white rounded-md shadow-xl"
         >
-            <a href="/admin/dashboard/profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-amber-400">Profile</a>
-            <a href="/admin/logout" class="block px-4 py-2 text-sm text-gray-700 hover:bg-amber-400">Logout</a>
+            <: for $user_menu -> $item { :>
+                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-amber-400"
+                   href="<: $item.link :>"
+                >
+                    <: $item.name :>
+                </a>
+            <: } :>
         </div>
     </div>
 </div>

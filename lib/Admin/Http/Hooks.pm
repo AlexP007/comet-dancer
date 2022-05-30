@@ -20,6 +20,8 @@ hook permission_denied   => sub { Utils::logout_and_show_403(app)   };
 ### Set routes.
 hook before => sub {
     routes {
+        logout          => '/logout',
+        profile         => '/profile',
         dashboard       => '/dashboard',
         users           => '/users',
         user_create     => '/users/create',
@@ -51,11 +53,19 @@ hook before_template_render => sub {
     ### CSRF token.
     $tokens->{csrf_token}   = get_csrf_token;
 
+    ### User menu.
+    my $user_menu = [
+        { name => 'Profile', link => route('profile') },
+        { name => 'Logout',  link => route('logout')  },
+    ];
+
+    $tokens->{user_menu} = $user_menu;
+
     ### Sidebar menu.
     my $sidebar = [
-        { name => 'Dashboard', path => route('dashboard'), icon => 'chart_pie',  show => 1         },
-        { name => 'Users',     path => route('users'),     icon => 'user_group', show => $is_admin },
-        { name => 'Roles',     path => route('roles'),     icon => 'user_roles', show => $is_admin },
+        { name => 'Dashboard', link => route('dashboard'), icon => 'chart_pie',  show => 1         },
+        { name => 'Users',     link => route('users'),     icon => 'user_group', show => $is_admin },
+        { name => 'Roles',     link => route('roles'),     icon => 'user_roles', show => $is_admin },
     ];
 
     $tokens->{sidebar} = Utils::set_active_menu_item($sidebar, request->path);
