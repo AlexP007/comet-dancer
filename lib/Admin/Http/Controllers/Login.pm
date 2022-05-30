@@ -17,6 +17,6 @@ sub index {
         exclude_bars => 1,
         login_error  => $login_error,
     };
-};
+}
 
 true;

@@ -16,10 +16,16 @@ get '/'
     => require_any_role Constant::roles_admin_access
     => sub { redirect '/dashboard' };
 
-get '/profile'
-    => require_any_role Constant::roles_admin_access
-    => \&Admin::Http::Controllers::Profile::index;
+prefix '/profile' => sub {
+    get ''
+        => require_any_role Constant::roles_admin_access
+        => \&Admin::Http::Controllers::Profile::index;
 
+    post '/update'
+        => require_any_role Constant::roles_admin_access
+        => \&Admin::Http::Controllers::Profile::update;
+
+};
 get '/dashboard'
     => require_any_role Constant::roles_admin_access
     => \&Admin::Http::Controllers::Dashboard::index;

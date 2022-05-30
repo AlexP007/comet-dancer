@@ -22,6 +22,7 @@ hook before => sub {
     routes {
         logout          => '/logout',
         profile         => '/profile',
+        profile_update  => '/profile/update',
         dashboard       => '/dashboard',
         users           => '/users',
         user_create     => '/users/create',
