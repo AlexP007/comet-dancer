@@ -1,0 +1,40 @@
+<: cascade admin::container :>
+<: around body -> { :>
+    <h3 class="text-gray-700 text-3xl font-semibold"><: $title :></h3>
+
+    <div class="mt-4">
+        <form method="post" action="<: $action :>">
+        <: include components::forms::csrf_token :>
+
+        <div class="grid grid-cols-2 gap-x-4">
+            <div>
+                <: include components::forms::input_group {
+                     label => 'Real Name',
+                     name  => 'name',
+                     value => $current_user.name,
+                } :>
+                <: include components::forms::input_group {
+                      label => 'Email',
+                      name  => 'email',
+                      value => $current_user.email,
+                } :>
+            </div>
+            <div>
+                <: include components::forms::input_group  {
+                     label        => 'Password',
+                     name         => 'password',
+                     autocomplete => 0,
+                } :>
+                <: include components::forms::input_group  {
+                     label        => 'Confirm Password',
+                     name         => 'password_cnf',
+                     autocomplete => 0,
+                } :>
+            </div>
+        </div>
+        <div class="flex justify-end items-baseline">
+            <: include components::forms::button {text => $button} :>
+        </div>
+        </form>
+    </div>
+<: } :>

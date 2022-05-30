@@ -5,15 +5,20 @@ use Dancer2 appname  => 'Admin';
 use Constant;
 use Dancer2::Plugin::Auth::Extensible;
 use Admin::Http::Controllers::Login;
+use Admin::Http::Controllers::Profile;
 use Admin::Http::Controllers::Dashboard;
 use Admin::Http::Controllers::User;
 use Admin::Http::Controllers::UserRoles;
 
 get '/login' => \&Admin::Http::Controllers::Login::index;
 
-get '/' => require_any_role Constant::roles_admin_access => sub {
-    redirect '/dashboard';
-};
+get '/'
+    => require_any_role Constant::roles_admin_access
+    => sub { redirect '/dashboard' };
+
+get '/profile'
+    => require_any_role Constant::roles_admin_access
+    => \&Admin::Http::Controllers::Profile::index;
 
 get '/dashboard'
     => require_any_role Constant::roles_admin_access
