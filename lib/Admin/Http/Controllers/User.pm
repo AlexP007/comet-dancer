@@ -1,4 +1,4 @@
-package Admin::Http::Controllers::Dashboard::User;
+package Admin::Http::Controllers::User;
 
 use Dancer2 appname  =>'Admin';
 

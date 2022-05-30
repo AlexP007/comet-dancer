@@ -1,4 +1,4 @@
-package Admin::Http::Controllers::Dashboard::UserRoles;
+package Admin::Http::Controllers::UserRoles;
 
 use Dancer2 appname  => 'Admin';
 

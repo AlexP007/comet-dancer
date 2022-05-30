@@ -6,8 +6,8 @@ use Constant;
 use Dancer2::Plugin::Auth::Extensible;
 use Admin::Http::Controllers::Login;
 use Admin::Http::Controllers::Dashboard;
-use Admin::Http::Controllers::Dashboard::User;
-use Admin::Http::Controllers::Dashboard::UserRoles;
+use Admin::Http::Controllers::User;
+use Admin::Http::Controllers::UserRoles;
 
 get '/login' => \&Admin::Http::Controllers::Login::index;
 
@@ -23,58 +23,58 @@ prefix '/users' => sub {
 
     get  ''
         => require_role Constant::role_admin
-        => \&Admin::Http::Controllers::Dashboard::User::index;
+        => \&Admin::Http::Controllers::User::index;
 
     get  '/create'
         => require_role Constant::role_admin
-        => \&Admin::Http::Controllers::Dashboard::User::create;
+        => \&Admin::Http::Controllers::User::create;
 
     get  '/:user/edit'
         => require_role Constant::role_admin
-        => \&Admin::Http::Controllers::Dashboard::User::edit;
+        => \&Admin::Http::Controllers::User::edit;
 
     post '/store'
         => require_role Constant::role_admin
-        => \&Admin::Http::Controllers::Dashboard::User::store;
+        => \&Admin::Http::Controllers::User::store;
 
     post '/:user/update'
         => require_role Constant::role_admin
-        => \&Admin::Http::Controllers::Dashboard::User::update;
+        => \&Admin::Http::Controllers::User::update;
 
     post '/:user/deactivate'
         => require_role Constant::role_admin
-        => \&Admin::Http::Controllers::Dashboard::User::deactivate;
+        => \&Admin::Http::Controllers::User::deactivate;
 
     post '/:user/activate'
         => require_role Constant::role_admin
-        => \&Admin::Http::Controllers::Dashboard::User::activate;
+        => \&Admin::Http::Controllers::User::activate;
 };
 
 prefix '/users/roles' => sub {
 
     get  ''
         => require_role Constant::role_admin
-        => \&Admin::Http::Controllers::Dashboard::UserRoles::index;
+        => \&Admin::Http::Controllers::UserRoles::index;
 
     get  '/create'
         => require_role Constant::role_admin
-        => \&Admin::Http::Controllers::Dashboard::UserRoles::create;
+        => \&Admin::Http::Controllers::UserRoles::create;
 
     get  '/:role/edit'
         => require_role Constant::role_admin
-        => \&Admin::Http::Controllers::Dashboard::UserRoles::edit;
+        => \&Admin::Http::Controllers::UserRoles::edit;
 
     post '/store'
         => require_role Constant::role_admin
-        => \&Admin::Http::Controllers::Dashboard::UserRoles::store;
+        => \&Admin::Http::Controllers::UserRoles::store;
 
     post '/:role/update'
         => require_role Constant::role_admin
-        => \&Admin::Http::Controllers::Dashboard::UserRoles::update;
+        => \&Admin::Http::Controllers::UserRoles::update;
 
     post '/:role/delete'
         => require_role Constant::role_admin
-        => \&Admin::Http::Controllers::Dashboard::UserRoles::delete;
+        => \&Admin::Http::Controllers::UserRoles::delete;
 };
 
 true;
