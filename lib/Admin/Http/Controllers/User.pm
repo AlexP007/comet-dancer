@@ -60,7 +60,7 @@ sub index {
         rows     => _users_to_table(\@users),
     );
 
-    template 'admin/dashboard/users/index', {
+    template 'admin/users/index', {
         title      => 'Users',
         table      => $table,
         pagination => $pagination,
@@ -74,7 +74,7 @@ sub index {
 sub create {
     my @roles = rset('Role')->all;
 
-    template 'admin/dashboard/users/form', {
+    template 'admin/users/form', {
         title  => 'Create User',
         button => 'Create',
         roles  => _roles_to_select(\@roles),
@@ -114,7 +114,7 @@ sub edit {
     if ($user) {
         my @roles = rset('Role')->all;
 
-        template 'admin/dashboard/users/form', {
+        template 'admin/users/form', {
             title           => 'Update User',
             user            => $user,
             roles           => _roles_to_select(\@roles, $user->role_names),

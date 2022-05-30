@@ -47,7 +47,7 @@ sub index {
         rows     => \@rows,
     );
 
-    template 'admin/dashboard/user_roles/index' , {
+    template 'admin/user_roles/index' , {
         title  => 'Roles',
         table  => $table,
         routes => {
@@ -57,7 +57,7 @@ sub index {
 }
 
 sub create {
-    template 'admin/dashboard/user_roles/form', {
+    template 'admin/user_roles/form', {
         title  => 'Create Role',
         button => 'Create',
         action => route('role_store'),
@@ -91,7 +91,7 @@ sub edit {
     my $role = rset('Role')->find({ role => $role_name });
 
     if ($role) {
-        template 'admin/dashboard/user_roles/form', {
+        template 'admin/user_roles/form', {
             title  => 'Update Role',
             role   => $role,
             button => 'Update',

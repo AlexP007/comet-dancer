@@ -1,4 +1,4 @@
-<: cascade admin::dashboard::container :>
+<: cascade admin::container :>
 <: around body -> { :>
 <h3 class="text-gray-700 text-3xl font-medium"><: $title :></h3>
 

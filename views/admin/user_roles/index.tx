@@ -1,4 +1,4 @@
-<: cascade admin::dashboard::container :>
+<: cascade admin::container :>
 <: around body -> { :>
 
 <div class="flex justify-between items-center">
