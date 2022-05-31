@@ -1,0 +1,69 @@
+version: "3.9"
+
+networks:
+  project:
+    driver: bridge
+
+services:
+  db:
+    build:
+      context: ./docker/db
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    volumes:
+      - ./storage/db/logs:/var/log/mysql
+      - ./storage/db/data:/var/lib/mysql
+    environment:
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    networks:
+      - project
+
+  app:
+    build:
+      context: ./docker/app
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - db
+    volumes:
+      - ./:/var/www/app
+      - ./storage/app/.carmel:/var/www/.carmel
+      - ./local/lib/perl5:/var/www/perl5
+    networks:
+      - project
+
+  nginx:
+    build:
+      context: ./docker/nginx
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - app
+    volumes:
+      - ./public:/var/www/app/public
+      - ./storage/nginx/logs:/var/log/nginx
+    ports:
+      - "80:80"
+      - "443:80"
+    networks:
+      - project
+
+  redis:
+    image: redis:6.2-alpine
+    restart: unless-stopped
+    depends_on:
+      - app
+    command: redis-server --save 20 1 --loglevel warning --requirepass ${REDIS_PASSWORD}
+    networks:
+      - project
+
+  npm:
+    image: node:17-alpine
+    volumes:
+      - ./:/var/www/app
+    working_dir: /var/www/app
+    command: npm install
+    networks:
+      - project

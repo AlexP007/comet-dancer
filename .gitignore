@@ -1,6 +1,11 @@
 .idea
+.env
+.vscode
+.DS_Store
+.carmel
 /environments
-/logs
+/local
+/storage
 /db
 /node_modules
 package-lock.json
