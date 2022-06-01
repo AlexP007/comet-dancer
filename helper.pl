@@ -19,9 +19,9 @@ for ($action) {
     if (/^npm-install$/) { exec("docker compose run --rm npm npm install");   }
 
     # db.
-    if (/^db$/)        { exec("docker compose exec db mysql -u$ENV{MYSQL_USER} -p$ENV{MYSQL_PASSWORD}");                            }
-    if (/^db-init$/)   { exec("docker compose exec db mysql -uroot -p$ENV{MYSQL_ROOT_PASSWORD} -e  '" . db_init($arg1) . "'");      }
-    if (/^migration$/) { exec("docker compose exec app bash -c 'export PERL5LIB=/var/www/perl5 && perl bin/migration.pl $arg1'");   }
+    if (/^db$/)           { exec("docker compose exec db mysql -u$ENV{MYSQL_USER} -p$ENV{MYSQL_PASSWORD}");                            }
+    if (/^db-init$/)      { exec("docker compose exec db mysql -uroot -p$ENV{MYSQL_ROOT_PASSWORD} -e  '" . db_init($arg1) . "'");      }
+    if (/^db-migration$/) { exec("docker compose exec app carton exec bin/migration.pl $arg1");                                        }
 }
 
 print "Action not found\n";
