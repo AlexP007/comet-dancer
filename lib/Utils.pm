@@ -1,6 +1,6 @@
 package Utils;
 
-use strict; use warnings;
+use v5.36;
 
 use constant {
     success    => 'flash_success',
@@ -10,8 +10,7 @@ use constant {
 use Constant;
 use Paginator::Lite;
 
-sub check_csrf_token {
-    my ($app) = @_;
+sub check_csrf_token($app) {
 
     if ($app->request->is_post) {
         my $csrf_token = $app->request->body_parameters->{csrf_token};
@@ -28,35 +27,26 @@ sub check_csrf_token {
     return;
 }
 
-sub login_success_message {
-    my ($app, $message) = @_;
-    return flash_success($app, $message);
+sub login_success_message($app) {
+    return flash_success($app, 'Login succeeded');
 }
 
-sub logout_and_show_403 {
-    my ($app) = @_;
-
+sub logout_and_show_403($app) {
     $app->destroy_session;
     $app->send_error('Forbidden', 403);
 }
 
-sub flash_success {
-    my ($app, $message) = @_;
-
+sub flash_success($app, $message) {
     $app->with_plugin('Dancer2::Plugin::Deferred')->deferred(success, $message);
     return;
 }
 
-sub flash_error {
-    my ($app, $message) = @_;
-
+sub flash_error($app, $message) {
     $app->with_plugin('Dancer2::Plugin::Deferred')->deferred(error, $message);
     return;
 }
 
-sub set_active_menu_item {
-    my ($items, $path) = @_;
-
+sub set_active_menu_item($items, $path) {
     for my $item (@{ $items }) {
         if ($item->{link} eq $path) {
             $item->{active} = 1;
@@ -66,9 +56,7 @@ sub set_active_menu_item {
     return $items;
 }
 
-sub pagination {
-    my (%args) = @_;
-
+sub pagination(%args) {
     my $page   = $args{page};
     my $size   = $args{size};
     my $frame  = $args{frame};
@@ -108,9 +96,7 @@ sub pagination {
     };
 }
 
-sub table {
-    my (%args) = @_;
-
+sub table(%args) {
     my $name     = $args{name};
     my $headings = $args{headings};
     my $rows     = $args{rows};
@@ -122,9 +108,7 @@ sub table {
     };
 }
 
-sub table_row_data {
-    my (%args) = @_;
-
+sub table_row_data(%args) {
     my $value = $args{value};
     my $type  = $args{type};
 
@@ -134,9 +118,7 @@ sub table_row_data {
     };
 }
 
-sub table_row_action {
-    my (%args) = @_;
-
+sub table_row_action(%args) {
     my $name    = $args{name};
     my $type    = $args{type};
     my $show    = $args{show};
@@ -152,9 +134,7 @@ sub table_row_action {
     };
 }
 
-sub select {
-    my (%args) = @_;
-
+sub select(%args) {
     my $text     = $args{text};
     my $value    = $args{value};
     my $selected = $args{selected};

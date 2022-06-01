@@ -1,6 +1,7 @@
-package Admin;
+package Admin::Http::Boot;
 
-use Dancer2;
+use v5.36;
+use Dancer2 appname  => 'Admin';
 
 our $VERSION = '0.1';
 

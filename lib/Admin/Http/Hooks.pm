@@ -1,5 +1,6 @@
 package Admin::Http::Hooks;
 
+use v5.36;
 use Dancer2 appname  => 'Admin';
 
 use Constant;
@@ -42,8 +43,7 @@ hook before => sub {
     return;
 };
 
-hook before_template_render => sub {
-    my ($tokens) = @_;
+hook before_template_render => sub($tokens) {
 
     my $user     = logged_in_user;
     my $is_admin = $user && $user->admin;
