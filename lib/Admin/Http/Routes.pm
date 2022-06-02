@@ -1,5 +1,6 @@
 package Admin::Http::Routes;
 
+use v5.36;
 use Dancer2 appname  => 'Admin';
 
 use Constant;

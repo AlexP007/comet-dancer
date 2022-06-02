@@ -1,5 +1,6 @@
 package Admin::Http::Controllers::Profile;
 
+use v5.36;
 use Dancer2 appname  => 'Admin';
 
 use Dancer2::Plugin::FormValidator;

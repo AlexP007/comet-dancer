@@ -1,5 +1,6 @@
 package Admin::Http::Controllers::User;
 
+use v5.36;
 use Dancer2 appname  =>'Admin';
 
 use Constant;
@@ -198,9 +199,7 @@ sub activate {
 
 ### Usecases ###
 
-sub _user_search {
-    my ($rset, %args) = @_;
-
+sub _user_search($rset, %args) {
     my $role   = $args{role};
     my $active = $args{active};
     my $search = $args{search};
@@ -234,9 +233,7 @@ sub _user_search {
     return $rset;
 }
 
-sub _users_to_table {
-    my ($users) = @_;
-
+sub _users_to_table($users) {
     my @rows = map {
         {
             id      => $_->username,
@@ -281,9 +278,7 @@ sub _users_to_table {
     return \@rows
 }
 
-sub _roles_to_select {
-    my ($roles, $selected) = @_;
-
+sub _roles_to_select($roles, $selected = undef) {
     my @select = map {
         Utils::select(
             text     => $_->role,
@@ -295,17 +290,13 @@ sub _roles_to_select {
     return \@select;
 }
 
-sub _set_selected {
-    my ($role, $selected) = @_;
-
+sub _set_selected($role, $selected = undef) {
     return $selected
         ? List::Util::any { $_ eq $role } @{ $selected }
         : undef;
 }
 
-sub _user_store {
-    my (%args) = @_;
-
+sub _user_store(%args) {
     my $roles_or_role = $args{roles};
     my $username      = $args{username};
     my $password      = $args{password};
@@ -335,9 +326,7 @@ sub _user_store {
     return undef;
 }
 
-sub _user_update {
-    my ($username, %args) = @_;
-
+sub _user_update($username, %args) {
     my $roles_or_role = $args{roles};
     my $password      = $args{password};
     my $name          = $args{name};
@@ -367,30 +356,27 @@ sub _user_update {
     return undef;
 }
 
-sub _deactivate_user {
-    my ($username) = @_;
+sub _deactivate_user($username) {
     return _get_user($username)->update({ deleted  => 1 });
 }
 
-sub _activate_user {
-    my ($username) = @_;
+sub _activate_user($username) {
     return _get_user($username)->update({ deleted  => 0 });
 }
 
 ### Utils ###
 
-sub _prepare_roles {
-    my $roles = {};
+sub _prepare_roles(@roles) {
+    my $result = {};
 
-    for my $role (@_) {
-        $roles->{$role} = 1;
+    for my $role (@roles) {
+        $result->{$role} = 1;
     }
 
-    return $roles;
+    return $result;
 }
 
-sub _get_user {
-    my ($username) = @_;
+sub _get_user($username) {
     return rset('User')->find({ username => $username });
 }
 

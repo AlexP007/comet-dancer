@@ -1,5 +1,6 @@
 package Admin::Http::Controllers::UserRoles;
 
+use v5.36;
 use Dancer2 appname  => 'Admin';
 
 use Constant;
