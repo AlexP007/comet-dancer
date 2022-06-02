@@ -1,7 +1,5 @@
 <: cascade admin::container :>
 <: around body -> { :>
-
-<div class="mt-4">
     <div class="flex flex-wrap -mx-6">
         <: include components::utils::dashboard_item {
            name  => 'Users',
@@ -10,9 +8,4 @@
            bg    => 'bg-indigo-600',
         } :>
     </div>
-</div>
-
-<div class="mt-8">
-
-</div>
 <: } :>

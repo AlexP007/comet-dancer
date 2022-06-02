@@ -1,6 +1,5 @@
 <: cascade admin::container :>
 <: around body -> { :>
-<div class="mt-4">
     <form method="post" action="<: $action :>">
         <: include components::forms::csrf_token :>
 
@@ -49,6 +48,4 @@
             <: include components::forms::button {text => $button} :>
         </div>
     </form>
-</div>
-
 <: } :>

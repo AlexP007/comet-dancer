@@ -1,7 +1,6 @@
 <: cascade admin::container :>
 <: around body -> { :>
-    <div class="mt-4">
-        <form method="post" action="<: $action :>">
+    <form method="post" action="<: $action :>">
         <: include components::forms::csrf_token :>
 
         <div class="grid grid-cols-2 gap-x-4">
@@ -28,6 +27,5 @@
         <div class="flex justify-end items-baseline">
             <: include components::forms::button {text => $button} :>
         </div>
-        </form>
-    </div>
+    </form>
 <: } :>

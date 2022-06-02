@@ -4,5 +4,7 @@
         <: block head -> { } :>
     </div>
 
-    <: block body -> { } :>
+    <div class="my-8">
+        <: block body -> { } :>
+    </div>
 </div>

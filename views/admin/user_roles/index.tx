@@ -11,13 +11,9 @@
 <: } :>
 
 <: around body -> { :>
-
-<div class="mt-8">
     <: include components::tables::table {
        name        => $table.name,
        headings    => $table.headings,
        rows        => $table.rows,
     } :>
-</div>
-
 <: } :>
