@@ -1,4 +1,4 @@
-package Schema::Auth::Result::UserRoles;
+package Schema::User::Result::UserRoles;
 
 use v5.36;
 
@@ -24,8 +24,8 @@ __PACKAGE__->set_primary_key(qw(user_id role_id));
 
 ### Relationships ###
 
-__PACKAGE__->belongs_to(user => 'Schema::Auth::Result::User', 'user_id');
+__PACKAGE__->belongs_to(user => 'Schema::User::Result::User', 'user_id');
 
-__PACKAGE__->belongs_to(role => 'Schema::Auth::Result::Role', 'role_id');
+__PACKAGE__->belongs_to(role => 'Schema::User::Result::Role', 'role_id');
 
 1;

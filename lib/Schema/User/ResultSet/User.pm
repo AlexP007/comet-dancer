@@ -1,4 +1,4 @@
-package Schema::Auth::ResultSet::User;
+package Schema::User::ResultSet::User;
 
 use v5.36;
 

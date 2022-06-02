@@ -1,4 +1,4 @@
-package Schema::Auth::Result::Role;
+package Schema::User::Result::Role;
 
 use v5.36;
 
@@ -29,7 +29,7 @@ __PACKAGE__->add_unique_constraint([qw(role)]);
 ### Relationships ###
 
 __PACKAGE__->has_many(
-    user_roles => 'Schema::Auth::Result::UserRoles', 'role_id',
+    user_roles => 'Schema::User::Result::UserRoles', 'role_id',
     {
         cascade_copy   => 0,
         cascade_delete => 0
