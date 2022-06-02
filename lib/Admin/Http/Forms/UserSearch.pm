@@ -1,6 +1,6 @@
-package Admin::Http::Forms::UserSearchForm;
+package Admin::Http::Forms::UserSearch;
 
-use strict; use warnings;
+use v5.36;
 
 use Moo;
 

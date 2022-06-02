@@ -5,7 +5,7 @@ use Dancer2 appname  => 'Admin';
 
 use Dancer2::Plugin::FormValidator;
 use Dancer2::Plugin::Auth::Extensible;
-use Admin::Http::Forms::ProfileForm;
+use Admin::Http::Forms::Profile;
 
 use feature 'try';
 no warnings 'experimental::try';
@@ -19,7 +19,7 @@ sub index {
 }
 
 sub update {
-    my $profile = Admin::Http::Forms::ProfileForm->new(
+    my $profile = Admin::Http::Forms::Profile->new(
         current_email => logged_in_user->email,
     );
 

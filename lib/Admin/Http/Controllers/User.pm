@@ -11,8 +11,8 @@ use Dancer2::Plugin::DBIC;
 use Dancer2::Plugin::FormValidator;
 use Dancer2::Plugin::Auth::Extensible;
 use Dancer2::Plugin::Syntax::ParamKeywords;
-use Admin::Http::Forms::UserForm;
-use Admin::Http::Forms::UserSearchForm;
+use Admin::Http::Forms::User;
+use Admin::Http::Forms::UserSearch;
 
 use feature 'try';
 no warnings 'experimental::try';
@@ -21,7 +21,7 @@ sub index {
     my $rset = rset('User');
     my $page = 1;
 
-    if (validate profile => Admin::Http::Forms::UserSearchForm->new) {
+    if (validate profile => Admin::Http::Forms::UserSearch->new) {
         my $validated = validated;
 
         if ($validated->{page} and $validated->{page} > 0) {
@@ -84,7 +84,7 @@ sub create {
 }
 
 sub store {
-    my $profile = Admin::Http::Forms::UserForm->new(
+    my $profile = Admin::Http::Forms::User->new(
         require_username => 1,
         require_password => 1,
     );
@@ -136,7 +136,7 @@ sub update {
     my $username = route_param      'user';
     my $user     = get_user_details $username;
 
-    my $profile  = Admin::Http::Forms::UserForm->new(
+    my $profile  = Admin::Http::Forms::User->new(
         require_username => 0,
         require_password => 0,
         current_email    => $user->email,

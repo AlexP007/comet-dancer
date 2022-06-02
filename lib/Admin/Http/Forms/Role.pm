@@ -1,6 +1,6 @@
-package Admin::Http::Forms::RoleForm;
+package Admin::Http::Forms::Role;
 
-use strict; use warnings;
+use v5.36;
 
 use Moo;
 

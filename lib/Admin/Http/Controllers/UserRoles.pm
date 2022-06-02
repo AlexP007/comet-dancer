@@ -8,7 +8,7 @@ use Utils;
 use Dancer2::Plugin::DBIC;
 use Dancer2::Plugin::FormValidator;
 use Dancer2::Plugin::Syntax::ParamKeywords;
-use Admin::Http::Forms::RoleForm;
+use Admin::Http::Forms::Role;
 
 use feature 'try';
 no warnings 'experimental::try';
@@ -66,7 +66,7 @@ sub create {
 }
 
 sub store {
-    if (validate profile => Admin::Http::Forms::RoleForm->new) {
+    if (validate profile => Admin::Http::Forms::Role->new) {
         my $v = validated;
 
         try {
@@ -110,7 +110,7 @@ sub edit {
 sub update {
     my $role = route_param 'role';
 
-    if (validate profile => Admin::Http::Forms::RoleForm->new) {
+    if (validate profile => Admin::Http::Forms::Role->new) {
         my $new_role = validated->{role};
 
         try {

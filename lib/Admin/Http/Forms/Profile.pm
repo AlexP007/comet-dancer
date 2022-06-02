@@ -1,24 +1,12 @@
-package Admin::Http::Forms::UserForm;
+package Admin::Http::Forms::Profile;
 
-use strict; use warnings;
+use v5.36;
 
 use Moo;
 use Types::Standard qw(Str Bool);
 use namespace::clean;
 
 with 'Dancer2::Plugin::FormValidator::Role::ProfileHasMessages';
-
-has require_username => (
-    is       => 'ro',
-    isa      => Bool,
-    required => 1,
-);
-
-has require_password => (
-    is       => 'ro',
-    isa      => Bool,
-    required => 1,
-);
 
 has current_email => (
     is        => 'ro',
@@ -27,28 +15,12 @@ has current_email => (
 );
 
 sub profile {
-    my ($self) = @_;
-
-    no warnings 'qw';
-
-    my %profile = (
-        username     => [ qw(alpha_num length_min:4 length_max:32 unique:User,username) ],
+    return {
         name         => [ qw(length_min:1 length_max:127) ],
         email        => [ qw(required email length_max:127) ],
         password     => [ qw(password_simple length_max:40) ],
         password_cnf => [ qw(required_with:password same:password) ],
-        roles        => [ qw(required) ]
-    );
-
-    if ($self->require_username) {
-        unshift @{ $profile{username} }, 'required';
-    }
-
-    if ($self->require_password) {
-        unshift @{ $profile{password} }, 'required';
-    }
-
-    return \%profile;
+    };
 }
 
 around hook_before => sub {
@@ -58,7 +30,7 @@ around hook_before => sub {
     # If email not equals current user email, add unique validator for it.
     if (
         $self->has_current_email
-        and $input->{email} ne $self->current_email
+            and $input->{email} ne $self->current_email
     ) {
         push @{ $profile->{email} }, 'unique:User,email';
     }
