@@ -11,11 +11,6 @@
                      name  => 'name',
                      value => $current_user.name,
                 } :>
-                <: include components::forms::input_group {
-                      label => 'Email',
-                      name  => 'email',
-                      value => $current_user.email,
-                } :>
             </div>
             <div>
                 <: include components::forms::input_group  {

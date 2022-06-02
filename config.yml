@@ -79,6 +79,9 @@ plugins:
   FormValidator:
     session:
       namespace: '_form_validator'
+    messages:
+      language: en
+      ucfirst: 1
     extensions:
       password:
         provider: 'Dancer2::Plugin::FormValidator::Extension::Password'

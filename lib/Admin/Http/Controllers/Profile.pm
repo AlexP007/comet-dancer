@@ -19,11 +19,7 @@ sub index {
 }
 
 sub update {
-    my $profile = Admin::Http::Forms::Profile->new(
-        current_email => logged_in_user->email,
-    );
-
-    if (validate profile => $profile) {
+    if (validate profile => Admin::Http::Forms::Profile->new) {
         my $validated = validated;
 
         try {
