@@ -1,41 +1,38 @@
 <: cascade admin::container :>
-<: around body -> { :>
 
-<div class="flex justify-between items-center">
-    <h3 class="text-gray-700 text-3xl font-medium">Users</h3>
-
+<: around head -> { :>
     <nav class="mx-2">
         <form method="get">
             <div class="flex">
                 <div class="flex">
                     <div class="relative">
                         <: include components::forms::select {
-                            class       => 'appearance-none rounded-l border block w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500',
-                            name        => 'role',
-                            options     => $roles,
-                            selected    => $query.role,
-                            placeholder => 'Role',
+                             class       => 'appearance-none rounded-l border block w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500',
+                             name        => 'role',
+                             options     => $roles,
+                             selected    => $query.role,
+                             placeholder => 'Role',
                         } :>
 
-                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                            <: include components::icons::arrow_down :>
-                        </div>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                <: include components::icons::arrow_down :>
+                            </div>
                     </div>
                     <div class="relative">
                         <: include components::forms::select {
-                            class   => 'appearance-none border-t border-r border-b sm:rounded-r-none sm:border-r-0 block w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500',
-                            name    => 'active',
-                            options => [
-                                { text => 'Active',   value => 1 },
-                                { text => 'Inactive', value => 0 },
-                            ],
-                            selected    => $query.active,
-                            placeholder => 'All',
+                             class   => 'appearance-none border-t border-r border-b sm:rounded-r-none sm:border-r-0 block w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500',
+                             name    => 'active',
+                             options => [
+                              { text => 'Active',   value => 1 },
+                              { text => 'Inactive', value => 0 },
+                             ],
+                             selected    => $query.active,
+                             placeholder => 'All',
                         } :>
 
-                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                            <: include components::icons::arrow_down :>
-                        </div>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                <: include components::icons::arrow_down :>
+                            </div>
                     </div>
                 </div>
                 <div class="relative">
@@ -44,17 +41,17 @@
                     </span>
 
                     <: include components::forms::input {
-                        class       => 'appearance-none border border-gray-400 block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:border-gray-500 focus:bg-white focus:placeholder-gray-600 focus:outline-none',
-                        name        => 'q',
-                        type        => 'search',
-                        placeholder => 'Search',
-                        value       => $query.q,
+                         class       => 'appearance-none border border-gray-400 block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:border-gray-500 focus:bg-white focus:placeholder-gray-600 focus:outline-none',
+                         name        => 'q',
+                         type        => 'search',
+                         placeholder => 'Search',
+                         value       => $query.q,
                     } :>
                 </div>
                 <div class="relative">
                     <: include components::forms::button {
-                       text  => 'Apply',
-                       class => 'rounded-r border-t border-r border-b border-gray-400 py-2 px-6 w-full bg-white text-sm text-gray-700 focus:bg-whit'
+                         text  => 'Apply',
+                         class => 'rounded-r border-t border-r border-b border-gray-400 py-2 px-6 w-full bg-white text-sm text-gray-700 focus:bg-whit'
                     } :>
                 </div>
             </div>
@@ -62,12 +59,14 @@
     </nav>
     <div class="pr-4">
         <: include components::utils::button_link {
-           text  => 'New',
-           link  => $routes.user_create,
-           color => 'sky',
+             text  => 'New',
+             link  => $routes.user_create,
+             color => 'sky',
         } :>
     </div>
-</div>
+<: } :>
+
+<: around body -> { :>
 
 <div class="mt-8">
     <: include components::tables::table {

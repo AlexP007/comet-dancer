@@ -1,16 +1,16 @@
 <: cascade admin::container :>
-<: around body -> { :>
 
-<div class="flex justify-between items-center">
-    <h3 class="text-gray-700 text-3xl font-semibold"><: $title :></h3>
+<: around head -> { :>
     <div class="pr-4">
         <: include components::utils::button_link {
-           text  => 'New',
-           link  => $routes.role_create,
-           color => 'sky',
+             text  => 'New',
+             link  => $routes.role_create,
+             color => 'sky',
         } :>
     </div>
-</div>
+<: } :>
+
+<: around body -> { :>
 
 <div class="mt-8">
     <: include components::tables::table {
