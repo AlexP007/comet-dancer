@@ -1,6 +1,6 @@
 package Constant;
 
-use strict; use warnings;
+use v5.36;
 
 use constant {
     role_admin            => 'admin',

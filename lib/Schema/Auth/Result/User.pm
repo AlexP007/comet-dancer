@@ -1,6 +1,7 @@
 package Schema::Auth::Result::User;
 
-use strict; use warnings;
+use v5.36;
+
 use Constant;
 
 use parent qw(DBIx::Class::Core);

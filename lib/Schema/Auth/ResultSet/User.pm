@@ -1,6 +1,6 @@
 package Schema::Auth::ResultSet::User;
 
-use strict; use warnings;
+use v5.36;
 
 use base 'DBIx::Class::ResultSet';
 

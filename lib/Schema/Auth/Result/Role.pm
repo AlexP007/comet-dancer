@@ -1,7 +1,7 @@
 package Schema::Auth::Result::Role;
 
-use strict;
-use warnings;
+use v5.36;
+
 use parent qw(DBIx::Class::Core);
 
 __PACKAGE__->table('roles');

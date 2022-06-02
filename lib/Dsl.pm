@@ -1,6 +1,6 @@
 package Dsl;
 
-use strict; use warnings;
+use v5.36;
 
 use constant {
     routes_var => 'routes',
@@ -13,9 +13,7 @@ extends 'Dancer2::Core::DSL';
 
 use namespace::clean;
 
-around dsl_keywords => sub {
-    my ($orig, $self) = @_;
-
+around dsl_keywords => sub($orig, $self) {
     my $keywords = $orig->($self);
 
     $keywords->{routes}          = { is_global => 1 };
@@ -28,16 +26,12 @@ around dsl_keywords => sub {
     return $keywords;
 };
 
-sub routes {
-    my ($self, $routes) = @_;
-
+sub routes($self, $routes) {
     $self->var(routes_var, $routes);
     return;
 }
 
-sub route {
-    my ($self, $name, @params) = @_;
-
+sub route($self, $name, @params) {
     my $route = $self->var(routes_var)->{$name};
     if (@params) {
         $route = sprintf($route, @params);
@@ -46,23 +40,19 @@ sub route {
     return $self->request->base . $route;
 }
 
-sub login_failed {
-    my ($self) = @_;
+sub login_failed($self) {
     return $self->app->request->var('login_failed');
 }
 
-sub flash_success {
-    my ($self, $message) = @_;
+sub flash_success($self, $message) {
     return Utils::flash_success($self->app, $message);
 }
 
-sub flash_error {
-    my ($self, $message) = @_;
+sub flash_error($self, $message) {
     return Utils::flash_error($self->app, $message);
 }
 
-sub back {
-    my ($self) = @_;
+sub back($self) {
     return $self->request->referer;
 }
 

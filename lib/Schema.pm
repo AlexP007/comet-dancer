@@ -1,6 +1,7 @@
 package Schema;
 
-use strict; use warnings;
+use v5.36;
+
 use parent qw(DBIx::Class::Schema);
 
 our $VERSION = 2;
