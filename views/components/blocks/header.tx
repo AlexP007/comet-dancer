@@ -1,4 +1,4 @@
-<header class="flex items-center justify-between px-6 py-2 h-20 bg-stone-50 border-b-4 border-sky-600">
+<header class="flex items-center justify-between px-6 py-2 h-20 bg-stone-50 border-b-4 border-primary-600">
 
     <div class="flex items-center">
         <button @click="sidebarOpen = true" class="text-gray-500 focus:outline-none lg:hidden">
@@ -30,7 +30,7 @@
                  class="absolute bg-stone-50 right-0 z-10 w-48 mt-2 overflow-hidden bg-white rounded-md shadow-xl"
             >
                 <: for $user_menu -> $item { :>
-                    <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-amber-400"
+                    <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-secondary-400"
                        href="<: $item.link :>"
                     >
                         <: $item.name :>

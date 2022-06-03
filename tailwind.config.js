@@ -1,7 +1,14 @@
+const colors = require('tailwindcss/colors');
+
 module.exports = {
   content: ["./views/**/*.tx", "./public/**/*.html"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primary: colors.sky,
+        secondary: colors.amber,
+      },
+    },
     minWidth: {
       'admin': '1024px',
       'full': '100%',

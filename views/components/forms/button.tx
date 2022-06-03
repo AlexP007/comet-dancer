@@ -3,7 +3,7 @@
         <: if $class != nil { :>
             class="<: $class :>"
         <: } else { :>
-            class="mt-4 bg-sky-600 text-white py-2 px-6 rounded-md hover:bg-sky-500"
+            class="mt-4 bg-primary-600 text-white py-2 px-6 rounded-md hover:bg-primary-500"
         <: } :>
 >
     <: $text :>

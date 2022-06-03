@@ -61,7 +61,7 @@
         <: include components::utils::button_link {
              text  => 'New',
              link  => $routes.user_create,
-             color => 'sky',
+             color => 'primary',
         } :>
     </div>
 <: } :>

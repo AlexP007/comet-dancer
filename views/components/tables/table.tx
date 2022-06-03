@@ -46,12 +46,12 @@
 
                                     <: if ($action.type == 'link') { :>
                                         <a href="<: $action.route :>"
-                                           class="block px-4 py-2 text-sm text-gray-700 hover:bg-amber-400"
+                                           class="block px-4 py-2 text-sm text-gray-700 hover:bg-secondary-400"
                                         >
                                             <span class="capitalize"><: $action.name :></span>
                                         </a>
                                     <: } elsif ($action.type == 'form') { :>
-                                        <div class="text-sm text-gray-700 hover:bg-amber-400">
+                                        <div class="text-sm text-gray-700 hover:bg-secondary-400">
                                             <form id="<: $row.id :>"
                                                   method="post"
                                                   action="<: $action.route :>"
