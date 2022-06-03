@@ -1,4 +1,4 @@
-<nav class="flex justify-end rounded-md bg-white py-4 px-4 overflow-x-auto">
+<nav class="flex justify-end rounded-md bg-white py-4 px-4 mt-2 overflow-x-auto">
     <ul class="flex rounded mr-4">
         <li>
             <a href="<: $prev_url :>"

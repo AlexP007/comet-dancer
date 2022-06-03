@@ -7,7 +7,7 @@
     "webpack-cli": "^4.9.2"
   },
   "scripts": {
-    "watch": "npx tailwindcss -i ./src/input.css -o ./public/css/style.css --watch",
+    "watch": "npx tailwindcss -i ./src/main.css -o ./public/css/style.css --watch",
     "build": "webpack"
   }
 }

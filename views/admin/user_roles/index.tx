@@ -5,7 +5,6 @@
         <: include components::utils::button_link {
              text  => 'New',
              link  => $routes.role_create,
-             color => 'primary',
         } :>
     </div>
 <: } :>

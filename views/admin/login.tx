@@ -13,7 +13,7 @@
                 <small class="pl-1 text-red-400"><: $login_error :></small>
             <: } :>
             <div class="flex justify-end items-baseline">
-                <: include components::forms::button {text => 'Log In'} :>
+                <: include components::utils::button {text => 'Log In', type => 'submit'} :>
             </div>
         </form>
     </div>

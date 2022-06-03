@@ -1,0 +1,6 @@
+<button
+        type="<: $type || 'button' :>"
+        class="<: $class || 'btn-primary' :>"
+>
+    <: $text :>
+</button>

@@ -1,5 +1,5 @@
 <input
-    type="<: $type // 'text' :>"
+    type="<: $type || 'text' :>"
     id="<: $name :>"
     name="<: $name :>"
     value="<: $value || $old[$name] :>"

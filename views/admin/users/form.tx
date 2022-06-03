@@ -44,8 +44,8 @@
             } :>
         </div>
 
-        <div class="flex justify-end items-baseline">
-            <: include components::forms::button {text => $button} :>
+        <div class="flex justify-end items-baseline mt-4">
+            <: include components::utils::button {text => $button, type => 'submit'} :>
         </div>
     </form>
 <: } :>

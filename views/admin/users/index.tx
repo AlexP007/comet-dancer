@@ -49,8 +49,9 @@
                     } :>
                 </div>
                 <div class="relative">
-                    <: include components::forms::button {
+                    <: include components::utils::button {
                          text  => 'Apply',
+                         type  => 'submit',
                          class => 'rounded-r border-t border-r border-b border-gray-400 py-2 px-6 w-full bg-white text-sm text-gray-700 focus:bg-whit'
                     } :>
                 </div>
@@ -72,8 +73,6 @@
        headings    => $table.headings,
        rows        => $table.rows,
     } :>
-<: } :>
 
-<div class="mt-2">
     <: include components::utils::pagination {$pagination} :>
-</div>
+<: } :>
