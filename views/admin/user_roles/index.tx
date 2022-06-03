@@ -1,4 +1,4 @@
-<: cascade admin::container :>
+<: cascade components::blocks::container :>
 
 <: around head -> { :>
     <div class="pr-4">

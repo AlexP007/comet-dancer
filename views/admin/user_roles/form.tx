@@ -1,4 +1,4 @@
-<: cascade admin::container :>
+<: cascade components::blocks::container :>
 <: around body -> { :>
     <form method="post" action="<: $action :>">
         <: include components::forms::csrf_token :>

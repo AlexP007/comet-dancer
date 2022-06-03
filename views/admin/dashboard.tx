@@ -1,4 +1,4 @@
-<: cascade admin::container :>
+<: cascade components::blocks::container :>
 <: around body -> { :>
     <div class="flex flex-wrap -mx-6">
         <: include components::utils::dashboard_item {
