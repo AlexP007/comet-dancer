@@ -11,14 +11,12 @@
 <body class="min-w-admin">
 <div x-data="{ sidebarOpen: false }" class="flex h-screen bg-gray-200 font-roboto">
     <: if $exclude_bars != 1 { :>
-        <: include admin::layout::sidebar :>
+        <: include components::blocks::sidebar :>
     <: } :>
 
     <div class="flex-1 flex flex-col overflow-hidden">
         <: if $exclude_bars != 1 { :>
-            <header class="flex items-center justify-between px-6 py-2 h-20 bg-stone-50 border-b-4 border-sky-600">
-                <: include admin::layout::header :>
-            </header>
+            <: include components::blocks::header :>
         <: } :>
         <main class="flex-1 overflow-x-hidden overflow-y-auto bg-stone-100">
             <: $content | raw :>
