@@ -46,12 +46,12 @@
 
                                     <: if ($action.type == 'link') { :>
                                         <a href="<: $action.route :>"
-                                           class="block px-4 py-2 text-sm text-gray-700 hover:bg-secondary-400"
+                                           class="link-secondary"
                                         >
                                             <span class="capitalize"><: $action.name :></span>
                                         </a>
                                     <: } elsif ($action.type == 'form') { :>
-                                        <div class="text-sm text-gray-700 hover:bg-secondary-400">
+                                        <div>
                                             <form id="<: $row.id :>"
                                                   method="post"
                                                   action="<: $action.route :>"
@@ -68,9 +68,9 @@
                                                   <: } :>
                                             >
                                                 <: include components::forms::csrf_token :>
-                                                    <button type="submit" class="px-4 py-2 w-full h-full text-left">
-                                                        <span class="capitalize"><: $action.name :></span>
-                                                    </button>
+                                                <button type="submit" class="link-secondary w-full h-full text-left">
+                                                    <span class="capitalize"><: $action.name :></span>
+                                                </button>
                                             </form>
                                         </div>
                                      <: } :>

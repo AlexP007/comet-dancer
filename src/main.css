@@ -3,7 +3,10 @@
 
 @layer components {
     .btn-primary{
-        @apply bg-primary-600 text-white py-2 px-6 rounded-md hover:bg-primary-500;
+        @apply block py-2 px-6 bg-primary-600 text-white rounded-md hover:bg-primary-500;
+    }
+    .link-secondary {
+        @apply block py-2 px-4 text-gray-700 text-sm hover:bg-secondary-400;
     }
 }
 
