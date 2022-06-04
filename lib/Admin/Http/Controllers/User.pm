@@ -84,16 +84,14 @@ sub create {
 }
 
 sub store {
-    my $profile = Admin::Http::Forms::User->new(
+    my $form = Admin::Http::Forms::User->new(
         require_username => 1,
         require_password => 1,
     );
 
-    if (validate profile => $profile) {
-        my $validated = validated;
-
+    if (validate profile => $form) {
         try {
-            my $user    = _user_store(%{ $validated });
+            my $user    = $form->save(validated());
             my $message = sprintf('User: %s created', $user->username);
 
             info          $message;
@@ -136,17 +134,15 @@ sub update {
     my $username = route_param      'user';
     my $user     = get_user_details $username;
 
-    my $profile  = Admin::Http::Forms::User->new(
+    my $form = Admin::Http::Forms::User->new(
         require_username => 0,
         require_password => 0,
         current_email    => $user->email,
     );
 
-    if (validate profile => $profile) {
-        my $validated = validated;
-
+    if (validate profile => $form) {
         try {
-            my $user    = _user_update($username, %{ $validated });
+            my $user    = $form->save(validated(), $username);
             my $message = sprintf('User: %s updated', $user->username);
 
             info          $message;
@@ -296,66 +292,6 @@ sub _set_selected($role, $selected = undef) {
         : undef;
 }
 
-sub _user_store(%args) {
-    my $roles_or_role = $args{roles};
-    my $username      = $args{username};
-    my $password      = $args{password};
-    my $name          = $args{name};
-    my $email         = $args{email};
-
-    my $roles = _prepare_roles(
-        ref $args{roles} eq 'ARRAY' ? @{ $roles_or_role } : ($roles_or_role)
-    );
-
-    my $user = create_user(
-        username => $username,
-        name     => $name,
-        email    => $email,
-        roles    => $roles,
-    );
-
-    if ($user) {
-        user_password(
-            username     => $username,
-            new_password => $password,
-        );
-
-        return $user;
-    }
-
-    return undef;
-}
-
-sub _user_update($username, %args) {
-    my $roles_or_role = $args{roles};
-    my $password      = $args{password};
-    my $name          = $args{name};
-    my $email         = $args{email};
-
-    my $roles = _prepare_roles(
-        ref $args{roles} eq 'ARRAY' ? @{ $roles_or_role } : ($roles_or_role)
-    );
-
-    my $user = update_user($username,
-        name     => $name,
-        email    => $email,
-        roles    => $roles,
-    );
-
-    if ($user) {
-        if ($password) {
-            user_password(
-                username     => $username,
-                new_password => $password,
-            );
-        }
-
-        return $user;
-    }
-
-    return undef;
-}
-
 sub _deactivate_user($username) {
     return _get_user($username)->update({ deleted  => 1 });
 }
@@ -365,16 +301,6 @@ sub _activate_user($username) {
 }
 
 ### Utils ###
-
-sub _prepare_roles(@roles) {
-    my $result = {};
-
-    for my $role (@roles) {
-        $result->{$role} = 1;
-    }
-
-    return $result;
-}
 
 sub _get_user($username) {
     return rset('User')->find({ username => $username });

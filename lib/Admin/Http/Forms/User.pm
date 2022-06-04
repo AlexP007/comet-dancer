@@ -1,9 +1,11 @@
 package Admin::Http::Forms::User;
 
 use v5.36;
+use Dancer2 appname  =>'Admin';
 
 use Moo;
-use Types::Standard qw(Str Bool);
+use Types::Standard qw(Str Bool HashRef);
+use Dancer2::Plugin::Auth::Extensible;
 use namespace::clean;
 
 with 'Dancer2::Plugin::FormValidator::Role::ProfileHasMessages';
@@ -24,6 +26,11 @@ has current_email => (
     is        => 'ro',
     isa       => Str,
     predicate => 1,
+);
+
+has validated => (
+    is        => 'rw',
+    isa       => HashRef,
 );
 
 sub profile($self) {
@@ -78,6 +85,61 @@ sub messages {
             },
         }
     }
+}
+
+sub save($self, $validated, $username = undef) {
+    $self->validated($validated);
+
+    my $user;
+    my $roles         = $self->_prepare_roles;
+    my $name          = $validated->{name};
+    my $email         = $validated->{email};
+    my $password      = $validated->{password};
+
+    # If we have username, we update user
+    if ($username) {
+        $user = update_user($username,
+            name     => $name,
+            email    => $email,
+            roles    => $roles,
+        );
+    }
+    else {
+        $username = $validated->{username};
+        $user = create_user(
+            username => $username,
+            name     => $name,
+            email    => $email,
+            roles    => $roles,
+        );
+    }
+
+    if ($user) {
+        if ($password) {
+            user_password(
+                username     => $username,
+                new_password => $password,
+            );
+        }
+
+        return $user;
+    }
+
+    return undef;
+}
+
+sub _prepare_roles($self) {
+    my @roles = ref $self->validated->{roles} eq 'ARRAY'
+        ? $self->validated->{roles}->@*
+        : $self->validated->{roles};
+
+    my $result = {};
+
+    for my $role (@roles) {
+        $result->{$role} = 1;
+    }
+
+    return $result;
 }
 
 1;
