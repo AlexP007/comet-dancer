@@ -66,13 +66,12 @@ sub create {
 }
 
 sub store {
-    if (validate profile => Admin::Http::Forms::Role->new) {
-        my $v = validated;
+    my $form = Admin::Http::Forms::Role->new;
 
+    if (validate profile => $form) {
         try {
-            rset('Role')->create({ role => $v->{role} });
-
-            my $message = sprintf('Role: %s created', $v->{role});
+            my $role    = $form->save(validated());
+            my $message = sprintf('Role: %s created', $role->role);
 
             info          $message;
             flash_success $message;
@@ -108,15 +107,13 @@ sub edit {
 }
 
 sub update {
-    my $role = route_param 'role';
+    my $role_name = route_param 'role';
+    my $form      = Admin::Http::Forms::Role->new;
 
-    if (validate profile => Admin::Http::Forms::Role->new) {
-        my $new_role = validated->{role};
-
+    if (validate profile => $form) {
         try {
-            rset('Role')->single({ role => $role })->update({ role => $new_role });
-
-            my $message = sprintf('Role: %s updated to %s', $role, $new_role);
+            my $role    = $form->save(validated(), $role_name);
+            my $message = sprintf('Role: %s updated to %s', $role_name, $role->role);
 
             info          $message;
             flash_success $message;

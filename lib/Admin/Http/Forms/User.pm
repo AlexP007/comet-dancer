@@ -142,4 +142,4 @@ sub _prepare_roles($self) {
     return $result;
 }
 
-1;
+true;
