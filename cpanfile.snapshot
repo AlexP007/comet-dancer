@@ -103,6 +103,12 @@ DISTRIBUTIONS
       Moo 0
       Moo::Role 0
       Path::Tiny 0
+  Canary-Stability-2013
+    pathname: M/ML/MLEHMANN/Canary-Stability-2013.tar.gz
+    provides:
+      Canary::Stability 2013
+    requirements:
+      ExtUtils::MakeMaker 0
   Capture-Tiny-0.48
     pathname: D/DA/DAGOLDEN/Capture-Tiny-0.48.tar.gz
     provides:
@@ -1031,6 +1037,42 @@ DISTRIBUTIONS
       YAML 0.86
       parent 0
       perl 5.012005
+  Dancer2-Debugger-0.008
+    pathname: S/SY/SYSPETE/Dancer2-Debugger-0.008.tar.gz
+    provides:
+      Dancer2::Debugger 0.008
+      Dancer2::Plugin::Debugger 0.008
+      Dancer2::Plugin::Debugger::Panel::Logger 0.008
+      Dancer2::Plugin::Debugger::Panel::Routes 0.008
+      Dancer2::Plugin::Debugger::Panel::Session 0.008
+      Dancer2::Plugin::Debugger::Panel::Settings 0.008
+      Dancer2::Plugin::Debugger::Panel::TemplateTimer 0.008
+      Dancer2::Plugin::Debugger::Panel::TemplateVariables 0.008
+      Dancer2::Plugin::Debugger::Role::Panel 0.008
+      Plack::Debugger::Panel::Dancer2::Logger 0.008
+      Plack::Debugger::Panel::Dancer2::Routes 0.008
+      Plack::Debugger::Panel::Dancer2::Session 0.008
+      Plack::Debugger::Panel::Dancer2::Settings 0.008
+      Plack::Debugger::Panel::Dancer2::TemplateTimer 0.008
+      Plack::Debugger::Panel::Dancer2::TemplateVariables 0.008
+    requirements:
+      Dancer2 0.15
+      Dancer2::Core::Hook 0
+      Dancer2::Core::Types 0
+      Dancer2::Plugin 0
+      Data::Dump 0
+      ExtUtils::MakeMaker 0
+      File::Spec 0
+      JSON::MaybeXS 0
+      Module::Find 0
+      Module::Runtime 0
+      Moo 2
+      Moo::Role 2
+      Plack::Debugger 0
+      Plack::Debugger::Panel 0
+      Time::HiRes 0
+      namespace::clean 0
+      perl 5.006
   Dancer2-Plugin-Auth-Extensible-0.710
     pathname: A/AB/ABEVERLEY/Dancer2-Plugin-Auth-Extensible-0.710.tar.gz
     provides:
@@ -2519,6 +2561,15 @@ DISTRIBUTIONS
       JSON::PP 2.27300
       Scalar::Util 0
       perl 5.006
+  JSON-XS-4.03
+    pathname: M/ML/MLEHMANN/JSON-XS-4.03.tar.gz
+    provides:
+      JSON::XS 4.03
+    requirements:
+      Canary::Stability 0
+      ExtUtils::MakeMaker 6.52
+      Types::Serialiser 0
+      common::sense 0
   LWP-MediaTypes-6.04
     pathname: O/OA/OALDERS/LWP-MediaTypes-6.04.tar.gz
     provides:
@@ -2981,6 +3032,14 @@ DISTRIBUTIONS
       perl 5.006
       strict 0
       warnings 0
+  Module-Versions-0.02
+    pathname: T/TH/THW/Module-Versions-0.02.zip
+    provides:
+      Module::Versions 0.02
+    requirements:
+      Data::Dumper 1
+      ExtUtils::MakeMaker 0
+      IO::Handle 1
   Moo-2.005004
     pathname: H/HA/HAARG/Moo-2.005004.tar.gz
     provides:
@@ -4138,6 +4197,42 @@ DISTRIBUTIONS
       WWW::Form::UrlEncoded 0.23
       parent 0
       perl 5.008001
+  Plack-Debugger-0.03
+    pathname: S/ST/STEVAN/Plack-Debugger-0.03.tar.gz
+    provides:
+      Plack::App::Debugger 0.03
+      Plack::Debugger 0.03
+      Plack::Debugger::Panel 0.03
+      Plack::Debugger::Panel::AJAX 0.03
+      Plack::Debugger::Panel::Environment 0.03
+      Plack::Debugger::Panel::Memory 0.03
+      Plack::Debugger::Panel::ModuleVersions 0.03
+      Plack::Debugger::Panel::Parameters 0.03
+      Plack::Debugger::Panel::PerlConfig 0.03
+      Plack::Debugger::Panel::PlackRequest 0.03
+      Plack::Debugger::Panel::PlackResponse 0.03
+      Plack::Debugger::Panel::Timer 0.03
+      Plack::Debugger::Panel::Warnings 0.03
+      Plack::Debugger::Storage 0.03
+      Plack::Middleware::Debugger::Collector 0.03
+      Plack::Middleware::Debugger::Injector 0.03
+      Plack::Test::Debugger 0.03
+      Plack::Test::Debugger::ResultGenerator 0.03
+      Plack::Test::MockHTTP::WithCleanupHandlers 0.03
+    requirements:
+      Config 0
+      ExtUtils::MakeMaker 0
+      File::ShareDir 0
+      File::ShareDir::Install 0.06
+      File::Spec 0
+      HTTP::Status 0
+      JSON::XS 0
+      Module::Versions 0
+      POSIX 0
+      Plack 0
+      Scalar::Util 0
+      Time::HiRes 0
+      Try::Tiny 0
   Plack-Middleware-FixMissingBodyInRedirect-0.12
     pathname: S/SW/SWEETKID/Plack-Middleware-FixMissingBodyInRedirect-0.12.tar.gz
     provides:
@@ -5195,6 +5290,16 @@ DISTRIBUTIONS
     requirements:
       ExtUtils::MakeMaker 6.17
       perl 5.010001
+  Types-Serialiser-1.01
+    pathname: M/ML/MLEHMANN/Types-Serialiser-1.01.tar.gz
+    provides:
+      JSON::PP::Boolean 1.01
+      Types::Serialiser 1.01
+      Types::Serialiser::BooleanBase 1.01
+      Types::Serialiser::Error 1.01
+    requirements:
+      ExtUtils::MakeMaker 0
+      common::sense 0
   UNIVERSAL-can-1.20140328
     pathname: C/CH/CHROMATIC/UNIVERSAL-can-1.20140328.tar.gz
     provides:
@@ -5426,6 +5531,12 @@ DISTRIBUTIONS
       perl 5.008001
       strict 0
       warnings 0
+  common-sense-3.75
+    pathname: M/ML/MLEHMANN/common-sense-3.75.tar.gz
+    provides:
+      common::sense 3.75
+    requirements:
+      ExtUtils::MakeMaker 0
   curry-2.000001
     pathname: M/MS/MSTROUT/curry-2.000001.tar.gz
     provides:

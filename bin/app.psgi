@@ -6,10 +6,22 @@ use FindBin;
 use lib "$FindBin::Bin/../lib";
 
 use Plack::Builder;
+use Dancer2::Debugger;
 use App::Http::Boot;
 use Admin::Http::Boot;
 
+my $debugger = Dancer2::Debugger->new;
+
 builder {
-    mount '/'      => App::Http::Boot->to_app;
-    mount '/admin' => Admin::Http::Boot->to_app;
+    $debugger->mount;
+
+    mount '/' => builder {
+        $debugger->enable;
+        App::Http::Boot->to_app;
+    };
+
+    mount '/admin' => builder {
+        $debugger->enable;
+        Admin::Http::Boot->to_app;
+    };
 };

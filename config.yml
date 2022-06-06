@@ -1,13 +1,15 @@
 # === Main ===
 
-appname: 'App'
-
-layout: 'main'
+layout: 'control_panel'
 
 charset: 'UTF-8'
 
 # If set to true, Dancer2 will look to X-Forwarded-Protocol and X-Forwarded-host.
 behind_proxy: 1
+
+# If set to true, Dancer2 will not add an "X-Powered-By" header and also
+# append the Dancer2 version to the "Server" header.
+no_server_tokens: 1
 
 # Template engine.
 template: 'Xslate'
@@ -88,4 +90,3 @@ plugins:
       dbic:
         provider: 'Dancer2::Plugin::FormValidator::Extension::DBIC'
         database: 'default'
-

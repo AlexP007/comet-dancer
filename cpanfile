@@ -3,6 +3,7 @@ mirror "https://cpan.metacpan.org/";
 ### Dancer2 and plugins.
 
 requires "Dancer2"                                             => "0.400000";
+requires "Dancer2::Debugger"                                   => "0";
 requires "Dancer2::Plugin::DBIC"                               => "0";
 requires "Dancer2::Plugin::Auth::Extensible::Provider::DBIC"   => "0";
 requires "Dancer2::Session::Redis"                             => "0";
