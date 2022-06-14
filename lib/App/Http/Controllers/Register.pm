@@ -10,7 +10,8 @@ use App::Http::Forms::RegisterForm;
 
 sub index {
     template 'app/register' => {
-        title  => 'Register page',
+        title        => 'Register page',
+        exclude_bars => 1,
     };
 }
 

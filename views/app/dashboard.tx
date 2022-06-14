@@ -1,0 +1,8 @@
+<: cascade components::blocks::container :>
+<: around body -> { :>
+    <div class="flex flex-wrap">
+       <h4>
+           Welcome <: $current_user.username :> !!!
+       </h4>
+    </div>
+<: } :>

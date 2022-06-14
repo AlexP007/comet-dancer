@@ -37,7 +37,7 @@ sub route($self, $name, @params) {
         $route = sprintf($route, @params);
     }
 
-    return $self->request->base . $route;
+    return $self->request->uri_base . $route;
 }
 
 sub login_failed($self) {

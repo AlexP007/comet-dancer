@@ -5,12 +5,8 @@ use Dancer2 appname  => 'Admin';
 
 use Constant;
 use Utils;
-use Dancer2::Plugin::CSRF;
 use Dancer2::Plugin::Auth::Extensible;
 use Dancer2::Plugin::Syntax::ParamKeywords;
-
-### Check CSRF token.
-hook before => \&Utils::check_csrf_token;
 
 ### Processing success message.
 hook after_login_success => sub { Utils::login_success_message(app) };
@@ -50,9 +46,6 @@ hook before_template_render => sub($tokens) {
     ### Logged in user.
     $tokens->{current_user} = $user;
 
-    ### CSRF token.
-    $tokens->{csrf_token}   = get_csrf_token;
-
     ### User menu.
     my $user_menu = [
         { name => 'Profile', link => route('profile') },
@@ -68,7 +61,7 @@ hook before_template_render => sub($tokens) {
         { name => 'Roles',     link => route('roles'),     icon => 'user_roles', show => $is_admin },
     ];
 
-    $tokens->{sidebar} = Utils::set_active_menu_item($sidebar, request->path);
+    $tokens->{sidebar} = Utils::set_active_menu_item($sidebar, request->route);
 
     ### Query.
     $tokens->{query} = query_params->as_hashref_mixed;

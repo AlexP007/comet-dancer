@@ -5,7 +5,8 @@ use Dancer2 appname  =>'App';
 
 sub index {
     template 'app/login' => {
-        title  => 'Login page',
+        title        => 'Login page',
+        exclude_bars => 1,
     };
 }
 

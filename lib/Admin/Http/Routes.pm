@@ -11,7 +11,8 @@ use Admin::Http::Controllers::Dashboard;
 use Admin::Http::Controllers::User;
 use Admin::Http::Controllers::UserRoles;
 
-get '/login' => \&Admin::Http::Controllers::Login::index;
+get '/login'
+    => \&Admin::Http::Controllers::Login::index;
 
 get '/'
     => require_any_role Constant::roles_admin_access
@@ -27,6 +28,7 @@ prefix '/profile' => sub {
         => \&Admin::Http::Controllers::Profile::update;
 
 };
+
 get '/dashboard'
     => require_any_role Constant::roles_admin_access
     => \&Admin::Http::Controllers::Dashboard::index;

@@ -10,23 +10,6 @@ use constant {
 use Constant;
 use Paginator::Lite;
 
-sub check_csrf_token($app) {
-
-    if ($app->request->is_post) {
-        my $csrf_token = $app->request->body_parameters->{csrf_token};
-        if (
-            not (
-                $csrf_token
-                or $app->with_plugin('Dancer2::Plugin::CSRF')->validate_csrf_token($csrf_token)
-            )
-        ) {
-            $app->send_error('Page expired', 419);
-        }
-    }
-
-    return;
-}
-
 sub login_success_message($app) {
     return flash_success($app, 'Login succeeded');
 }
