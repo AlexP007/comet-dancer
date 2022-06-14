@@ -17,7 +17,7 @@
                     <: for $links -> $item { :>
                         <: if $~item.index % 2 != 0 && $~item.index > 0 { :>
                             <span>/</span>
-                        <: } else { :>
+                        <: } elsif $~item.index > 0 { :>
                             <br>
                         <: } :>
                         <a class="cursor-pointer hover:underline" href="<: $item.link :>"><: $item.text :></a>
