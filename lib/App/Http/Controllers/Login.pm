@@ -4,9 +4,15 @@ use v5.36;
 use Dancer2 appname  =>'App';
 
 sub index {
-    template 'app/login' => {
+    my $links = [
+        { text => 'Register',      link => route('register') },
+        { text => 'Lost password', link => route('forget')   },
+    ];
+
+    template 'shared/login' => {
         title        => 'Login page',
         exclude_bars => 1,
+        links        => $links,
     };
 }
 

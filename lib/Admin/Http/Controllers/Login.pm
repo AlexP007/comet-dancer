@@ -11,7 +11,7 @@ sub index {
         $login_error = 'Invalid credentials';
     }
 
-    template 'admin/login' => {
+    template 'shared/login' => {
         title        => 'Login page',
         exclude_bars => 1,
         login_error  => $login_error,
