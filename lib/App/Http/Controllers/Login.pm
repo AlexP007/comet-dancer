@@ -5,8 +5,7 @@ use Dancer2 appname  =>'App';
 
 sub index {
     my $links = [
-        { text => 'Register',      link => route('register') },
-        { text => 'Lost password', link => route('forget')   },
+        { text => 'Register', link => route('register') },
     ];
 
     template 'shared/login' => {

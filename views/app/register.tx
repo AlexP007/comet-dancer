@@ -1,24 +1,30 @@
 <: cascade components::blocks::window_centered :>
 <: around body -> { :>
 <div class="w-3/4 max-w-md bg-white shadow-lg py-4 px-6">
-    <form method="post" action="<: $routes.register :>">
-        <: include components::forms::input_group {label => 'Username',         name  => 'username'                        } :>
-        <: include components::forms::input_group {label => 'Email',            name  => 'email'                           } :>
-        <: include components::forms::input_group {label => 'Password',         name  => 'password'    , autocomplete => 0 } :>
-        <: include components::forms::input_group {label => 'Confirm Password', name  => 'password_cnf', autocomplete => 0 } :>
-        <div class="flex justify-between items-baseline">
-           <div>
-               <input class="cursor-pointer"
-                       type="checkbox"
-                       id="confirm"
-                       name="confirm"
-                       checked
-               >
-               <label for="confirm" class="form-check-label inline-block">I accept the Terms of Use</label>
-           </div>
-            <: include components::utils::button {text => 'Register', type => 'submit'} :>
-        </div>
-        <: include components::forms::error { name => 'confirm' } :>
-    </form>
+    <div>
+        <img class="object-fill" src="/images/cd_logo_light.png" alt="Comet Dancer logo">
+    </div>
+    <div class="mt-2">
+        <form method="post" action="<: $action :>">
+            <: include components::forms::csrf_token :>
+            <: include components::forms::input_group {label => 'Username',         name  => 'username'                        } :>
+            <: include components::forms::input_group {label => 'Email',            name  => 'email'                           } :>
+            <: include components::forms::input_group {label => 'Password',         name  => 'password'    , autocomplete => 0 } :>
+            <: include components::forms::input_group {label => 'Confirm Password', name  => 'password_cnf', autocomplete => 0 } :>
+            <div class="mt-4 flex justify-between items-center">
+                <div>
+                    <input class="cursor-pointer"
+                           type="checkbox"
+                           id="confirm"
+                           name="confirm"
+                           checked
+                    >
+                    <label for="confirm" class="form-check-label inline-block">I accept the Terms of Use</label>
+                </div>
+                <: include components::utils::button {text => 'Register', type => 'submit'} :>
+            </div>
+            <: include components::forms::error { name => 'confirm' } :>
+        </form>
+    </div>
 </div>
 <: } :>

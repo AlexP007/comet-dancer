@@ -1,7 +1,7 @@
 package Admin::Http::Forms::Role;
 
 use v5.36;
-use Dancer2 appname  =>'Admin';
+use Dancer2 appname  => 'Admin';
 
 use Moo;
 use Dancer2::Plugin::DBIC;

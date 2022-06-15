@@ -1,7 +1,7 @@
 package Admin::Http::Forms::User;
 
 use v5.36;
-use Dancer2 appname  =>'Admin';
+use Dancer2 appname  => 'Admin';
 
 use Moo;
 use Types::Standard qw(Str Bool HashRef);

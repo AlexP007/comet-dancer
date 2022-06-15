@@ -12,7 +12,7 @@
             <: if $login_error { :>
                 <small class="pl-1 text-red-400"><: $login_error :></small>
             <: } :>
-            <div class="flex mt-4 items-center">
+            <div class="mt-4 flex items-center">
                 <div class="text-sm text-gray-500">
                     <: for $links -> $item { :>
                         <: if $~item.index % 2 != 0 && $~item.index > 0 { :>
@@ -23,7 +23,7 @@
                         <a class="cursor-pointer hover:underline" href="<: $item.link :>"><: $item.text :></a>
                     <: } :>
                 </div>
-                <div class="ml-auto ml-2">
+                <div class="ml-auto">
                     <: include components::utils::button {text => 'Log In', type => 'submit'} :>
                 </div>
             </div>

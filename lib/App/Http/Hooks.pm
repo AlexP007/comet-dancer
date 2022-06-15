@@ -11,7 +11,6 @@ hook before => sub {
     routes {
         login     => '/login',
         logout    => '/logout',
-        forget    => '/forget',
         register  => '/register',
         profile   => '/profile',
         dashboard => '/dashboard',
@@ -22,7 +21,6 @@ hook before => sub {
 
 hook before_template_render => sub($tokens) {
     my $user     = logged_in_user;
-    my $is_admin = $user && $user->admin;
 
     ### Logged in user.
     $tokens->{current_user} = $user;

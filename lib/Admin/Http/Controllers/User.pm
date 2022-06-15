@@ -151,7 +151,7 @@ sub update {
         } catch ($e) {
             error         $e;
             flash_error   $e;
-        }
+        };
     }
 
     redirect back;
@@ -172,7 +172,7 @@ sub deactivate {
         error         $e;
         flash_error   $e;
         redirect      back;
-    }
+    };
 }
 
 sub activate {
@@ -190,7 +190,7 @@ sub activate {
         error         $e;
         flash_error   $e;
         redirect      back;
-    }
+    };
 }
 
 ### Usecases ###

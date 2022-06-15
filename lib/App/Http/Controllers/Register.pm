@@ -1,41 +1,39 @@
 package App::Http::Controllers::Register;
 
 use v5.36;
-use Dancer2 appname  =>'App';
+use Dancer2 appname  => 'App';
 
 use Dancer2::Plugin::FormValidator;
-use Dancer2::Plugin::Auth::Extensible;
-use App::Http::Forms::RegisterForm;
+use App::Http::Forms::Register;
 
+use feature 'try';
+no warnings 'experimental::try';
 
 sub index {
     template 'app/register' => {
         title        => 'Register page',
+        action       => route('register'),
         exclude_bars => 1,
     };
 }
 
 sub store {
-    if (validate profile => App::Http::Forms::RegisterForm->new) {
-        my $v = validated;
+    my $form = App::Http::Forms::Register->new;
 
-        my $user = create_user(
-            username => $v->{username},
-            email    => $v->{email},
-            roles    => { user => 1 },
-        );
+    if (validate profile => $form) {
+        try {
+            my $user    = $form->save(validated());
+            my $message = sprintf('User: %s registered', $user->username);
 
-        if ($user) {
-            user_password(
-                username     => $user->username,
-                new_password => $v->{password},
-            );
-
-            return 'super';
-        }
+            info          $message;
+            flash_success $message;
+            redirect      route('dashboard');
+        } catch ($e) {
+            error         $e;
+        };
     }
 
-    redirect '/register';
+    redirect back;
 }
 
 true;
