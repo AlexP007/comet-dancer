@@ -1,17 +1,17 @@
-<: if $deferred.flash_success != nil { :>
+<: if $flash.success != nil { :>
     <div
             class="py-2 px-4 relative -translate-y-1/2 text-emerald-700 text-center bg-green-200 rounded-sm shadow-sm opacity-80"
             x-data="{ show : true }"
             x-show="show"
             x-init="setTimeout(() => show = false, 3000)"
     >
-        <: $deferred.flash_success :>
+        <: $flash.success :>
     </div>
 <: } :>
 
-<: if $deferred.flash_error != nil { :>
-    <: if is_array_ref($deferred.flash_error) {:>
-        <: for $deferred.flash_error -> $errors { :>
+<: if $flash.error != nil { :>
+    <: if is_array_ref($flash.error) {:>
+        <: for $flash.error -> $errors { :>
             <: for $errors -> $error { :>
                 <div
                         class="py-2 px-4 mb-1 relative z-10 -translate-y-1/2 text-red-800 text-center bg-red-300 rounded-sm shadow-sm opacity-80"
@@ -30,7 +30,7 @@
                 x-show="show"
                 x-init="setTimeout(() => show = false, 8000)"
         >
-            <: $deferred.flash_error :>
+            <: $flash.error :>
         </div>
     <: } :>
 <: } :>

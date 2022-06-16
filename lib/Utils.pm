@@ -2,11 +2,6 @@ package Utils;
 
 use v5.36;
 
-use constant {
-    success    => 'flash_success',
-    error      => 'flash_error',
-};
-
 use Constant;
 use Paginator::Lite;
 
@@ -20,12 +15,12 @@ sub logout_and_show_403($app) {
 }
 
 sub flash_success($app, $message) {
-    $app->with_plugin('Dancer2::Plugin::Deferred')->deferred(success, $message);
+    $app->with_plugin('Flash')->flash(success => $message);
     return;
 }
 
 sub flash_error($app, $message) {
-    $app->with_plugin('Dancer2::Plugin::Deferred')->deferred(error, $message);
+    $app->with_plugin('Flash')->flash(error => $message);
     return;
 }
 

@@ -19,8 +19,11 @@ hook before => sub {
     return;
 };
 
+### Processing success message.
+hook after_login_success => sub { Utils::login_success_message(app) };
+
 hook before_template_render => sub($tokens) {
-    my $user     = logged_in_user;
+    my $user = logged_in_user;
 
     ### Logged in user.
     $tokens->{current_user} = $user;

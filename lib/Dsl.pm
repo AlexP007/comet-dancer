@@ -16,12 +16,12 @@ use namespace::clean;
 around dsl_keywords => sub($orig, $self) {
     my $keywords = $orig->($self);
 
-    $keywords->{routes}          = { is_global => 1 };
-    $keywords->{route}           = { is_global => 1 };
-    $keywords->{login_failed}    = { is_global => 1 };
-    $keywords->{flash_success}   = { is_global => 1 };
-    $keywords->{flash_error}     = { is_global => 1 };
-    $keywords->{back}            = { is_global => 1 };
+    $keywords->{routes}          = { is_global => 0 };
+    $keywords->{route}           = { is_global => 0 };
+    $keywords->{login_failed}    = { is_global => 0 };
+    $keywords->{flash_success}   = { is_global => 0 };
+    $keywords->{flash_error}     = { is_global => 0 };
+    $keywords->{back}            = { is_global => 0 };
 
     return $keywords;
 };
