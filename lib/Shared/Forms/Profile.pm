@@ -1,4 +1,4 @@
-package Admin::Forms::Profile;
+package Shared::Forms::Profile;
 
 use v5.36;
 

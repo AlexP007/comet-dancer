@@ -9,11 +9,12 @@ use Dancer2::Plugin::Syntax::ParamKeywords;
 
 hook before => sub {
     routes {
-        login     => '/login',
-        logout    => '/logout',
-        register  => '/register',
-        profile   => '/profile',
-        dashboard => '/dashboard',
+        login          => '/login',
+        logout         => '/logout',
+        register       => '/register',
+        profile        => '/profile',
+        profile_update => '/profile/update',
+        dashboard      => '/dashboard',
     };
 
     return;
