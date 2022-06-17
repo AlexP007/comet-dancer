@@ -7,8 +7,8 @@ use lib "$FindBin::Bin/../lib";
 
 use Plack::Builder;
 use Dancer2::Debugger;
-use App::Http::Boot;
-use Admin::Http::Boot;
+use App::Boot;
+use Admin::Boot;
 
 my $debugger = Dancer2::Debugger->new;
 
@@ -17,11 +17,11 @@ builder {
 
     mount '/' => builder {
         $debugger->enable;
-        App::Http::Boot->to_app;
+        App::Boot->to_app;
     };
 
     mount '/admin' => builder {
         $debugger->enable;
-        Admin::Http::Boot->to_app;
+        Admin::Boot->to_app;
     };
 };

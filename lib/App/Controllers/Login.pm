@@ -1,11 +1,14 @@
-package Admin::Http::Controllers::Login;
+package App::Controllers::Login;
 
 use v5.36;
-use Dancer2 appname  => 'Admin';
+use Dancer2 appname => 'App';
 
 sub index {
-    my $login_error = undef;
+    my $links = [
+        { text => 'Register', link => route('register') },
+    ];
 
+    my $login_error = undef;
     if (login_failed) {
         status 403;
         $login_error = 'Invalid credentials';
@@ -14,6 +17,7 @@ sub index {
     template 'shared/login' => {
         title        => 'Login page',
         exclude_bars => 1,
+        links        => $links,
         login_error  => $login_error,
     };
 }

@@ -1,10 +1,10 @@
-package App::Http::Controllers::Register;
+package App::Controllers::Register;
 
 use v5.36;
-use Dancer2 appname  => 'App';
+use Dancer2 appname => 'App';
 
 use Dancer2::Plugin::FormValidator;
-use App::Http::Forms::Register;
+use App::Forms::Register;
 
 use feature 'try';
 no warnings 'experimental::try';
@@ -18,7 +18,7 @@ sub index {
 }
 
 sub store {
-    my $form = App::Http::Forms::Register->new;
+    my $form = App::Forms::Register->new;
 
     if (validate profile => $form) {
         try {

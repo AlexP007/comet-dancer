@@ -1,4 +1,4 @@
-package App::Http::Hooks;
+package App::Hooks;
 
 use v5.36;
 use Dancer2 appname => 'App';

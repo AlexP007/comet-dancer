@@ -1,4 +1,4 @@
-package Admin::Http::Forms::Profile;
+package Admin::Forms::Profile;
 
 use v5.36;
 

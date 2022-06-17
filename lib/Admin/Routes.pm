@@ -1,18 +1,18 @@
-package Admin::Http::Routes;
+package Admin::Routes;
 
 use v5.36;
 use Dancer2 appname  => 'Admin';
 
 use Constant;
 use Dancer2::Plugin::Auth::Extensible;
-use Admin::Http::Controllers::Login;
-use Admin::Http::Controllers::Profile;
-use Admin::Http::Controllers::Dashboard;
-use Admin::Http::Controllers::User;
-use Admin::Http::Controllers::UserRoles;
+use Admin::Controllers::Login;
+use Admin::Controllers::Profile;
+use Admin::Controllers::Dashboard;
+use Admin::Controllers::User;
+use Admin::Controllers::UserRoles;
 
 get '/login'
-    => \&Admin::Http::Controllers::Login::index;
+    => \&Admin::Controllers::Login::index;
 
 get '/'
     => require_any_role Constant::roles_admin_access
@@ -21,74 +21,74 @@ get '/'
 prefix '/profile' => sub {
     get ''
         => require_any_role Constant::roles_admin_access
-        => \&Admin::Http::Controllers::Profile::index;
+        => \&Admin::Controllers::Profile::index;
 
     post '/update'
         => require_any_role Constant::roles_admin_access
-        => \&Admin::Http::Controllers::Profile::update;
+        => \&Admin::Controllers::Profile::update;
 
 };
 
 get '/dashboard'
     => require_any_role Constant::roles_admin_access
-    => \&Admin::Http::Controllers::Dashboard::index;
+    => \&Admin::Controllers::Dashboard::index;
 
 prefix '/users' => sub {
 
     get  ''
         => require_role Constant::role_admin
-        => \&Admin::Http::Controllers::User::index;
+        => \&Admin::Controllers::User::index;
 
     get  '/create'
         => require_role Constant::role_admin
-        => \&Admin::Http::Controllers::User::create;
+        => \&Admin::Controllers::User::create;
 
     get  '/:user/edit'
         => require_role Constant::role_admin
-        => \&Admin::Http::Controllers::User::edit;
+        => \&Admin::Controllers::User::edit;
 
     post '/store'
         => require_role Constant::role_admin
-        => \&Admin::Http::Controllers::User::store;
+        => \&Admin::Controllers::User::store;
 
     post '/:user/update'
         => require_role Constant::role_admin
-        => \&Admin::Http::Controllers::User::update;
+        => \&Admin::Controllers::User::update;
 
     post '/:user/deactivate'
         => require_role Constant::role_admin
-        => \&Admin::Http::Controllers::User::deactivate;
+        => \&Admin::Controllers::User::deactivate;
 
     post '/:user/activate'
         => require_role Constant::role_admin
-        => \&Admin::Http::Controllers::User::activate;
+        => \&Admin::Controllers::User::activate;
 };
 
 prefix '/users/roles' => sub {
 
     get  ''
         => require_role Constant::role_admin
-        => \&Admin::Http::Controllers::UserRoles::index;
+        => \&Admin::Controllers::UserRoles::index;
 
     get  '/create'
         => require_role Constant::role_admin
-        => \&Admin::Http::Controllers::UserRoles::create;
+        => \&Admin::Controllers::UserRoles::create;
 
     get  '/:role/edit'
         => require_role Constant::role_admin
-        => \&Admin::Http::Controllers::UserRoles::edit;
+        => \&Admin::Controllers::UserRoles::edit;
 
     post '/store'
         => require_role Constant::role_admin
-        => \&Admin::Http::Controllers::UserRoles::store;
+        => \&Admin::Controllers::UserRoles::store;
 
     post '/:role/update'
         => require_role Constant::role_admin
-        => \&Admin::Http::Controllers::UserRoles::update;
+        => \&Admin::Controllers::UserRoles::update;
 
     post '/:role/delete'
         => require_role Constant::role_admin
-        => \&Admin::Http::Controllers::UserRoles::delete;
+        => \&Admin::Controllers::UserRoles::delete;
 };
 
 true;

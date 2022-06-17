@@ -1,7 +1,7 @@
-package App::Http::Forms::Register;
+package App::Forms::Register;
 
 use v5.36;
-use Dancer2 appname  => 'App';
+use Dancer2 appname => 'App';
 
 use Moo;
 use Dancer2::Plugin::Auth::Extensible;

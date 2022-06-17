@@ -1,11 +1,11 @@
-package Admin::Http::Controllers::Profile;
+package Admin::Controllers::Profile;
 
 use v5.36;
-use Dancer2 appname  => 'Admin';
+use Dancer2 appname => 'Admin';
 
 use Dancer2::Plugin::FormValidator;
 use Dancer2::Plugin::Auth::Extensible;
-use Admin::Http::Forms::Profile;
+use Admin::Forms::Profile;
 
 use feature 'try';
 no warnings 'experimental::try';
@@ -19,7 +19,7 @@ sub index {
 }
 
 sub update {
-    if (validate profile => Admin::Http::Forms::Profile->new) {
+    if (validate profile => Admin::Forms::Profile->new) {
         my $validated = validated;
 
         try {

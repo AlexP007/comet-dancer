@@ -1,4 +1,4 @@
-package Admin::Http::Forms::UserSearch;
+package Admin::Forms::UserSearch;
 
 use v5.36;
 

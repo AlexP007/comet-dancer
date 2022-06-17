@@ -1,14 +1,14 @@
-package Admin::Http::Controllers::UserRoles;
+package Admin::Controllers::UserRoles;
 
 use v5.36;
-use Dancer2 appname  => 'Admin';
+use Dancer2 appname => 'Admin';
 
 use Constant;
 use Utils;
 use Dancer2::Plugin::DBIC;
 use Dancer2::Plugin::FormValidator;
 use Dancer2::Plugin::Syntax::ParamKeywords;
-use Admin::Http::Forms::Role;
+use Admin::Forms::Role;
 
 use feature 'try';
 no warnings 'experimental::try';
@@ -66,7 +66,7 @@ sub create {
 }
 
 sub store {
-    my $form = Admin::Http::Forms::Role->new;
+    my $form = Admin::Forms::Role->new;
 
     if (validate profile => $form) {
         try {
@@ -108,7 +108,7 @@ sub edit {
 
 sub update {
     my $role_name = route_param 'role';
-    my $form      = Admin::Http::Forms::Role->new;
+    my $form      = Admin::Forms::Role->new;
 
     if (validate profile => $form) {
         try {
