@@ -4,7 +4,7 @@ use v5.36;
 use Dancer2 appname => 'Admin';
 
 use Moo;
-use Types::Standard qw(Str Bool HashRef);
+use Types::Standard qw(Str Bool HashRef Maybe);
 use Dancer2::Plugin::Auth::Extensible;
 use namespace::clean;
 
@@ -24,7 +24,7 @@ has require_password => (
 
 has current_email => (
     is        => 'ro',
-    isa       => Str,
+    isa       => Maybe[Str],
     predicate => 1,
 );
 

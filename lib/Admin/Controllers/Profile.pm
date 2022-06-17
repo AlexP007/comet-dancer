@@ -25,7 +25,6 @@ sub update {
         try {
             update_current_user(
                 name  => $validated->{name},
-                email => $validated->{email},
             );
 
             if ($validated->{password}) {
