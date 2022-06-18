@@ -1,0 +1,65 @@
+# configuration file for development environment
+
+# the logger engine to use
+# console: log messages to STDOUT (your console where you started the
+#          application server)
+# file:    log message to a file in log/
+logger: 'console'
+
+# The log level for this environment.
+# (debug, info, warning and error).
+log: 'core'
+
+# should Dancer2 show a stacktrace when an 5xx error is caught?
+# if set to yes, public/500.html will be ignored and either
+# views/500.tt, 'error_template' template, or a default error template will be used.
+show_errors: 1
+
+# If set to true, Dancer2 will display full stack traces
+# when a warning or a die occurs.
+traces: 1
+
+# Print the banner.
+startup_info: 1
+
+# === Plugins ===
+
+plugins:
+
+  # Dancer2::Plugin::Debugger.
+  Debugger:
+    enabled: 1
+
+  # Dancer2::Plugin::DBIC.
+  DBIC:
+    default:
+      dsn: YOUR DSN like 'dbi:mysql:dbname:db:3306'
+      schema_class: 'Schema'
+      user: USER
+      password: PASS
+      mysql_enable_utf8: 1
+      options:
+        RaiseError: 1
+
+# === Engines ===
+
+engines:
+
+  session:
+    #  Dancer2::Session::Redis.
+    Redis:
+      cookie_name: 'session_id'
+      # 86400 is 24 hours.
+      cookie_duration: 86400
+      session_duration: 86400
+      is_secure: 1
+      is_http_only: 1
+      redis_server: 'redis:6379'
+      redis_password: PASS
+      # Reconnect up to 60 seconds (reconnect) every 5000 milliseconds (every).
+      redis_reconnect: 60
+      redis_every: 5000
+      # Use serialization for storing values other than simple scalars.
+      redis_serialization:
+        module: 'Dancer2::Session::Redis::Serialization::Sereal'
+        compression: snappy

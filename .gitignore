@@ -3,7 +3,8 @@
 .vscode
 .DS_Store
 .carmel
-/environments
+/environments/development.yml
+/environments/production.yml
 /local
 /storage
 /node_modules
