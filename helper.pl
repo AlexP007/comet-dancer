@@ -21,7 +21,7 @@ for ($action) {
     # db.
     if (/^db$/)           { exec("docker compose exec db mysql -u$ENV{MYSQL_USER} -p$ENV{MYSQL_PASSWORD}");                            }
     if (/^db-init$/)      { exec("docker compose exec db mysql -uroot -p$ENV{MYSQL_ROOT_PASSWORD} -e  '" . db_init($arg1) . "'");      }
-    if (/^db-migration$/) { exec("docker compose exec app carton exec bin/migration.pl $arg1");                                        }
+    if (/^db-migration$/) { exec("docker compose exec app carmel exec bin/migration.pl $arg1");                                        }
 }
 
 print "Action not found\n";
