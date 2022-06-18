@@ -19,7 +19,7 @@ for ($action) {
     if (/^npm-install$/) { exec("docker compose run --rm npm npm install");   }
 
     # db.
-    if (/^db$/)           { exec("docker compose exec db mysql -u$ENV{MYSQL_USER} -p$ENV{MYSQL_PASSWORD}");                            }
+    if (/^db$/)           { exec("docker compose exec db mysql -u$ENV{MARIADB_USER} -p$ENV{MARIADB_PASSWORD}");                            }
     if (/^db-migration$/) { exec("docker compose exec app carmel exec bin/migration.pl $arg1");                                        }
 }
 

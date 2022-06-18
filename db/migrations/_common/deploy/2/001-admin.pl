@@ -3,6 +3,7 @@ use v5.36;
 use Dancer2 appname => 'Migration';
 use Dancer2::Plugin::DBIC;
 use Dancer2::Plugin::Auth::Extensible;
+use DBIx::Class::Migration::RunScript;
 
 migrate {
     rset('Role')->create({ role => 'admin' });
