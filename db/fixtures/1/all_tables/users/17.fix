@@ -1,0 +1,16 @@
+$HASH1 = {
+           deleted  => 0,
+           email    => 'ne@mail.riu',
+           id       => 17,
+           lastlogin
+                    => undef,
+           name     => 'MosNe Re',
+           password => '{SSHA256}BXFw/+wiwB55MaLc6pj/fCXUEvH7Lnm8nmiYa+HFkz/QpVYX',
+           pw_changed
+                    => '2022-05-25 19:04:54',
+           pw_reset_code
+                    => undef,
+           registered
+                    => '2022-05-25 22:04:54',
+           username => 'MosNe'
+         };

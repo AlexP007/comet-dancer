@@ -1,0 +1,16 @@
+$HASH1 = {
+           deleted  => 0,
+           email    => 'mail@new.ru',
+           id       => 13,
+           lastlogin
+                    => '2022-05-17 17:44:48',
+           name     => "\320\235\320\276\320\262\321\213\320\271 \320\256\320\267\320\265\321\200",
+           password => '{SSHA256}7YrNW0H0D3ZLOXmLH+OrgVpzYSRMtcaXOlfYO0UOWU19lcDh',
+           pw_changed
+                    => '2022-05-17 17:44:33',
+           pw_reset_code
+                    => undef,
+           registered
+                    => '0000-00-00 00:00:00',
+           username => 'NewO'
+         };

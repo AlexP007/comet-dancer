@@ -1,0 +1,16 @@
+$HASH1 = {
+           deleted  => 1,
+           email    => 'verdana@mails.ru',
+           id       => 8,
+           lastlogin
+                    => undef,
+           name     => "\320\222\320\265\321\200\320\264\320\275\320\260 \320\220\320\275\320\264\321\200\320\265\320\265\320\262\320\260\321\217",
+           password => '{SSHA256}CHyjACjAxVfY1x+CoUV4F5EG11RSuZyS6ak+NlQoxRIvePa6',
+           pw_changed
+                    => '2022-05-16 09:43:51',
+           pw_reset_code
+                    => undef,
+           registered
+                    => '0000-00-00 00:00:00',
+           username => 'Verdane'
+         };

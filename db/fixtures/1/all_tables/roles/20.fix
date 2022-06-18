@@ -1,0 +1,4 @@
+$HASH1 = {
+           id   => 20,
+           role => 'client'
+         };

@@ -1,0 +1,16 @@
+$HASH1 = {
+           deleted  => 0,
+           email    => 'alex@cpan.ru',
+           id       => 2,
+           lastlogin
+                    => '2022-06-17 08:03:41',
+           name     => 'Alexander',
+           password => '{SSHA256}oELP8oR/xb6K4yjTxztVW98aSRdEixugWsJFdqJ7GmetjHgL',
+           pw_changed
+                    => '2022-05-16 19:58:31',
+           pw_reset_code
+                    => undef,
+           registered
+                    => '0000-00-00 00:00:00',
+           username => 'Alex'
+         };

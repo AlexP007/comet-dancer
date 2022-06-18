@@ -1,0 +1,16 @@
+$HASH1 = {
+           deleted  => 1,
+           email    => 'manager@vega.ru',
+           id       => 5,
+           lastlogin
+                    => undef,
+           name     => 'Susan',
+           password => '{SSHA256}O69ohLkrsXyndrhAJKZr1S85geD9giDUpsckjnIdtEgXrr2g',
+           pw_changed
+                    => '2022-04-25 20:27:36',
+           pw_reset_code
+                    => undef,
+           registered
+                    => '0000-00-00 00:00:00',
+           username => 'Manager'
+         };

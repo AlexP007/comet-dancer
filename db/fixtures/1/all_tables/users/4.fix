@@ -1,0 +1,16 @@
+$HASH1 = {
+           deleted  => 0,
+           email    => 'vas@mail.ru',
+           id       => 4,
+           lastlogin
+                    => undef,
+           name     => "\320\222\320\260\321\201\320\270\320\273\320\270\320\271 \320\222\320\265\321\200\321\202\320\270\321\206\320\272\320\270\320\271",
+           password => '{SSHA256}H3hXOPA7TBVigxzjg3L3iJJTuZgmeyNQ6+268g82vLDgyTMb',
+           pw_changed
+                    => '2022-04-11 15:47:48',
+           pw_reset_code
+                    => undef,
+           registered
+                    => '0000-00-00 00:00:00',
+           username => 'Vasua'
+         };

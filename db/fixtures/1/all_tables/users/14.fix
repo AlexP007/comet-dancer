@@ -1,0 +1,16 @@
+$HASH1 = {
+           deleted  => 1,
+           email    => 'mail@pend.ru',
+           id       => 14,
+           lastlogin
+                    => undef,
+           name     => "\320\222\320\270\320\272\321\202\320\276\321\200 \320\237\320\265\320\275\320\264\321\216\320\272",
+           password => '{SSHA256}qxwF4CQQ/1ioIY53S3m/pTF6hYwtbdTpUrGEEptYGGSQtDYd',
+           pw_changed
+                    => '2022-05-24 19:55:05',
+           pw_reset_code
+                    => undef,
+           registered
+                    => '0000-00-00 00:00:00',
+           username => 'Visa'
+         };
