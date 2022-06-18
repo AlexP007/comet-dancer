@@ -22,4 +22,5 @@ for ($action) {
     $migration->downgrade       if /^downgrade$/;
     $migration->drop_tables     if /^drop_tables$/;
     $migration->dump_all_sets   if /^dump_sets$/;
+    $migration->populate        if /^populate$/;
 }
