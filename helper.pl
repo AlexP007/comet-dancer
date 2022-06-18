@@ -20,17 +20,9 @@ for ($action) {
 
     # db.
     if (/^db$/)           { exec("docker compose exec db mysql -u$ENV{MYSQL_USER} -p$ENV{MYSQL_PASSWORD}");                            }
-    if (/^db-init$/)      { exec("docker compose exec db mysql -uroot -p$ENV{MYSQL_ROOT_PASSWORD} -e  '" . db_init($arg1) . "'");      }
     if (/^db-migration$/) { exec("docker compose exec app carmel exec bin/migration.pl $arg1");                                        }
 }
 
 print "Action not found\n";
-
-sub db_init {
-    my $db_sql   = "CREATE DATABASE $_[0] CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;";
-    my $db_grant = "GRANT ALL PRIVILEGES ON $_[0].* TO '$ENV{MYSQL_USER}';";
-
-    return $db_sql . $db_grant;
-}
 
 __END__
