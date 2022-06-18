@@ -4,7 +4,7 @@ use v5.36;
 
 use parent qw(DBIx::Class::Schema);
 
-our $VERSION = 2;
+our $VERSION = 1;
 
 __PACKAGE__->load_namespaces(
     result_namespace    => [ 'User::Result' ],
