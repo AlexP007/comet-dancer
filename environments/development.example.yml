@@ -33,7 +33,7 @@ plugins:
   # Dancer2::Plugin::DBIC.
   DBIC:
     default:
-      dsn: YOUR DSN like 'dbi:mysql:dbname:db:3306'
+      dsn: YOUR DSN like 'dbi:mysql:comet:db:3306'
       schema_class: 'Schema'
       user: USER
       password: PASS
