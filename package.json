@@ -8,6 +8,7 @@
   },
   "scripts": {
     "watch": "npx tailwindcss -i ./src/main.css -o ./public/css/style.css --watch",
-    "build": "webpack && npx tailwindcss -i ./src/main.css -o ./public/css/style.css"
+    "build": "npm run build-css && webpack",
+    "build-css": "npx tailwindcss -i ./src/main.css -o ./public/css/style.css"
   }
 }
