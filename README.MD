@@ -4,15 +4,16 @@
 Ready-to-use foundation for web-application based on Perl5 and Dancer2.
 
 ### OUT OF THE BOX:
-* docker environment
-* dependency management
-* database migrations and fixtures
-* debugger
-* authorization
-* user control panel
-* csrf protection
-* form validation
-* css and js build scripts
+* Perl v5.36
+* Docker environment
+* Dependency management
+* Database migrations and fixtures
+* Debugger
+* Authorization
+* User control panel
+* Csrf protection
+* Form validation
+* Css and js build scripts
 
 ### SCREENSHOTS
 
@@ -44,7 +45,7 @@ This project can also be used as an example of Dancer2 big application with sepa
 ## USAGE
 
 ### PREREQUISITE
-* Perl v5.36 with Dotenv module
+* Perl with Dotenv module
 * Docker
 
 ### HOW TO START
@@ -80,4 +81,4 @@ You are welcome! Be concise and respect code style. You can start from TODO list
 * Medialibrary
 
 ### LICENSE AND COPYRIGHT
-This software is copyright (c) 2022 by Alexander Panteleev. This is free software; you can redistribute it and/or modify it under the same terms as the Perl 5 programming language system itself.
+This software is copyright (c) 2022 by Alexander Panteleev. This is free software, you can redistribute it and/or modify it under the same terms as the Perl 5 programming language system itself.
