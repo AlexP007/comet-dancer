@@ -6,7 +6,7 @@ use Dancer2::Plugin::Debugger;
 use Dancer2::Plugin::Flash;
 use Dancer2::Plugin::CSRFI;
 
-our $VERSION = '0.1';
+our $VERSION = '1';
 
 ### Hooks.
 require App::Hooks;
