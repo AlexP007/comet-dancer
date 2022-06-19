@@ -66,10 +66,13 @@ There are more usefull commands inside helper.pl. You can explore them by your o
 
 To get acquainted with Comet Dancer, try to implement deleting users.
 
-### CONTRIBUTING
+### NOTICE
+This environment is created exclusively for development, don't use it mindlessly in production.
+
+## CONTRIBUTING
 You are welcome! Be concise and respect code style. You can start from TODO list.
 
-### TODO
+## TODO
 * Managing the error page through a template
 * Media Library
 * Journaling
@@ -81,5 +84,5 @@ You are welcome! Be concise and respect code style. You can start from TODO list
 * Medialibrary
 * Documentation (migrations, tailwind, alpinejs)
 
-### LICENSE AND COPYRIGHT
+## LICENSE AND COPYRIGHT
 This software is copyright (c) 2022 by Alexander Panteleev. This is free software, you can redistribute it and/or modify it under the same terms as the Perl 5 programming language system itself.
