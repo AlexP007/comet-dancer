@@ -10,6 +10,8 @@ Ready-to-use foundation for web-application based on Perl5 and Dancer2.
 * debugger
 * authorization
 * user control panel
+* csrf protection
+* form validation
 * css and js build scripts
 
 ### SCREENSHOTS
@@ -32,6 +34,7 @@ This project can also be used as an example of Dancer2 big application with sepa
 * Dancer2
 * DBIx::Class
 * Docker
+* Nginx
 * MariaDB
 * Redis
 * TailwindCSS 3
@@ -59,6 +62,8 @@ Please don't forget to visit localhost/admin.
 To stop application: perl helper.pl down.
 
 There are more usefull commands inside helper.pl. You can explore them by your own.
+
+To get acquainted with Comet Dancer, try to implement deleting users.
 
 ### CONTRIBUTING
 You are welcome! Be concise and respect code style. You can start from TODO list.
