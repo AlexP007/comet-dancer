@@ -1,4 +1,4 @@
-![comet](./public/images/cd_logo_dark.png)
+![comet](./public/images/cd_logo_light.png)
 
 ## SYNOPSIS
 Ready-to-use foundation for web-application based on Perl5 and Dancer2.
